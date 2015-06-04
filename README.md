@@ -1,4 +1,4 @@
-## paperless Baran
+## Paperless Baran
 To run this code u need to install nodejs ,mongodb and git.
 Then :
 ```sh
@@ -6,7 +6,6 @@ git clone https://github.com/barangroup/paperless_baran.git
 cd paperless_baran
 npm install
 bower install
-bower install client/public
 ```
 
 Now u can run server :
