@@ -355,7 +355,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 
   $http.post("/users").
   success(function($json) {
-    $scope.canEdit =  false && $json.can_edit;
+    $scope.canEdit = $json.can_edit;
     $scope.paging(1);
   }).
   error(function($data, $status) {
