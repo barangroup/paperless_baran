@@ -1,0 +1,32 @@
+<div class="row">
+	<div class="col-lg-6">
+		<form name="settingForm" ng-submit="saveSetting()">
+			<div class="box box-solid">
+				<div class="box-header with-border">
+					<p class="box-title"><i class="fa fa-star-o"></i>	تنظیمات پیامک تبریک تولد</p>
+					<div class="pull-left"><button type="button" class="btn btn-sm btn-default" data-toggle="popover" data-content="در صورت فعال بودن، این متن برای اعضایی که روز تولدشان فرا برسد به صورت خودکار ارسال میشود." data-animation="true" data-trigger="focus"><i class="fa fa-info"></i></button></div>
+				</div>
+				<div class="box-body">
+					<div class="input-group">
+						<label>
+							<input type="checkbox" ng-model="smsSetting.enable">
+							فعالسازی پیامک تولد.
+						</label>
+					</div>
+					<div class="form-group" style="position: relative;">
+						<textarea class="textarea form-control" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #DDD; padding: 10px; resize: vertical;" ng-model="smsSetting.text" ng-disabled="!smsSetting.enable">
+						</textarea>
+						<p class="margin text-left label label-default" style="position: absolute; bottom: 0; left: 0;">{{getSMSCount()+' پیام'}} ، {{smsSetting.text.length + '/' + getSMSCount() * maxCharCount}}</p>
+					</div>
+				</div>
+				<div class="box-footer">
+					<button class="btn btn-primary" type="submit">ذخیره	<i class="fa fa-save"></i></button>
+				</div>
+				<div class="overlay" ng-show="isSending"><i class="fa fa-spinner fa-spin"></i></div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	$("[data-toggle='popover']").popover();
+</script>

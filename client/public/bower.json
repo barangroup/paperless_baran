@@ -1,0 +1,24 @@
+{
+  "name": "client",
+  "version": "0.0.1",
+  "description": "client plugins",
+  "main": "plugins/",
+  "keywords": [
+    "chartjs"
+  ],
+  "authors": [
+    "Mehran Arjmand"
+  ],
+  "license": "MIT",
+  "homepage": "www.barang.ir",
+  "dependencies": {
+    "angularjs": "~1.3.15",
+    "angular-route": "~1.3.15",
+    "slimScroll": "~1.3.3",
+    "fastclick": "~1.0.6",
+    "ion.rangeSlider": "~2.0.6",
+    "chart.js": "~0.1.0",
+    "md5": "~0.3.0",
+    "Chart.js": "~1.0.2"
+  }
+}

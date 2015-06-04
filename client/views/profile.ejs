@@ -1,0 +1,102 @@
+  <link type="text/css" href="plugins/persiandatepicker/styles/datepicker.css" rel="stylesheet" />
+  <style type="text/css">
+  .ui-datepicker{
+    z-index: 50 !important;
+  }
+  </style>
+  <div class="row">
+    <div class="col-lg-6">
+      <form name="profileForm" ng-submit="editUser(userCopy);">
+        <div class="box box-primary pr" >
+          <!-- .box-header -->
+          <div class="box-header with-border">
+            <h3 class="box-title">پروفایل <small ng-bind="getFullName(user)"></small></h3>
+            <div class="pull-left">
+              <img ng-src="{{user.avatar}}" style="width: 50px;" class="img-circle">
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <ul class="products-list product-list-in-box table-hover">
+              <li class="item">
+                <div class="product-info">
+                  <span class="product-title text-blue">نام<small class="text-red"> *</small></span>
+                  <input class="form-control pr-med text-black" name="first_name" ng-model="userCopy.first_name" ng-readonly="true"></input>
+                </span>
+              </div>
+            </li>
+            <li class="item">
+              <div class="product-info">
+                <span class="product-title text-blue">نام خانوادگی<small class="text-red"> *</small></span>
+                <input class="form-control pr-med text-black" name="last_name" ng-model="userCopy.last_name" ng-readonly="true"></input>
+              </span>
+            </div>
+          </li>
+          <li class="item">
+            <div class="product-info" ng-class="{'has-error' : profileForm.email.$invalid}">
+              <span class="product-title text-blue">ایمیل</span>
+              <input type="email" class="form-control pr-en text-black" name="email" ng-model="userCopy.email"></input>
+            </span>
+          </div>
+        </li>
+        <li class="item">
+          <div class="product-info" ng-class="{'has-error' : profileForm.mobile.$invalid}">
+            <span class="product-title text-blue">شماره همراه<small class="text-red"> *</small></span>
+            <input class="form-control pr-en text-black" name="mobile" ng-model="userCopy.mobile" ng-pattern="/^09[0-9]{9}$/" required></input>
+          </span>
+        </div>
+      </li>
+      <li class="item">
+        <div class="product-info" ng-class="{'has-error' : profileForm.telephone_number.$invalid}">
+          <span class="product-title text-blue">تلفن ثابت</span>
+          <input class="form-control pr-en text-black " name="telephone_number" ng-model="userCopy.telephone_number" ng-pattern="/^0[0-9]{10}$/"></input>
+        </span>
+      </div>
+    </li>
+    <li class="item">
+      <div class="product-info">
+        <span class="product-title text-blue">محل سکونت</span>
+        <div class="input-group">
+          <span class="input-group-addon">شهر</span>
+          <input class="form-control text-black" ng-model="userCopy.city" ng-disabled="userCopy.native"></input>
+          <span class="input-group-addon"><label><input type="checkbox" name="native" ng-model="userCopy.native" ng-change="userCopy.native ?  userCopy.city = 'مشهد' : userCopy.city=''"> ساکن مشهد</label></span>
+        </div>
+        <br>
+        <div class="input-group">
+          <span class="input-group-addon">آدرس</span>
+          <input class="form-control text-black" ng-model="userCopy.address"></input>
+        </div>
+      </span>
+    </div>
+  </li>
+  <li class="item">
+    <div class="product-info" ng-class="{'has-error' : profileForm.telephone_number.$invalid}">
+      <span class="product-title text-blue">تاریخ تولد</span>
+      <input class="form-control pr-numb text-black datePicker" name="birth_date" ng-model="userCopy.birth_date" ng-pattern="/^0[0-9]{10}$/"></input>
+    </span>
+  </div>
+</li>
+</ul>
+</div>
+<!-- /.box-body -->
+<div class="box-footer">
+  <button class="btn btn-primary" type="submit">ویرایش</button> 
+</div>
+<div class="overlay" ng-hide="userCopy"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+</div>
+</form>
+</div>
+
+<script type="text/javascript" src="plugins/persiandatepicker/scripts/jquery.ui.datepicker-cc.all.min.js"></script>
+
+
+<script type="text/javascript">
+$('.datePicker').datepicker({
+  dateFormat: 'yy/m/d',
+  changeYear: true,
+  changeMonth: true,
+  minDate: '-30y',
+  maxDate: '-17y'
+});
+</script>

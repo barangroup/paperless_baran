@@ -1,0 +1,59 @@
+<a href="index.html" class="logo pr">گروه دانشجویی <b>باران</b></a> 
+<!-- Header Navbar: style can be found in header.less -->
+<nav class="navbar navbar-static-top" role="navigation"> 
+  <!-- Sidebar toggle button--> 
+  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> 
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span> 
+    <span class="icon-bar"></span> 
+    <span class="icon-bar"></span> 
+  </a>
+  <div class="navbar-custom-menu  pr">
+    <ul class="nav navbar-nav">
+      <!-- User Account: style can be found in dropdown.less -->
+      <li class="dropdown user user-menu"> 
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+          <img ng-src="{{user.avatar}}" class="user-image" alt="User Image"/> 
+          <span class="hidden-xs">{{getFullName(user)}}</span>
+        </a>
+        <ul class="dropdown-menu">
+          <!-- User image -->
+          <li class="user-header pr pr-sml"> <img ng-src="{{user.avatar}}" class="img-circle" alt="User Image" />
+            <p>{{getFullName(user)}}<small>{{user.group}}</small> </p>
+          </li>
+
+          <li class="user-footer">
+            <div class="pull-left"> <a href="index.html" class="btn btn-default btn-flat">خروج</a> </div>
+            <div class="pull-right"> <a href="profile.html" class="btn btn-default btn-flat">پروفایل</a> </div>
+          </li>
+        </ul>
+      </li>
+      <!-- Messages: style can be found in dropdown.less-->
+      <li class="dropdown messages-menu"> 
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+          <i class="fa fa-comments"></i> 
+          <!-- <span class="label label-success">{{messages.length > 0 ? messages.length : ''}}</span>  -->
+        </a>
+        <ul class="dropdown-menu">
+          <!-- <li class="header text-right">{{messages.length > 0 ? 'شما '+messages.length+' پیام جدید دارید.' : 'پیام جدیدی وجود ندارد.'}}</li> -->
+          <li> 
+            <!-- inner menu: contains the actual data -->
+            <ul class="menu pr text-right">
+              <li ng-repeat="messsage in messages"><!-- start message --> 
+                <a ng-href="{{messsage.message.link}}">
+                  <div class="pull-right"> 
+                    <img ng-src="{{messsage.sender.avatar}}" class="img-circle" alt="User Image" title="{{messsage.sender.name}}"/>
+                  </div>
+                  <h4>{{messsage.sender.name}}<small>{{messsage.message.time}}<i class="fa fa-clock-o"></i></small> </h4>
+                  <p>{{messsage.message.title}}</p>
+                </a> 
+              </li>
+              <!-- end message -->
+            </ul>
+          </li>
+          <li class="footer"><a href>نمایش تمام پیام ها</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

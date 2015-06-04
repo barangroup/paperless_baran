@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-lg-3" ng-repeat="(title, count) in report" ng-cloak>
+    <div class="info-box" ng-if="!angular.isDefined(count)">
+      <span class="info-box-icon bg-aqua"><i class="fa fa-gear"></i></span>
+      <div class="info-box-content">
+        <span class="info-box-text">{{title}}</span>
+        <span class="info-box-number">{{count}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="box box-solid">
+      <div class="box-header with-border">
+        <p class="box-title"><i class="fa fa-bar-chart-o"></i>  گزارش بر اساس سال عضویت</p>
+      </div>
+      <div class="box-body">
+        <div class="chart-responsive">
+          <canvas id="reportChart" height="250"></canvas>
+        </div>
+      </div>
+      <div class="box-footer no-padding" ng-bind-html="reportByYearChart.legend">
+    </div>
+  </div>
+</div>
+
+<!-- ChartJS 1.0.1 -->
+<script src="../../plugins/Chart.js/Chart.min.js" type="text/javascript"></script>

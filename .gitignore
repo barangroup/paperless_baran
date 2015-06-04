@@ -1,0 +1,16 @@
+server/logs
+server/node_modules/encrypt_module.js
+server/utils/removed_codes
+.mali_api_readme.txt
+node_modules/
+client/public/plugins/angular/
+client/public/plugins/angularjs/
+client/public/plugins/angular-route/
+client/public/plugins/chart.js/
+client/public/plugins/fastclick/
+client/public/plugins/ion.rangeSlider/
+client/public/plugins/jquery/
+client/public/plugins/md5/
+client/public/plugins/raphael/
+client/public/plugins/slimScroll/
+client/public/lib/

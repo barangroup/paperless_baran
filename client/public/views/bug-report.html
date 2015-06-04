@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="col-lg-8">
+		<div class="box box-solid">
+			<form name="bugReportForm" ng-submit="sendBug()">
+				<div class="box-header with-border">
+					<p class="box-title">گزارش خرابی</p>
+				</div>
+				<div class="box-body" ng-cloak>
+					<div class="form-group">
+						<label>
+							در کدام قسمت به مشکل برخوردید؟
+						</label>
+							<select class="form-control" ng-model="bug.section" ng-options="section.title for section in menus">
+							<option value="">سایر قسمتها</option>
+							</select>
+					</div>
+					<div class="form-group">
+						<textarea name="bug-report" ng-model="bug.text" class="form-control textarea" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #DDD; padding: 10px; resize: vertical;" placeholder="توضیح دهید..." required \></textarea> 
+					</div>
+				</div>
+				<div class="box-footer">
+					<button type="submit" ng-disabled="bugReportForm.$invalid" class="btn btn-default">ارسال	<i class="fa fa-send"></i></button>
+				</div>
+			</form>
+			<div class="overlay" ng-show="isSending"><i class="fa fa-spinner fa-spin"></i></div>
+		</div>
+	</div>
+</div>
+

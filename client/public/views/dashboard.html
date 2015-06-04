@@ -1,0 +1,32 @@
+<div class="error-page clearfix">
+	<p class="headline text-yellow pr-en" style="font-size: 100px !important;"><img src="../dist/img/baran-logo-small.png" class="img-circle" style=" background-color:#fff; padding:5px; border: solid 1px #fff;"></p>
+	<div class="error-content pr">
+		<h3>بارانی عزیز <span class="text-orange">{{getFullName(user)}}</span></h3>
+		<h3>به سیستم مکانیزه <a href="http://barang.ir">گروه دانشجویی باران</a> خوش آمدید.</h3>
+		<ul>
+
+			<li>اگر با سیستم به مشکل برخوردید به <a href="#/faq">این صفحه</a> مراجعه نمایید.</li>
+			<li><a href="#/feedback">انتقادات و پیشنهادات</a> خودتان را با ما در میان بگذارید.</li>
+		</ul>
+	</div>
+</div>
+<br>
+<div class="row align-center" ng-if="quote" ng-cloak>
+	<div class="col-lg-2"></div>
+	<div class="col-lg-8">
+		<div class="box box-solid">
+			<div class="box-header with-border" ng-if="quote.title">
+				<p class="box-title"><i class="fa" ng-class="quote.icon"></i>	{{quote.title}}</p>
+			</div>
+			<div class="box-body clearfix">
+				<blockquote class="pull-right">
+					<p ng-bind-html="quote.text"></p>
+					<small ng-if="quote.author">{{quote.author}}</small>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-6"></div>
+</div>
