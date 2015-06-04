@@ -16,6 +16,7 @@ module.exports.post = function (req, res, next) {
         var user = String.remove_empty_data(req.body) ;
 
         if(user._id){
+            console.open(req.body);
             db.users.findOne({ _id : user._id },function(err,u){
                 if(err) console.log(err);
                 else if (u){
@@ -35,7 +36,8 @@ module.exports.post = function (req, res, next) {
                     }
 
                     u.entering_uni_year = user.entering_uni_year ;
-                    if(user.mobile) u.mobile = String.enc_mobile(user.mobile) ;
+                    
+
                     u.telephone_number = user.telephone_number ;
 
                     if(user.gender) u.gender = true ;
@@ -93,14 +95,20 @@ module.exports.post = function (req, res, next) {
                         u._comments = u._comments.concat(user._comments);
                     }
 
-                    u.save(function(err,data){
-                        // console.open(data);
-                        if(err) console.log(err);
-                        else {
-                            console.log(req.user.first_name + " " + req.user.last_name + " " + "edit " + data.first_name + " " + data.last_name );
-                            res.json({ edit : true });
-                        }
-                    });
+                    if(user.mobile){
+                        db.users.findOne({ mobile : String.enc_mobile(user.mobile) },function(err,exist){
+                            if(err) console.log(err);
+                            else if(exist){
+                                res.json({ exists : true });
+                            } else {
+                                u.mobile = String.enc_mobile(user.mobile) ;
+                                save(u,res,req);
+                            }
+                        });
+                    } else {
+                        save(u,res,req);    
+                    }
+                    
                 }
             });
         } else {
@@ -113,3 +121,14 @@ module.exports.post = function (req, res, next) {
         else console.log("someone try to edit a user without having permission!!!");
     }
 };
+
+function save(u,res,req){
+    // console.log("in save f");
+    u.save(function(err,data){
+        if(err) console.log(err);
+        else {
+            console.log(req.user.first_name + " " + req.user.last_name + " " + "edit " + data.first_name + " " + data.last_name );
+            res.json({ edit : true });
+        }
+    });
+}
