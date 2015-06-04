@@ -16,4 +16,4 @@ node ./bin/www
 it's recommended to use [nodemon](https://www.npmjs.com/package/nodemon) fo development and [pm2](https://www.npmjs.com/package/pm2) for public release.
 
 ### contact us
-we eager to read your ideas : bugreport.barang@gmail.com
+we r eager to read your ideas : bugreport.barang@gmail.com
