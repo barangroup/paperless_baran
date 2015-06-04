@@ -6,7 +6,7 @@ git clone https://github.com/barangroup/paperless_baran.git
 cd paperless_baran
 npm install
 bower install
-bower client/public
+bower install client/public
 ```
 
 Now u can run server :
