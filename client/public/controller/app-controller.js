@@ -434,13 +434,18 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
           $scope.isSending = true;
           $http.post("/edit_users", newUser)
           .success(function(data) {
-            $scope.toast.info("کاربر مورد نظر ویرایش گردید");
+            if(data.exists == true)
+              $scope.toast.info("شماره تلفن وارد شده در سیستم موجود است!");
+            else if(data.edit)
+              $scope.toast.info("کاربر مورد نظر ویرایش گردید");
+            else
+              $scope.toast.info("ویرایش نشد!");
             $scope.selectedUser = null;
             $scope.paging($scope.datatable.currentPage, true);
             $scope.isSending = false;
           })
           .error(function(data, code) {
-            $scope.toast.info("کاربر مورد نظر ویرایش گردید");
+            $scope.toast.info("خطا در ارتباط با سرور");
             $scope.isSending = false;
           });
         }
