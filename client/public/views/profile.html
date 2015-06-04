@@ -11,6 +11,7 @@
           <ul class="products-list product-list-in-box">
             <li class="item">
               <div class="product-info">
+              <img ng-src="{{user.avatar}}" class="pull-right img-circle" style=" margin-left:20px; border:solid 3px #E1E1E1" width="60" height="60">
                 <span class="product-title text-blue">نام و نام خانوادگی
                 </span>
                 <div class="pr-lg" ng-bind="getFullName(user)"></div>
@@ -42,14 +43,15 @@
                 <div class="input-group">
                   <span class="input-group-addon">کلمه عبور جدید</span>
                   <input class="form-control" id="password" type="password" name="password" ng-change="getPasswordStrength()" ng-model="userCopy.password"></input>
-                  <a href class="input-group-addon" ng-mousedown="showPassword('password');" ng-mouseup="hidePassword('password');"><i class="fa fa-eye"></i></a>
+                  <a href class="input-group-addon" ng-mouseenter="showPassword('password');" ng-mouseleave="hidePassword('password');"><i class="fa fa-eye"></i></a>
                 </div>
                 <div class="progress flat progress-sm progress-striped active">
                   <div class="progress-bar flat" ng-init="passwordStrength = 0" ng-class="{'progress-bar-danger': passwordStrength <= 30 , 'progress-bar-warning': passwordStrength <= 60 , 'progress-bar-success': passwordStrength > 60}" ng-style="{width: passwordStrength + '%'}">
                   </div>
                 </div>
               </div>
-              <div class="product-info input-group" ng-class="{'has-error' : userCopy.password != passwordRepeat}">
+              <!-- has bug in password repeat -->
+              <div class="product-info input-group" ng-class="{'has-error' : (userCopy.password != passwordRepeat && passwordRepeat != undefined)}">
                 <span class="input-group-addon">تکرار کلمه عبور</span>
                 <input class="form-control" type="password" name="passwordRepeat" ng-model="passwordRepeat"></input>
               </div>

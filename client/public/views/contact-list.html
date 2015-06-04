@@ -3,7 +3,7 @@
   <div class="col-lg-5">
     <div class="box box-solid">
       <div class="box-header with-border">
-        <h3 class="box-title"><i class="fa fa-group"></i> لیست اعضا</h3>
+        <h3 class="box-title"><i class="fa fa-list"></i> لیست اعضا</h3>
         <div class="pull-left">
           <div class="box-tools">
             <button type="button" class="btn btn-sm text-muted" ng-init="_show_search_box = false;" data-toggle="collapse" data-target="#SearchBox">
@@ -16,14 +16,19 @@
       <div class="box-body table-responsive no-padding" ng-cloak>
         <form name="searchBox" id="SearchBox" class="collapse" ng-submit="search()" style="background-color: #f9f9f9; padding: 5px;">
           <div class="input-group">
-            <input class="form-control" name="quick_search" type="text" placeholder="جستجو" ng-model="query.quick_search">
-            <div class="input-group-btn" ng-show="query.quick_search">
+            <input class="form-control" name="quick_search" type="text" placeholder="جستجوی سریع ..." ng-model="_query.quick_search">
+            <!-- <div class="input-group-btn" ng-show="query.quick_search">
               <button type="button" class="btn btn-default btn-flat" ng-click="clearSearch();"><i class="fa fa-times"></i></button>
-            </div>
+            </div> -->
             <div class="input-group-btn">
-              <button type="submit" data-toggle="tooltip" title="asd" class="btn btn-primary"><i class="fa fa-search"></i></button>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </div>
-            <!-- /btn-group -->
+          </div>
+          <div class="row margin pr-en">
+            <a class="col-lg-3 label label-warning margin" ng-repeat="(key, value) in query" href ng-click="RemoveCriteria(key)">{{value}}</a>
+          </div>
+          <div class="clearfix">
+            <a class="pull-left" href data-toggle="modal" data-target="#modal-search"><i class="fa fa-plus"></i>  جستجوی پیشرفته</a>
           </div>
         </form>
         <div class="text-gray margin text-center" ng-if="!users || users.length == 0">
@@ -52,11 +57,11 @@
           <div class="col-lg-6 col-md-4 col-xs-6">
             <div class="input-group">
               <span class="input-group-addon">تعداد لیست</span>
-            <select class="form-control" ng-change="paging(1,true)" ng-model="datatable.listSize">
-              <option ng-value="10">10</option>
-              <option ng-value="25">25</option>
-              <option ng-value="50">50</option>
-            </select>
+              <select class="form-control" ng-change="paging(1,true)" ng-model="datatable.listSize">
+                <option ng-value="10">10</option>
+                <option ng-value="25">25</option>
+                <option ng-value="50">50</option>
+              </select>
             </div>
           </div>
           <div class="col-lg-6 col-md-4 col-xs-6 pull-left">
@@ -82,255 +87,255 @@
     <div class="box box-solid" ng-cloak>
       <form name="myForm" ng-submit="editUser(selectedUser)">
         <div class="box-header with-border">
-          <h3 class="box-title">اطلاعات کاربر</h3>
+          <h3 class="box-title"><i class="fa fa-edit"></i>  اطلاعات کاربر</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
           <!-- Content -->
 
           <div ng-hide="!selectedUser" >
-            <h2>اطلاعات فردی</h2>
+            <fieldset ng-disabled="!canEdit">
 
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="input-group" ng-class="{'has-error' : myForm.first_name.$touched && myForm.first_name.$invalid}">
-                  <span class="input-group-addon text-blue">نام<small class="text-red"> *</small></span>
-                  <input type="text" class="form-control" name="first_name" ng-model="selectedUser.first_name" required ng-disabled="!canEdit">
+              <h2>اطلاعات فردی</h2>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="input-group" ng-class="{'has-error' : myForm.first_name.$touched && myForm.first_name.$invalid}">
+                    <span class="input-group-addon text-blue">نام<small class="text-red"> *</small></span>
+                    <input type="text" class="form-control" name="first_name" ng-model="selectedUser.first_name" required >
+                  </div>
+                </div>
+                <br class="hidden-lg">
+
+                <div class="col-lg-6">
+                  <div class="input-group" ng-class="{'has-error' : myForm.last_name.$touched && myForm.last_name.$invalid}">
+                    <span class="input-group-addon text-blue">نام خانوادگی<small class="text-red"> *</small></span>
+                    <input type="text" class="form-control" name="last_name" ng-model="selectedUser.last_name" required >
+                  </div>
                 </div>
               </div>
-              <br class="hidden-lg">
+              <br>
 
-              <div class="col-lg-6">
-                <div class="input-group" ng-class="{'has-error' : myForm.last_name.$touched && myForm.last_name.$invalid}">
-                  <span class="input-group-addon text-blue">نام خانوادگی<small class="text-red"> *</small></span>
-                  <input type="text" class="form-control" name="last_name" ng-model="selectedUser.last_name" required ng-disabled="!canEdit">
+              <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                  <div class="input-group">
+                    <label>
+                      <input type="radio" name="gender" ng-model="selectedUser.gender"  ng-value="true" >
+                      مرد
+                    </label>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                  <div class="input-group">
+                    <label>
+                      <input type="radio" name="gender" ng-model="selectedUser.gender" ng-value="" >
+                      زن
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <br>
+              <br>
 
-            <div class="row">
-              <div class="col-lg-3 col-sm-6">
-                <div class="input-group">
-                  <label>
-                    <input type="radio" name="gender" ng-model="selectedUser.gender"  ng-value="true" ng-disabled="!canEdit">
-                    مرد
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="input-group" ng-class="{'has-error' : myForm.mobile.$touched && myForm.mobile.$invalid}">
+                    <span class="input-group-addon text-blue">
+                      شماره همراه<small class="text-red"> *</small>
+                    </span>
+                    <input type="text" class="form-control pr-numb  text-left" name="mobile" ng-model="selectedUser.mobile"
+                    ng-pattern="/^09[0-9]{9}$/" placeholder="مثال: 09151234568"  required>
+                  </div>
+                </div>
+                <br class="hidden-lg">
+
+                <div class="col-lg-6">
+                  <div class="input-group" ng-class="{'has-error' : myForm.telephone_number.$touched && myForm.telephone_number.$invalid}">
+                    <span class="input-group-addon text-blue">
+                      تلفن ثابت
+                    </span>
+                    <input type="text" class="form-control pr-numb  text-left" name="telephone_number"
+                    ng-model="selectedUser.telephone_number" ng-pattern="/^0[0-9]{10}$/" placeholder="مثال: 05138471234" >
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="input-group" ng-class="{'has-error' : myForm.email.$invalid}">
+                <span class="input-group-addon text-blue">ایمیل</span>
+                <input type="email" class="form-control pr-en" name="email" ng-model="selectedUser.email" >
+              </div>
+              <br>
+              <h2>اطلاعات تحصیلی</h2>
+
+              <div class="input-group">
+                <span class="input-group-addon pr pr-sml text-blue">دانشگاه</span>
+                <input type="text" class="form-control pr pr-sml" name="university" ng-model="selectedUser.university" ng-disabled="selectedUser.sadjad_uni_student">
+                <span class="input-group-addon">
+                  <label class="pr-sml">
+                    <input type="checkbox" name="sadjad_student" ng-model="selectedUser.sadjad_uni_student"  ng-change="selectedUser.sadjad_uni_student ?  selectedUser.university = 'صنعتی سجاد' : selectedUser.university=''">
+                    صنعتی سجاد
                   </label>
-                </div>
+                </span>
               </div>
-              <div class="col-lg-3 col-sm-6">
-                <div class="input-group">
-                  <label>
-                    <input type="radio" name="gender" ng-model="selectedUser.gender" ng-value="" ng-disabled="!canEdit">
-                    زن
+
+              <br>
+
+              <div class="input-group">
+                <span class="input-group-addon text-blue">شماره دانشجویی</span>
+                <input type="text" class="form-control pr-numb" ng-model="selectedUser.student_number"
+                ng-disabled="selectedUser._free_of_edu" >
+                <span class="input-group-addon">
+                  <label >
+                    <input type="checkbox" name="_free_of_edu" ng-model="selectedUser._free_of_edu" >
+                    فارق التحصیل
                   </label>
+                </span>
+              </div>
+              <br>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="input-group">
+                    <span class="input-group-addon text-blue">رشته</span>
+                    <select class="form-control text-right" ng-model="selectedUser.major"
+                    ng-options="getMajorValue(major) as major.name group by major.group for major in majorsList" ></select>
+                  </div>
+                </div>
+                <br class="hidden-lg">
+                <div class="col-lg-6">
+                  <div class="input-group">
+                    <span class="input-group-addon text-blue">سال ورود به دانشگاه</span>
+                    <select class="form-control text-center" ng-model="selectedUser.entering_uni_year"
+                    ng-options="year for year in entryYear" >
+                  </select>
                 </div>
               </div>
+
             </div>
             <br>
-
-
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="input-group" ng-class="{'has-error' : myForm.mobile.$touched && myForm.mobile.$invalid}">
-                  <span class="input-group-addon text-blue">
-                    شماره همراه<small class="text-red"> *</small>
-                  </span>
-                  <input type="text" class="form-control pr-numb  text-left" name="mobile" ng-model="selectedUser.mobile"
-                  ng-pattern="/^09[0-9]{9}$/" placeholder="مثال: 09151234568" ng-disabled="!canEdit" required>
-                </div>
-              </div>
-              <br class="hidden-lg">
-
-              <div class="col-lg-6">
-                <div class="input-group" ng-class="{'has-error' : myForm.telephone_number.$touched && myForm.telephone_number.$invalid}">
-                  <span class="input-group-addon text-blue">
-                    تلفن ثابت
-                  </span>
-                  <input type="text" class="form-control pr-numb  text-left" name="telephone_number"
-                  ng-model="selectedUser.telephone_number" ng-pattern="/^0[0-9]{10}$/" placeholder="مثال: 05138471234" ng-disabled="!canEdit">
-                </div>
-              </div>
-            </div>
-            <br>
-            <div class="input-group" ng-class="{'has-error' : myForm.email.$invalid}">
-              <span class="input-group-addon text-blue">ایمیل</span>
-              <input type="email" class="form-control pr-en" name="email" ng-model="selectedUser.email" ng-disabled="!canEdit">
-            </div>
-            <br>
-            <h2>اطلاعات تحصیلی</h2>
 
             <div class="input-group">
-              <span class="input-group-addon text-blue">دانشگاه</span>
-              <input type="text" class="form-control" name="university" ng-model="selectedUser.university" ng-disabled="!canEdit">
+              <span class="input-group-addon text-blue">
+                شهر
+              </span>
+              <input type="text" class="form-control" name="city" ng-model="selectedUser.city"
+              ng-disabled="selectedUser.native">
               <span class="input-group-addon">
-                <label >
-                  <input type="checkbox" name="sadjad_student" ng-model="selectedUser.university" ng-true-value="'صنعتی سجاد'"
-                  ng-false-value="''" ng-disabled="!canEdit">
-                  دانشجوی دانشگاه صنعتی سجاد
+                <label>
+                  <input type="checkbox" name="native" ng-model="selectedUser.native"
+                  ng-change="selectedUser.native ?  selectedUser.city = 'مشهد' : selectedUser.city=''" >
+                  ساکن مشهد
                 </label>
               </span>
             </div>
-
             <br>
 
             <div class="input-group">
-              <span class="input-group-addon text-blue">شماره دانشجویی</span>
-              <input type="text" class="form-control pr-numb" ng-model="selectedUser.student_number"
-              ng-disabled="selectedUser._free_of_edu || !canEdit" >
-              <span class="input-group-addon">
-                <label >
-                  <input type="checkbox" name="_free_of_edu" ng-model="selectedUser._free_of_edu" ng-disabled="!canEdit">
-                  فارق التحصیل
-                </label>
+              <span class="input-group-addon text-blue">
+                آدرس
               </span>
+              <input type="text" class="form-control" name="address" ng-model="selectedUser.address" >
             </div>
             <br>
 
+            <div class="input-group" ng-class="{'has-error' : myForm.birth_date.$invalid}">
+              <span class="input-group-addon text-blue">تاریخ تولد</span>
+              <input type="text" class="form-control pr-numb datePicker" name="birth_date" placeholder="ماه/روز/سال" ng-model="selectedUser.birth_date" ng-pattern="/^1[3-4][0-9]{2}/[0-9]{1,2}/[0-9]{1,2}$/" >
+            </div>
+            <br>
+            <h2>اطلاعات گروه</h2>
+            <br>
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-4  col-md-4">
                 <div class="input-group">
-                  <span class="input-group-addon text-blue">رشته</span>
-                  <select class="form-control text-right" ng-model="selectedUser.major"
-                  ng-options="getMajorValue(major) as major.name group by major.group for major in majorsList" ng-disabled="!canEdit"></select>
+                  <label >
+                    <input type="checkbox" ng-model="selectedUser._visited"/ > فرم ثبت نام بررسی شده
+                  </label>
                 </div>
               </div>
-              <br class="hidden-lg">
-              <div class="col-lg-6">
+              <div class="col-lg-4  col-md-4">
                 <div class="input-group">
-                  <span class="input-group-addon text-blue">سال ورود به دانشگاه</span>
-                  <select class="form-control text-center" ng-model="selectedUser.entering_uni_year"
-                  ng-options="year for year in entryYear" ng-disabled="!canEdit">
-                </select>
+                  <label >
+                    <input type="checkbox" ng-model="selectedUser._justified"  /> توجیح شده
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-4  col-md-4">
+                <div class="input-group">
+                  <label >
+                    <input type="checkbox" ng-model="selectedUser._called"  /> تماس گرفته شده
+                  </label>
+                </div>
               </div>
             </div>
-
-          </div>
-          <br>
-          
-          <div class="input-group">
-            <span class="input-group-addon text-blue">
-              شهر
-            </span>
-            <input type="text" class="form-control" name="city" ng-model="selectedUser.city"
-            ng-disabled="selectedUser.native || !canEdit">
-            <span class="input-group-addon">
-              <label>
-                <input type="checkbox" name="native" ng-model="selectedUser.native"
-                ng-change="selectedUser.native ?  selectedUser.city = 'مشهد' : selectedUser.city=''" ng-disabled="!canEdit">
-                ساکن مشهد
-              </label>
-            </span>
-          </div>
-          <br>
-
-          <div class="input-group">
-            <span class="input-group-addon text-blue">
-              آدرس
-            </span>
-            <input type="text" class="form-control" name="address" ng-model="selectedUser.address" ng-disabled="!canEdit">
-          </div>
-          <br>
-
-          <div class="input-group" ng-class="{'has-error' : myForm.birth_date.$invalid}">
-            <span class="input-group-addon text-blue">تاریخ تولد</span>
-            <input type="text" class="form-control pr-numb datePicker" name="birth_date" placeholder="ماه/روز/سال" ng-model="selectedUser.birth_date" ng-pattern="/^1[3-4][0-9]{2}/[0-9]{1,2}/[0-9]{1,2}$/" ng-disabled="!canEdit">
-          </div>
-          <br>
-          <h2>اطلاعات گروه</h2>
-          <br>
-          <div class="row">
-            <div class="col-lg-4  col-md-4">
-              <div class="input-group">
-                <label >
-                  <input type="checkbox" ng-model="selectedUser._visited"/ ng-disabled="!canEdit"> فرم ثبت نام بررسی شده
-                </label>
+            <br>
+            <div class="row">
+              <div class="col-lg-4  col-md-4">
+                <div class="input-group">
+                  <label >
+                    <input type="checkbox" ng-model="selectedUser.have_job"  /> شاغل
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-4  col-md-4">
+                <div class="input-group">
+                  <label >
+                    <input type="checkbox" ng-model="selectedUser._active"  /> نیروی فعال
+                  </label>
+                </div>
               </div>
             </div>
-            <div class="col-lg-4  col-md-4">
-              <div class="input-group">
-                <label >
-                  <input type="checkbox" ng-model="selectedUser._justified" ng-disabled="!canEdit" /> توجیح شده
-                </label>
+            <!-- <h2>فعالیت ها</h2> -->
+            <h4>علاقه مند به تدریس در کدام مقطع(ها) می باشید.</h4>
+            <div class="form-group">
+              <select class="form-control" name="age_group_decide" ng-model="selectedUser.age_group_decide" ng-options="age for age in agesList"  multiple>
+              </select>
+            </div>
+            <p class="help-block">(برای انتخاب چند گزینه کلید Ctrl را نگهدارید)</p>
+            <br>
+            <h4>توانایی تدریس در کدام دروس را دارید؟</h4>
+            <div class="form-group">
+              <select class="form-control" name="lessons" ng-model="selectedUser.teaching_lessons" ng-options="lesson for lesson in lessonsList"  multiple>
+              </select>
+            </div>
+            <br>
+            <h2 class="help-block">مهارت</h2>
+            <div class="row">
+              <div class="col-lg-12">
+                <table class="table table-hover">
+                  <thead>
+                    <th>عنوان</th>
+                    <th width="60px">حذف</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="2" ng-if="!selectedUser.skills || selectedUser.skills.length == 0">
+                        هیچ مهارتی اضافه نشده.
+                      </td>
+                    </tr>
+                    <tr ng-repeat="skill in selectedUser.skills track by $index">
+                      <td>
+                        <input type="text" name="skill" class="form-control" ng-model="selectedUser.skills[$index]"  >
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger" ng-click="removeSkill(selectedUser,$index)" ><i class="fa fa-remove"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2">
+                        <button type="button" class="btn btn-default" ng-click="addSkill(selectedUser);" ng-hide="!canEdit">افزودن  <i class="fa fa-plus"></i></button>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
-            <div class="col-lg-4  col-md-4">
-              <div class="input-group">
-                <label >
-                  <input type="checkbox" ng-model="selectedUser._called" ng-disabled="!canEdit" /> تماس گرفته شده
-                </label>
-              </div>
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col-lg-4  col-md-4">
-              <div class="input-group">
-                <label >
-                  <input type="checkbox" ng-model="selectedUser.have_job" ng-disabled="!canEdit" /> شاغل
-                </label>
-              </div>
-            </div>
-            <div class="col-lg-4  col-md-4">
-              <div class="input-group">
-                <label >
-                  <input type="checkbox" ng-model="selectedUser._active" ng-disabled="!canEdit" /> نیروی فعال
-                </label>
-              </div>
-            </div>
-          </div>
-          <!-- <h2>فعالیت ها</h2> -->
-          <h4>علاقه مند به تدریس در کدام مقطع(ها) می باشید.</h4>
-          <div class="form-group">
-            <select class="form-control" name="age_group_decide" ng-model="selectedUser.age_group_decide" ng-options="age for age in agesList" ng-disabled="!canEdit" multiple>
-            </select>
-          </div>
-          <p class="help-block">(برای انتخاب چند گزینه کلید Ctrl را نگهدارید)</p>
-          <br>
-          <h4>توانایی تدریس در کدام دروس را دارید؟</h4>
-          <div class="form-group">
-            <select class="form-control" name="lessons" ng-model="selectedUser.teaching_lessons" ng-options="lesson for lesson in lessonsList" ng-disabled="!canEdit" multiple>
-            </select>
-          </div>
-          <br>
-          <h2 class="help-block">مهارت</h2>
-          <div class="row">
-            <div class="col-lg-12">
-              <table class="table table-hover">
-                <thead>
-                  <th>عنوان</th>
-                  <th width="60px">حذف</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td colspan="2" ng-if="!selectedUser.skills || selectedUser.skills.length == 0">
-                      هیچ مهارتی اضافه نشده.
-                    </td>
-                  </tr>
-                  <tr ng-repeat="skill in selectedUser.skills track by $index">
-                    <td>
-                      <input type="text" name="comment" class="form-control" ng-model="selectedUser.skills[$index]"  ng-disabled="!canEdit">
-                    </td>
-                    <td>
-                      <button type="button" class="btn btn-danger" ng-click="removeSkill(selectedUser,$index)" ng-disabled="!canEdit"><i class="fa fa-remove"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="2">
-                      <button type="button" class="btn btn-default" ng-click="addSkill(selectedUser);" ng-hide="!canEdit">افزودن  <i class="fa fa-plus"></i></button>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
-          <br>
-          <h2 class="help-block">توضیحات</h2>
-          <div class="row">
-            <div class="col-lg-12">
-              <table class="table table-hover">
+            <br>
+            <h2 class="help-block">توضیحات</h2>
+            <div class="row">
+              <div class="col-lg-12">
+                <table class="table table-hover">
                   <thead>
                     <th width="120px">نویسنده</th>
                     <th>عنوان</th>
@@ -349,7 +354,7 @@
                         <input type="text" name="comment" class="form-control" ng-model="comment.comment" ng-readonly="comment._writer">
                       </td>
                       <td>
-                        <button type="button" class="btn btn-danger" ng-click="removeComment(selectedUser,$index);" ng-disabled="comment._writer || !canEdit"><i class="fa fa-remove"></i></button>
+                        <button type="button" class="btn btn-danger" ng-click="removeComment(selectedUser,$index);" ng-disabled="comment._writer"><i class="fa fa-remove"></i></button>
                       </td>
                     </tr>
                   </tbody>
@@ -361,21 +366,17 @@
                     </tr>
                   </tfoot>
                 </table>
+              </div>
             </div>
-          </div>
-          <br>
-
+            <br>
+          </fieldset>
         </div>
-        <!-- /Content -->
 
-        <!-- Overlay View -->
         <div ng-show="!selectedUser" class="text-gray text-center">
           <h1><i class="fa fa-exclamation-circle text-blue"></i></h1>
           <h4>هیچ کاربری انتخاب نشده</h4>
         </div>
-        <!-- /Overlay View -->
       </div>
-      <!-- /.box-body -->
       <div class="box-footer" ng-if="canEdit && selectedUser">
         <div class="row">
           <div class="col-lg-3 col-md-3 col-xs-6">
@@ -390,12 +391,79 @@
 </div>
 </div>
 
+<div class="modal fade" id="modal-search" data-backdrop="static">
+  <div class="modal-dialog">
+    <form name="AdvanceSearchForm" role="form">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pull-left" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-times"></i></span>
+          </button>
+          <h4 class="modal-title">جستجوی پیشرفته</h4>
+        </div>
+        <div class="modal-body">
+          <p class="help-block">تنها مواردی که مقدار دارند جستجو میشوند.</p>
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <span>نام</span>
+              <input type="text" class="form-control" name="first_name" ng-model="_query.first_name">
+            </div>
+            <div class="form-group col-lg-6">
+              <span>نام خانوادگی</span>
+              <input type="text" class="form-control" name="last_name" ng-model="_query.last_name">
+            </div>
+            <div class="form-group col-lg-6">
+              <span>شماره همراه</span>
+              <input type="text" class="form-control" name="mobile" ng-model="_query.mobile">
+            </div>
+            <div class="form-group col-lg-6">
+              <span>ایمیل</span>
+              <input type="text" class="form-control pr-en" name="email" ng-model="_query.email">
+            </div>
+            <div class="form-group col-lg-6">
+              <span>دانشگاه</span>
+              <input type="text" class="form-control" name="university" ng-model="_query.university">
+            </div>
+            <div class="form-group col-lg-6">
+              <span>رشته</span>
+              <select class="form-control text-right" ng-model="_query.major"
+              ng-options="getMajorValue(major) as major.name group by major.group for major in majorsList"></select>
+            </div>
+            <div class="form-group col-lg-6">
+              <span>سال ورود به دانشگاه</span>
+              <select class="form-control text-center" ng-model="_query.entering_uni_year"
+              ng-options="year for year in entryYear"></select>
+            </div>
+            <div class="form-group col-lg-6">
+              <span>شهر</span>
+              <input type="text" class="form-control" name="city" ng-model="_query.city">
+            </div>
+            <div class="form-group col-lg-6">
+              <span>مهرات</span>
+              <input type="text" class="form-control" name="skill" ng-model="_query.skill">
+            </div>
+            <div class="form-group col-lg-6">
+              <span>توضیحات</span>
+              <input type="text" class="form-control" name="comment" ng-model="_query.comment">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">لغو</button>
+          <button type="submit" class="btn btn-primary" ng-click="search();" data-dismiss="modal">جستجو  <i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 <script type="text/javascript" src="plugins/persiandatepicker/scripts/jquery.ui.datepicker-cc.all.min.js"></script>
 
 <script type="text/javascript">
-var date = new Date();
-date.setYear(date.getYear() - 21);
-new Date()
+  var date = new Date();
+  date.setYear(date.getYear() - 21);
+  new Date()
   $('.datePicker').datepicker({
     dateFormat: 'yy/m/d',
     defaultDate: date,
@@ -406,5 +474,5 @@ new Date()
     showOtherMonths: true,
     selectOtherMonths: false
   });
-$(".dropdown-toggle").dropdown();
+  $(".dropdown-toggle").dropdown();
 </script>
