@@ -16,7 +16,7 @@ module.exports.post = function (req, res, next) {
         var user = String.remove_empty_data(req.body) ;
 
         if(user._id){
-            console.open(req.body);
+            // console.open(req.body);
             db.users.findOne({ _id : user._id },function(err,u){
                 if(err) console.log(err);
                 else if (u){
@@ -97,8 +97,9 @@ module.exports.post = function (req, res, next) {
 
                     if(user.mobile){
                         db.users.findOne({ mobile : String.enc_mobile(user.mobile) },function(err,exist){
+                            // console.log(req.user.mobile);
                             if(err) console.log(err);
-                            else if(exist){
+                            else if(exist && exist.mobile != u.mobile){
                                 res.json({ exists : true });
                             } else {
                                 u.mobile = String.enc_mobile(user.mobile) ;
