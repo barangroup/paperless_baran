@@ -65,8 +65,6 @@ module.exports.get = function (req, res) {
                                         }
                                     }
 
-//                                    console.log(loop.iteration());
-
                                     if(users[loop.iteration()]._comments){
                                         String.sync_for(users[loop.iteration()]._comments.length,function(comment_loop){
 
@@ -96,7 +94,6 @@ module.exports.get = function (req, res) {
                                     });
                                 },
                                 function () {
-//                                    console.open(users);
                                     res.json({ c: users.length, data: users});
                                 });
                         } else res.json({});
@@ -114,7 +111,6 @@ module.exports.get = function (req, res) {
 };
 
 module.exports.post = function (req, res, next) {
-
 
     // console.open(req.body);
 
@@ -161,9 +157,13 @@ module.exports.post = function (req, res, next) {
                     delete query.quick_search ;
                 }
 
+                if(query.mobile) query.mobile = String.enc_mobile(query.mobile);
+                if(query.first_name) query.first_name = new RegExp(query.first_name);
+                if(query.last_name) query.last_name = new RegExp(query.last_name);
+                if(query.city) query.city = new RegExp(query.city);
+
 
                 db.users.count(query,function(err,c){
-                    // console.log(c);
                     db.users.find(query, { __v: false, password: false})
                         .sort({ _id: -1 })
                         .populate({
@@ -216,7 +216,7 @@ module.exports.post = function (req, res, next) {
                     } else if (c) {
                         var r = { total_count: c } ;
                         if(_.includes(req.user._permissions, "edit_users")){
-                            r. can_edit = true ;
+                            r.can_edit = true ;
                         }
                         res.json(r);
                     }
