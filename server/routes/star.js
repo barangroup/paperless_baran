@@ -36,7 +36,6 @@ module.exports = (function () {
                     .populate("task").lean().exec(
                     function (err, user) {
                         if (user) {
-                            req.user = user;
                             user._permissions = [] ;
 
                             if( user.task && user.task.length > 0){
@@ -44,6 +43,7 @@ module.exports = (function () {
                                     user._permissions = Array.merge(user._permissions , t.permissions);
                                 });
                             }
+                            req.user = user;
                             next();
                         } else {
                             res.redirect('/del');

@@ -84,7 +84,7 @@ module.exports.post = function (req, res, next) {
                             u.save(function(err){
                                 if(err){
                                     console.log(err);
-                                    res.json({edit : false});
+                                    res.json( { edit : false } );
                                 } else res.json( { edit : true } );
                             });
                         }
@@ -114,8 +114,6 @@ module.exports.post = function (req, res, next) {
                     });
                 }
             }
-
-
         });
     }
 };
