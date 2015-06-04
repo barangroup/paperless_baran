@@ -81,12 +81,11 @@
         <h2>اطلاعات تحصیلی</h2>
         <div class="input-group">
           <span class="input-group-addon pr pr-sml text-blue">دانشگاه</span>
-          <input type="text" class="form-control pr pr-sml" name="university" ng-model="contact.university">
+          <input type="text" class="form-control pr pr-sml" name="university" ng-model="contact.university" ng-disabled="contact.sadjad_uni_student">
           <span class="input-group-addon">
             <label class="pr-sml">
-              <input type="checkbox" name="sadjad_student" ng-model="contact.university" ng-true-value="'صنعتی سجاد'"
-              ng-false-value="''">
-              دانشجوی دانشگاه صنعتی سجاد
+              <input type="checkbox" name="sadjad_student" ng-model="contact.sadjad_uni_student"  ng-change="contact.sadjad_uni_student ?  contact.university = 'صنعتی سجاد' : contact.university=''">
+              صنعتی سجاد
             </label>
           </span>
         </div>
@@ -272,7 +271,6 @@
       </div>
       <div ng-show="Deactive" class="overlay">
         <i class="fa fa-spinner fa-spin"></i>
-
       </div>
     </div>
   </form>

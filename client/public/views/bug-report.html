@@ -10,8 +10,7 @@
 						<label>
 							در کدام قسمت به مشکل برخوردید؟
 						</label>
-							<select class="form-control" ng-model="bug.section" ng-options="section.title for section in menus">
-							<option value="">سایر قسمتها</option>
+							<select class="form-control" ng-model="bug.section" ng-options="section.title as section.title for section in menus" required>
 							</select>
 					</div>
 					<div class="form-group">

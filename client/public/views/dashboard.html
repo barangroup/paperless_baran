@@ -1,32 +1,50 @@
-<div class="error-page clearfix">
-	<p class="headline text-yellow pr-en" style="font-size: 100px !important;"><img src="../dist/img/baran-logo-small.png" class="img-circle" style=" background-color:#fff; padding:5px; border: solid 1px #fff;"></p>
-	<div class="error-content pr">
-		<h3>بارانی عزیز <span class="text-orange">{{getFullName(user)}}</span></h3>
-		<h3>به سیستم مکانیزه <a href="http://barang.ir">گروه دانشجویی باران</a> خوش آمدید.</h3>
-		<ul>
-
-			<li>اگر با سیستم به مشکل برخوردید به <a href="#/faq">این صفحه</a> مراجعه نمایید.</li>
-			<li><a href="#/feedback">انتقادات و پیشنهادات</a> خودتان را با ما در میان بگذارید.</li>
-		</ul>
-	</div>
-</div>
-<br>
-<div class="row align-center" ng-if="quote" ng-cloak>
-	<div class="col-lg-2"></div>
-	<div class="col-lg-8">
+<div class="row" ng-cloak>
+	<div class="col-lg-8 col-md	-6">
 		<div class="box box-solid">
-			<div class="box-header with-border" ng-if="quote.title">
-				<p class="box-title"><i class="fa" ng-class="quote.icon"></i>	{{quote.title}}</p>
+			<div class="box-body">
+				<h3>سلام، <a href="#/profile" class="text-orange">{{getFullName(user)}}</a></h3>
+				<h3>به <abbr>سیستم مکانیزه <a href="http://barang.ir" target="_blank">گروه دانشجویی باران</a></abbr> خوش آمدید.</h3>
+				<ul>
+					<li>اگر با سیستم به مشکل برخوردید به <a href="#/faq">این صفحه</a> مراجعه نمایید.</li>
+					<li><a href="#/feedback">انتقادات و پیشنهادات</a> خودتان را با ما در میان بگذارید.</li>
+				</ul>
 			</div>
-			<div class="box-body clearfix">
-				<blockquote class="pull-right">
-					<p ng-bind-html="quote.text"></p>
-					<small ng-if="quote.author">{{quote.author}}</small>
-				</blockquote>
+		</div>
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<p class="box-title"><i class="fa fa-newspaper-o"></i>	اخبار باران</p>
+			</div>
+			<div class="box-body">
+				<i class="fa fa-gears"></i>	در حال راه اندازی
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
-	<div class="col-lg-6"></div>
+	<div class="col-lg-4 col-md-6">
+		<div class="small-box" ng-class="quote.style">
+			<div class="inner">
+				<h3>{{quote.title}}</h3>
+				<p>{{quote.text}}</p>
+			</div>
+			<a ng-href="{{quote.link}}" target="_blank" class="small-box-footer">
+				<i class="fa fa-arrow-circle-right"></i>	جزئیات بیشتر
+			</a>
+		</div>
+		<div class="box box-solid" ng-if="vote">
+			<form name="voteForm" ng-submit="sendVote()">
+				<div ng-if="vote.header" class="box-header with-border">
+					<h2 class="box-title"><i class="fa" ng-class="vote.header.icon"></i>	{{vote.header.title}}</h2>
+				</div>
+				<div class="box-body">
+					<p ng-bind="vote.question"></p>	
+					<div class="form-group">
+						<input class="form-control" type="text" ng-model="vote.answer" placeholder="پاسخ" required>
+					</div>
+				</div>
+				<div class="box-footer">
+					<button type="submit" class="btn btn-sm btn-warning" ng-disabled="voteForm.$invalid">ارسال	<i class="fa fa-send-o"></i></button>
+				</div>
+			</form>
+			<div class="overlay" ng-show="vote.isSending"><i class="fa fa-spinner fa-spin"></i></div>
+		</div>
+	</div>
 </div>
