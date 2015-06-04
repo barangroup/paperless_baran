@@ -19,4 +19,4 @@ it's recommended to use [nodemon](https://www.npmjs.com/package/nodemon) fo deve
 we r eager to read your ideas : bugreport.barang@gmail.com
 
 #### LICENSE
-(GPL3)[http://opensource.org/licenses/gpl-3.0.html]
+[GPL3](http://opensource.org/licenses/gpl-3.0.html)
