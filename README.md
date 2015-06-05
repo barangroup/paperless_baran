@@ -17,5 +17,11 @@ it's recommended to use [nodemon](https://www.npmjs.com/package/nodemon) fo deve
 ### contact us
 we r eager to read your ideas : bugreport.barang@gmail.com
 
+### release notes 
+https://github.com/barangroup/paperless_baran/wiki/release-notes
+
+#### TODO list
+https://github.com/barangroup/paperless_baran/wiki/TODO
+
 #### LICENSE
-[GPL3](http://opensource.org/licenses/gpl-3.0.html)
+GPL3 : http://www.gnu.org/licenses/gpl.txt
