@@ -24,6 +24,7 @@ db.tasks.count(function(err,c){
                 "see_all_woman_users_notification",
                 "users_report",
                 "add_dispatch" ,
+                "stations" ,
                 "see_all_dispatch",
                 "see_all_man_dispatch",
                 "see_all_woman_dispatch",
