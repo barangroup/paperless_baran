@@ -30,10 +30,6 @@ module.exports = (function () {
         }
         */
 
-        // temp
-        req.body.data = {} ;
-        req.body.data = req.body ;
-
         if(( _.includes(req.user._permissions, "root") || _.includes(req.user._permissions, "stations"))){
             if( req.body && req.body.type == "add" && req.body.data) {
                 var station = req.body ;
