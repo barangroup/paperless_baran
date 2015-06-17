@@ -2,7 +2,7 @@
 var db = require('mongo_schemas');
 var sms = require('send_sms');
 var _ = require('lodash');
-
+var send_sms = require('send_sms_log');
 
 module.exports = (function () {
     var _return = {};
@@ -26,7 +26,7 @@ module.exports = (function () {
         if(_.includes(req.user._permissions, "root") || _.includes(req.user._permissions, "sms_root")){
             console.open(req.body);
             var data = req.body ;
-            if(data.text && data.contacts){
+            if(data.text && data.contacts && (data.contacts.male || data.contacts.female)){
                 var query = {} ;
                 if(!(data.contacts.male && data.contacts.female)){
                     if(data.contacts.male){
@@ -41,7 +41,12 @@ module.exports = (function () {
                 db.users.find(query).lean().exec(function(err,users){
                     if(err) console.log(err);
                     else if (users){
-                        res.json({ send : false , count : users.length }); // not completed yet
+                        res.json({ send : false , count : users.length });
+                        console.log(req.user.first_name + " " + req.user.last_name + "send custom SMS -> " + users.length );
+                        console.log("text -> " + data.text);
+                        users.forEach(function (user) {
+                            send_sms({ text : data.text , to : String.dec_mobile(user.mobile)  },"sending");
+                        });
                     }
                 });
 
