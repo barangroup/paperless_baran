@@ -5,3 +5,4 @@ server/utils/removed_codes
 node_modules/
 client/public/plugins/
 client/public/lib/
+server/test/
