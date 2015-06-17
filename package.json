@@ -23,6 +23,7 @@
     "express": "~4.11.1",
     "jalaali-js": "^0.2.0",
     "lodash": "^3.6.0",
+    "mocha": "^2.2.5",
     "mongoose": "^3.8.24",
     "morgan": "~1.5.1",
     "request": "^2.53.0",
