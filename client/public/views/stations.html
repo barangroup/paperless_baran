@@ -1,0 +1,99 @@
+<div class="row">
+	<div class="col-lg-6">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h2 class="box-title"><i class="fa fa-building-o"></i>	مراکز</h2>
+			</div>
+			<div class="box-body">
+				<button data-toggle="modal" data-target="#AddStationModal">as</button>
+			</div>
+			<div class="overlay" ng-show="isSending"><i class="fa fa-spinner fa-spin"></i></div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="AddStationModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close pull-left" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+				</button>
+				<h2 class="modal-title"><i class="fa fa-edit"></i>	ثبت مرکز</h2>
+			</div>
+				<form class="form-horizontal" name="AddStationForm" ng-submit=SubmitStation()>
+			<div class="modal-body">
+					<div class="form-group" ng-class="{'has-error' : AddStationForm.station_name.$invalid}">
+						<label for="inputStationName" class="col-sm-2 control-label">نام مرکز<span class="text-red">*</span></label>
+						<div class="col-lg-8 col-sm-10">
+							<input type="text" name="station_name" ng-model="station.name" id="inputStationName" class="form-control" required="required" >
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : AddStationForm.address.$invalid}">
+						<label for="inputAddress" class="col-sm-2 control-label">آدرس<span class="text-red">*</span></label>
+						<div class="col-sm-10 col-lg-8">
+							<input type="text" name="address" ng-model="station.address" id="inputAddress" class="form-control" required="required">
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : !station.male && !station.female}">
+						<label class="col-sm-2 control-label">جنسیت<span class="text-red">*</span></label>
+						<label class="inine-checkbox col-lg-4 col-sm-5">
+							<input type="checkbox" ng-model="station.male">
+							پسر
+						</label>
+						<label class="inine-checkbox col-lg-4 col-sm-5">
+							<input type="checkbox" ng-model="station.female">
+							دختر
+						</label>
+					</div>
+					<div class="form-group">
+						<label for="inputAge_from" class="col-sm-2 control-label">رده سنی<span class="text-red">*</span> از</label>
+						<div class="col-sm-4 col-lg-3" ng-class="{'has-error' : AddStationForm.age_from.$invalid || station.age_from > station.age_to}">
+							<input type="number" ng-model="station.age_from" name="age_from" id="inputAge_from" class="form-control" min="1" max="70" step="1" required="required" >
+						</div>
+						<label for="inputAge_to" class="col-sm-2 control-label">تا</label>
+						<div class="col-sm-4 col-lg-3" ng-class="{'has-error' : AddStationForm.age_to.$invalid || station.age_from > station.age_to}">
+							<input type="number" ng-model="station.age_to" name="age_to" id="inputAge_to" class="form-control" min="1" max="70" step="1" required="required" >
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : AddStationForm.mobile.$invalid}">
+						<label for="inputMobile" class="col-sm-2 control-label">موبایل</label>
+						<div class="col-sm-10 col-lg-8">
+							<input type="text" name="mobile" id="inputMobile" class="form-control" ng-model="station.mobile_number" ng-pattern="/^09[0-9]{9}$/">
+						</div>
+					</div>
+					<table class="table table-hover">
+						<thead>
+							<th>شماره های تماس</th>
+							<th width="60px">حذف</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="2" ng-if="!station.phone_numbers || station.phone_numbers.length == 0">
+									هیچ شمارهای اضافه نشده.
+								</td>
+							</tr>
+							<tr ng-repeat="number in station.phone_numbers track by $index">
+								<td ng-class="{'has-error' : !station.phone_numbers[$index]}">
+									<input type="text" name="telephone_number" class="form-control" ng-model="station.phone_numbers[$index]" ng-pattern="/^0[0-9]{10}$/" placeholder="مثال: 05138471234">
+								</td>
+								<td>
+									<button type="button" class="btn btn-danger" ng-click="station.phone_numbers.splice($index,1)" ng-if="$index != 0"><i class="fa fa-remove"></i></button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+						<tr>
+							<td colspan="2">
+								<button type="button" class="btn btn-default" ng-click="station.phone_numbers.push('')">افزودن  <i class="fa fa-plus"></i></button>
+							</td>
+						</tr>
+						</tfoot>
+					</table>
+				</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default pull-left" data-dismiss="modal">بستن</button>
+			<button type="submit" class="btn btn-primary" ng-disabled="hasError()">ثبت	<i class="fa fa-save"></i></button>
+		</div>
+			</form>
+	</div>
+</div>
