@@ -85,7 +85,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     $scope.count = 0;
 
     $scope.toast = new function() {
-      this.startDestroyer = function(time) {$timeout(function() {$scope.alerts.shift(); }, time); }; this.info = function(message) {$scope.alerts.push({cssClass: "alert-info", description: message }); this.startDestroyer(2500); }; this.error = function(message) {$scope.alerts.push({cssClass: "alert-danger", description: message }); this.startDestroyer(2500); }; this.success = function(message) {$scope.alerts.push({cssClass: "alert-success", description: message }); this.startDestroyer(2500); };
+      this.startDestroyer = function(time) {$timeout(function() {$scope.alerts.shift(); }, time); }; this.info = function(message) {$scope.alerts.push({cssClass: "alert-info", description: message }); this.startDestroyer(2500); }; this.warning = function(message) {$scope.alerts.push({cssClass: "alert-warning", description: message }); this.startDestroyer(2500); }; this.error = function(message) {$scope.alerts.push({cssClass: "alert-danger", description: message }); this.startDestroyer(2500); }; this.success = function(message) {$scope.alerts.push({cssClass: "alert-success", description: message }); this.startDestroyer(2500); };
     };
 
     $http.post("/page_data")
@@ -655,6 +655,9 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 .controller('SubmitDispatchController', ['$scope', '$http', function ($scope, $http) {
 
 }])
+.controller('StationController', ['$scope', '$http', function ($scope, $http) {
+
+}])
 .controller('SendSmsController',['$scope', '$http', function ($scope, $http) {
 
   $scope.sms = {
@@ -679,9 +682,15 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     }
 
     $scope.sendSMS = function () {
-      $http.post("/send_sms", sms)
-      .success(function (data) {
 
+      if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
+          $scope.toast.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
+          return;
+      };
+
+      $http.post("/send_sms", $scope.sms)
+      .success(function (data) {
+        $scope.toast.success("پیام با موفقیت ارسال شد.");
       })
       .error( function (data, code) {
         $scope.toast.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
@@ -730,6 +739,11 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     templateUrl: 'views/submit-dispatch.html',
     controller: 'SubmitDispatchController'
           // redirectTo: '/under-construct'
+  })
+  .when('/stations', {
+    // templateUrl: 'views/stations.html',
+    // controller: 'StationController'
+          redirectTo: '/under-construct'
         })
   .when('/bug-report', {
     templateUrl: 'views/bug-report.html',
