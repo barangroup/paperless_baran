@@ -690,7 +690,10 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 
       $http.post("/send_sms", $scope.sms)
       .success(function (data) {
-        $scope.toast.success("پیام با موفقیت ارسال شد.");
+        if(data.send == true)
+          $scope.toast.success(data.count + " پیام با موفقیت ارسال شد.");
+        else
+          $scope.toast.error("خطا در ارسال");
       })
       .error( function (data, code) {
         $scope.toast.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
