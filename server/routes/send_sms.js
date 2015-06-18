@@ -43,7 +43,7 @@ module.exports = (function() {
                     if (err) console.log(err);
                     else if (users) {
                         res.json({
-                            send: false,
+                            send: true,
                             count: users.length
                         });
                         console.log(req.user.first_name + " " + req.user.last_name + "send custom SMS -> " + users.length);
