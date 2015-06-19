@@ -3,13 +3,12 @@
 var db = require('mongo_schemas'),
     CronJob = require('cron').CronJob;
     sms = require("send_sms");
-var logs = new CronJob('0 0 * * * *', function(){
+var logs = new CronJob('0 0 0 * * *', function(){
     update_sms_credit();
 });
 
 if(global.init.sms_credit_cron){
-    // todo : this was a bad Idea :|
-    // logs.start();
+    logs.start();
 }
 
 function update_sms_credit(){
@@ -27,3 +26,5 @@ function update_sms_credit(){
 
     });
 }
+
+// module.exports.update = update_sms_credit ;
