@@ -4,7 +4,7 @@
     "apikey": "XXXXXXXXXX",
     "sms_sender": "XXXXXXXXXX",
     "google_secret": "XXXXXXXXXX",
-    "outgo_sms": true,
+    "outgo_sms": false,
     "birthday_sms": true,
     "developer": true,
     "time_diffrence": 3,
@@ -15,7 +15,7 @@
     "mongo_logs_limit": 5000,
     "sms_credit_cron": false,
     "req_per_min": 60,
-    "income_sms" : true ,
+    "income_sms" : false ,
     "income_sms_loop_time": 10 ,
-    "domain" : "baran.kiaan.org"
+    "domain" : "-"
 }
