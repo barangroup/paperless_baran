@@ -18,13 +18,13 @@
 								مرکزی در لیست موجود نیست.
 							</td>
 						</tr>
-						<tr ng-repeat="user in users" ng-model="user" ng-click="selectUser(user)" ng-class="{'bg-blue' : user._id == selectedUser._id}">
-							<td>{{datatable.listSize * (datatable.currentPage - 1) + $index + 1}}</td>
-							<td>{{user.first_name + ' ' + user.last_name}}</td>
+						<tr ng-repeat="station in StationList" ng-model="station" ng-click="selectStation(station)" ng-class="{'bg-blue' : station._id == SelectedStation._id}">
+							<td>{{$index + 1}}</td>
+							<td>{{station.name}}</td>
 						</tr>
 					</tbody>
 					<tfoot>
-						<tr><td><button type="button" class="btn btn-default" ng-click="_type = 'add'; SelectedStation = DefaultStation() ">افزودن مرکز 	<i class="fa fa-plus-circle"></i></button></td></tr>
+						<tr><td colspan="2"><button type="button" class="btn btn-default" ng-click="_type = 'add'; SelectedStation = DefaultStation() ">افزودن مرکز 	<i class="fa fa-plus-circle"></i></button></td></tr>
 					</tfoot>
 				</table>
 			</div>
@@ -107,7 +107,7 @@
 					</table>
 				</div>
 				<div class="box-footer">
-					<button type="submit" class="btn btn-primary" ng-disabled="hasError()" ng-click="EditStaion(SelectedStation)" ng-if="_type=='edit'">ویرایش	<i class="fa fa-edit"></i></button>
+					<button type="submit" class="btn btn-primary" ng-disabled="hasError()" ng-click="EditStation(SelectedStation)" ng-if="_type=='edit'">ویرایش	<i class="fa fa-edit"></i></button>
 					<button type="submit" class="btn btn-primary" ng-disabled="hasError()" ng-click="AddStation(SelectedStation)" ng-if="_type=='add'">افزودن	<i class="fa fa-plus-circle"></i></button>
 					<button type="button" class="btn btn-danger" ng-click="SelectedStation = null	">لغو	<i class="fa fa-times"></i></button>
 				</div>
