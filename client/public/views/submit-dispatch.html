@@ -1,5 +1,11 @@
-<link type="text/css" href="plugins/persiandatepicker/styles/datepicker.css" rel="stylesheet" />
+<link type="text/css" href="bootstrap/persiandatepicker/styles/datepicker.css" rel="stylesheet" />
+<link type="text/css" href="bootstrap/Tokenize-2.4.1/jquery.tokenize.min.css" rel="stylesheet" />
+<link type="text/css" href="../bootstrap/loopj-jquery-tokeninput-201d2d1/styles/token-input.css" rel="stylesheet" />
+<link type="text/css" href="bootstrap/loopj-jquery-tokeninput-201d2d1/styles/token-input-baran.css" rel="stylesheet" />
 
+<style type="text/css">
+	.tokenize-sample { width: 100%; display: block; }
+</style>
 <div class="row">
 	<div class="col-lg-8">
 		<div class="box box-solid">
@@ -7,24 +13,48 @@
 				<h2 class="box-title"><i class="fa fa-calendar"></i>	ثبت اعزام</h2>
 			</div>
 			<form class="form-horizontal">
-				<div class="box-body">
+				<div class="box-body" ng-cloak>
 					<div class="form-group">
-						<label for="inputDate" class="col-sm-2 control-label">تاریخ:</label>
+						<label for="inputDate" class="col-sm-2 control-label">تاریخ</label>
 						<div class="col-lg-6 col-sm-10">
 							<input type="text" ng-model="dispatch.date" name="date" id="inputDate" class="form-control datePicker pr-numb" required="required" ng-pattern="/^1[3-4][0-9]{2}/[0-9]{1,2}/[0-9]{1,2}$/" placeholder="ماه/روز/سال" >
 						</div>
 					</div>
-					<h2>لیست هزینه ها</h2>
+					<div class="form-group">
+						<label for="inputMembers" class="col-sm-2 control-label">اعضا</label>
+						<div class="col-sm-10 col-lg-6">
+							<select id="tokenize" multiple="multiple" class="tokenize-sample">
+								<option value="1">مهران ارجمند</option>
+								<option value="2">الیاس قاسمی</option>
+								<option value="3">محمد مینویی</option>
+								<option value="4">امید ماهری</option>
+								<option value="5">سجاد حسین زاده</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputMembers" class="col-sm-2 control-label">اعضا</label>
+						<div class="col-sm-10 col-lg-6">
+							<input type="text" ng-model="test" name="members" id="inputMembers" class="form-control">
+						</div>
+					</div>
+					{{test}}
+					<div class="form-group">
+						<label for="inputDescription" class="col-sm-2 control-label">توضیحات</label>
+						<div class="col-sm-10 col-lg-6">
+							<textarea style="resize: vertical" class="form-control" rows="3"></textarea>
+						</div>
+					</div>
 					<table class="table table-hover">
 						<thead>
-							<th>عنوان</th>
+							<th>لیست هزینه ها</th>
 							<th width="150px">هزینه</th>
 							<th width="60px">حذف</th>
 						</thead>
 						<tbody>
 							<tr>
-								<td colspan="2" ng-if="!dispatch.costs || dispatch.costs.length == 0">
-									هیچ مهارتی اضافه نشده.
+								<td colspan="3" ng-if="!dispatch.costs || dispatch.costs.length == 0">
+									هزینه ای انجام نشده.
 								</td>
 							</tr>
 							<tr ng-repeat="cost in dispatch.costs track by $index">
@@ -41,13 +71,15 @@
 						</tbody>
 						<tfoot>
 							<tr>
-								<td colspan="2">
+								<td colspan="3">
 									<button type="button" class="btn btn-default" ng-click="dispatch.costs.push('')">افزودن  <i class="fa fa-plus"></i></button>
 								</td>
 							</tr>
 						</tfoot>
 					</table>
-
+				</div>
+				<div class="box-footer">
+					<button type="button" class="btn btn-success">ثبت	<i class="fa fa-save"></i></button>
 				</div>
 			</form>
 		</div>
@@ -55,7 +87,9 @@
 </div>
 
 
-<script type="text/javascript" src="plugins/persiandatepicker/scripts/jquery.ui.datepicker-cc.all.min.js"></script>
+<script type="text/javascript" src="bootstrap/persiandatepicker/scripts/jquery.ui.datepicker-cc.all.min.js"></script>
+<script type="text/javascript" src="bootstrap/Tokenize-2.4.1/jquery.tokenize.min.js"></script>
+<script type="text/javascript" src="bootstrap/loopj-jquery-tokeninput-201d2d1/src/jquery.tokeninput.min.js"></script>
 
 <script type="text/javascript">
 	var date = new Date();
@@ -71,4 +105,54 @@
 		showOtherMonths: true,
 		selectOtherMonths: false
 	});
+
+	$('#tokenize').tokenize({
+		datas: 'http://localhost:3030/users',
+		newElements: false,
+		nbDropdownElements: 5,
+		dataType: 'json',
+		placeholder:  'نام خانوادگی اعضا را بنویسید',
+		valueField: 'last_name',
+		textField: 'last_name',
+		debounce: 0,
+		onAddToken:  	function(value, text, e){toast.error(text)}
+	});
+
+		$("#inputMembers").tokenInput(
+
+			[{"_id":"553b6be6e92d78920188dda5","first_name":"محمد رضا","last_name":"خسروی","gender":true,"telephone_number":"05137587317","mobile":"09366443605","native":true,"city":"مشهد","university":"صنعتی سجاد","entering_uni_year":1391,"major":"مهندسی پزشکی","_visited":true,"_justified":true,"_called":true,"_creator":{"first_name":"سجاد","last_name":"حسین زاده"},"_task_history":[],"_comments":[],"teaching_lessons":[],"age_group_decide":["ابتدایی"],"task":[],"free_times":[],"sadjad_uni_student":true,"create_date":"1394/2/5","create_time":"14:59:46"},{"_id":"55362d69e92d78920188dd9d","first_name":"عاطفه","last_name":"تن زده پناه","telephone_number":"05137311155","mobile":"09370361249","_creator":{"first_name":"سجاد","last_name":"حسین زاده"},"_task_history":[],"_comments":[],"teaching_lessons":[],"age_group_decide":[],"task":[],"free_times":[],"create_date":"1394/2/1","create_time":"15:31:49"},{"_id":"552fa7fe17655bb20d5c5800","first_name":"احسان","last_name":"رسایی","gender":true,"email":"ehsan.rasaee@gmail.com","telephone_number":"05137685908","mobile":"09155011271","native":true,"city":"مشهد","university":"فردوسی","_free_of_edu":true,"major":"شیمی","entering_uni_year":1386,"_visited":true,"_justified":true,"_called":true,"have_job":true,"_creator":{"first_name":"سجاد","last_name":"حسین زاده"},"birth_date":"1361/1/1","_task_history":[],"_comments":[{"comment":"لینک شهرداری","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa7fe17655bb20d5c5807"},{"comment":"فرهنگی اشنا داره","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa7fe17655bb20d5c5806"},{"comment":"مالی میشه کمک کنه","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa7fe17655bb20d5c5805"},{"comment":"لینک دانشکده های دانشگاه فردوسی","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa7fe17655bb20d5c5804"},{"comment":"خیلی مشتاق هستش","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa7fe17655bb20d5c5803"},{"comment":"قرارشدبره کرامت","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa7fe17655bb20d5c5802"},{"comment":"خیلی نیرو خوب ومرتب واقا","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa7fe17655bb20d5c5801"}],"skills":["ورزشی"],"teaching_lessons":["زبان خارجه","ریاضیات","شیمی","فیزیک"],"age_group_decide":["ابتدایی","راهنمایی"],"task":[],"free_times":[],"create_date":"1394/1/27","create_time":"16:48:58"},{"_id":"552fa5dd17655bb20d5c57fb","first_name":"شهرزاد","last_name":"شریفی","email":"sh.sharifi95@gmail.com","mobile":"09399918138","native":true,"city":"مشهد","university":"صنعتی سجاد","major":"مهندسی-صنایع","entering_uni_year":1393,"_visited":true,"_justified":true,"_creator":{"first_name":"سجاد","last_name":"حسین زاده"},"_task_history":[],"_comments":[{"comment":"نیروی خوبی هستش","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa5dd17655bb20d5c57fe"},{"comment":"حتما پیگیری بشه برای اعزام","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa5dd17655bb20d5c57fd"},{"comment":"کاربشه برای مراسم","_writer":{"first_name":"سجاد","last_name":"حسین زاده"},"_id":"552fa5dd17655bb20d5c57fc"}],"skills":["ورزشی"],"teaching_lessons":["زبان خارجه","ریاضیات","شیمی"],"age_group_decide":["ابتدایی"],"task":[],"free_times":[],"_free_of_edu":true,"sadjad_uni_student":true,"create_date":"1394/1/27","create_time":"16:39:53"},{"_id":"552dfdc517655bb20d5c57ee","first_name":"فاطمه","last_name":"سلیمی","email":"fsbahar@gmail.com","mobile":"09399299360","native":true,"city":"مشهد","university":"صنعتی سجاد","_free_of_edu":true,"major":"کامپیوتر-نرم افزار","entering_uni_year":1391,"_visited":true,"_justified":true,"_called":true,"have_job":true,"_creator":{"first_name":"الیاس","last_name":"قاسمی"},"_task_history":[],"_comments":[{"comment":"درسشون تموم شده و تقریبا تمام روز ها عصر میتونن بیان","_writer":{"first_name":"الیاس","last_name":"قاسمی"},"_id":"552dfdc517655bb20d5c57f0"},{"comment":"با توجه به محدوده منزلشون مناسب برای رسالت و یا علی اصغر هستن","_writer":{"first_name":"الیاس","last_name":"قاسمی"},"_id":"552dfdc517655bb20d5c57ef"}],"skills":["فرهنگی میشناسن","خیر میشناسن","طراحی سایت","نویسندگی","نقاشی"],"teaching_lessons":["عربی","ریاضیات"],"age_group_decide":["ابتدایی","راهنمایی","دبیرستان"],"task":[],"free_times":[],"sadjad_uni_student":true,"create_date":"1394/1/26","create_time":"10:30:25"},{"_id":"552dfa6717655bb20d5c57ea","first_name":"امیر حسین","last_name":"بخشی زاده مهاجر","gender":true,"mobile":"09372925588","native":true,"city":"مشهد","university":"صنعتی سجاد","major":"مهندسی پزشکی","entering_uni_year":1393,"_visited":true,"_justified":true,"_creator":{"first_name":"الیاس","last_name":"قاسمی"},"birth_date":"1375/5/4","_task_history":[],"_comments":[{"comment":"احتمالا بفرستیمش کرامت توی گروه شنبه","_writer":{"first_name":"الیاس","last_name":"قاسمی"},"_id":"552dfa6717655bb20d5c57ec"},{"comment":"مشتاق و پسر خوبی هست","_writer":{"first_name":"الیاس","last_name":"قاسمی"},"_id":"552dfa6717655bb20d5c57eb"}],"skills":["چاپ و تکثیر","ورزشی"],"teaching_lessons":["ریاضیات","فیزیک"],"age_group_decide":["ابتدایی","راهنمایی","دبیرستان"],"task":[],"free_times":[],"sadjad_uni_student":true,"create_date":"1394/1/26","create_time":"10:16:03"},{"_id":"552de5e117655bb20d5c57e7","first_name":"ایمان","last_name":"محمودی","gender":true,"email":"imanmahmudi40@yahoo.com","mobile":"09156188797","native":true,"city":"مشهد","university":"صنعتی سجاد","major":"نقشه برداری","entering_uni_year":1392,"_creator":{"first_name":"محمود","last_name":"گلمکانی"},"birth_date":"1374/8/19","_task_history":[],"_comments":[],"skills":["روانشناسی کودک","مشاور مذهبی","مشاور تحصیلی","کلیپ","پوستر"],"teaching_lessons":["ریاضیات"],"age_group_decide":["ابتدایی","راهنمایی"],"task":[],"free_times":[],"sadjad_uni_student":true,"create_date":"1394/1/26","create_time":"08:48:29"},{"_id":"552de51f17655bb20d5c57e4","first_name":"جواد","last_name":"سلامتی","gender":true,"mobile":"09376194416","city":"شیروان","university":"صنعتی سجاد","major":"برق-مخابرات","entering_uni_year":1392,"have_job":true,"_creator":{"first_name":"محمود","last_name":"گلمکانی"},"birth_date":"1374/6/13","_task_history":[],"_comments":[{"comment":"سابقه همکاری با مرکزتوانبخشی شهرستان شیروان","_writer":{"first_name":"محمود","last_name":"گلمکانی"},"_id":"552de51f17655bb20d5c57e5"}],"skills":["آموزش امداد و نجات"],"teaching_lessons":["ریاضیات","فیزیک"],"age_group_decide":[],"task":[],"free_times":[],"sadjad_uni_student":true,"create_date":"1394/1/26","create_time":"08:45:15"},{"_id":"552de46b17655bb20d5c57e1","first_name":"رضا","last_name":"ابراهیمی","gender":true,"telephone_number":"05146123137","mobile":"09019662355","city":"چناران","university":"صنعتی سجاد","major":"مهندسی-عمران","entering_uni_year":1393,"_creator":{"first_name":"محمود","last_name":"گلمکانی"},"birth_date":"1375/1/5","_task_history":[],"_comments":[{"comment":"ورزشی","_writer":{"first_name":"محمود","last_name":"گلمکانی"},"_id":"552de46b17655bb20d5c57e2"}],"skills":["مشاور تحصیلی","نویسندگی"],"teaching_lessons":["زبان خارجه"],"age_group_decide":["ابتدایی","راهنمایی"],"task":[],"free_times":[],"sadjad_uni_student":true,"create_date":"1394/1/26","create_time":"08:42:15"},{"_id":"552de3cd17655bb20d5c57df","first_name":"علی","last_name":"پرهیزگار","gender":true,"native":true,"city":"مشهد","telephone_number":"05138789398","mobile":"09356670958","university":"صنعتی سجاد","major":"کامپیوتر-نرم افزار","entering_uni_year":1393,"_creator":{"first_name":"محمود","last_name":"گلمکانی"},"birth_date":"1375/4/9","_task_history":[],"_comments":[],"skills":["تئاتر","سرود","ورزشی"],"teaching_lessons":["زبان خارجه","ریاضیات"],"age_group_decide":["ابتدایی","راهنمایی"],"task":[],"free_times":[],"sadjad_uni_student":true,"create_date":"1394/1/26","create_time":"08:39:37"}]	
+
+			// [
+			//  {ide: 7, names: "Ruby"},
+			//  {ide: 11, names: "Python"},
+			//  {ide: 121, names: "Python"},
+			//  {ide: 13, names: "JavaScript"},
+			//  {ide: 17, names: "ActionScript"},
+			//  {ide: 19, names: "Scheme"},
+			//  {ide: 23, names: "Lisp"},
+			//  {ide: 29, names: "C#"},
+			//  {ide: 31, names: "Fortran"},
+			//  {ide: 37, names: "Visual Basic"},
+			//  {ide: 41, names: "C"},
+			//  {ide: 43, names: "C++"},
+			//  {ide: 47, names: "Java"} ]
+
+			, {
+				// method: 'GET',
+				// queryParam: 'q',
+                searchDelay: 0,
+                minChars: 1,
+                jsonContainer: null,
+                hintText: 'نام خانوادگی را وارد نمایید.',
+                noResultsText: 'چنین داده ای موجود نیست.',
+                searchingText: 'در حال جستجو <i class="fa fa-spinner fa-spin"></i>',	
+                theme: 'baran',
+                searchingText: 10,
+                // tokenDelimiter:'|',
+                tokenValue: 'last_name',
+                // deleteText:'حذف',
+                propertyToSearch: 'last_name',
+                preventDuplicates: true,
+                tokenLimit: null
+    });
 </script>
