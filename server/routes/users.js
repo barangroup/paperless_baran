@@ -42,7 +42,14 @@ module.exports.get = function(req, res) {
                         err: true
                     });
                 } else if (users) {
-                    res.json(users);
+                    var _res = [];
+                    users.forEach(function(user) {
+                        _res.push({
+                            _id: user._id,
+                            name: user.first_name + " " + user.last_name
+                        });
+                    });
+                    res.json(_res);
                 }
             });
 
