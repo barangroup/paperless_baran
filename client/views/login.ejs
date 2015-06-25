@@ -36,7 +36,9 @@
          <div class="form-group input-group has-feedback">
           <input type="password" id="password" tabindex="2" class="form-control" name="password" ng-model="user.password" placeholder="کلمه عبور" required/>
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          <a href class="input-group-addon" ng-mousedown="showPassword('password');" ng-mouseup="hidePassword('password')"><i class="fa fa-eye"></i></a>
+          <div class="input-group-btn">
+            <button type=button class="btn btn-default" ng-mousedown="showPassword('password');" ng-mouseup="hidePassword('password')"><i class="fa fa-eye"></i></a>
+          </div>
         </div>
 
         <div class="row">
@@ -63,7 +65,9 @@
           </div>
           <div class="modal-body">
             <ul>
-              <li>نام کابری شما، شماره تلفن همراه شماست. دقت کنید ساختار آن باید به شکل <span class="pr-numb">(-------09)</span> باشد.</li>
+              <li>نام کابری شما، شماره تلفن همراه شماست. دقت کنید ساختار آن باید به شکل <span class="pr-numb">(-------09)</span> باشد.
+              <p class="text-danger">دقت کنید که در هنگام ورود اعداد، زبان سیستم را انگلیسی کنید.</p>
+              </li>
               <li>دقت کنید کلمه عبورتان را صحیح وارد کرده باشید. با استفاده از کلید [<i class="fa fa-eye"></i>] آن را دوباره بررسی نمایید.</li>
               <h4>بازم رفع نشد؟!</h4>
               <li>با این ایمیل مشکل خودتان را در میان بگذارید: <a target="_blank" href="mailto:bugreport.barang@gmail.com" >bugreport.barang@gmail.com</a></li>
