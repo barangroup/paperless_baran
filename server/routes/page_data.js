@@ -89,7 +89,7 @@ module.exports.post = function (req, res) {
             _.includes(req.user._permissions , "birthday_sms")){
             a.menus.push({
                 "title" : "پیامک تولد",
-                "icon" : "fa-star-o",
+                "icon" : "fa-birthday-cake",
                 "link" : "#/birthday-sms"
             });
         }
@@ -99,6 +99,21 @@ module.exports.post = function (req, res) {
                 "title" : "ارسال پیامک",
                 "icon" : "fa-mobile",
                 "link" : "#/send-sms"
+            });
+        }
+        if(_.includes(req.user._permissions , "root")){
+            a.menus.push({
+                "title" : "ثبت مراکز",
+                "icon" : "fa-building-o",
+                "link" : "#/stations"
+            });
+        }
+
+        if(_.includes(req.user._permissions , "root")){
+            a.menus.push({
+                "title" : "ثبت اعزام",
+                "icon" : "fa-building-o",
+                "link" : "#/submit-dispatch"
             });
         }
     }
