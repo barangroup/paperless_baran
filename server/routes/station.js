@@ -7,17 +7,6 @@ module.exports = (function() {
 
     _return.get = function(req, res, next) {
         next();
-        // db.stations.find().populate({
-        //                 path: '_creator',
-        //                 select: 'first_name last_name -_id'
-        //             }).lean().exec(function(err,stations){
-        //                 if(err){
-        //                     console.log(err);
-        //                 } else if (stations){
-        //                     // todo : add persion date to each on
-        //                     res.json(stations);
-        //                 }
-        //         });
     };
 
     _return.post = function(req, res, next) {
@@ -57,6 +46,29 @@ module.exports = (function() {
                     } else if (stations) {
                         // todo : add persion date to each on
                         res.json(stations);
+                    }
+                });
+            } else if (req.body && req.body.type == "edit" && req.body.data) {
+                db.users.findOne({
+                    _id: req.body.data._id
+                }, function(err, staion) {
+                    if (err) {
+                        console.log(err);
+                    } else if (staion) {
+                        for (i in req.body.data) {
+                            staion[i] = req.body.data[i];
+                        }
+                        staion.save(function(err) {
+                            if (err) {
+                                res.json({
+                                    edit: false
+                                });
+                            } else {
+                                res.json({
+                                    edit: true
+                                });
+                            }
+                        });
                     }
                 });
             }
