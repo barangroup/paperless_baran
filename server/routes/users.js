@@ -66,7 +66,7 @@ module.exports.post = function(req, res, next) {
         var _root = _.includes(req.user._permissions, "root"),
             _see_all_women = _.includes(req.user._permissions, "see_all_woman_users"),
             _see_all_man = _.includes(req.user._permissions, "see_all_man_users"),
-            _see_all_users = (_see_all_man && _see_all_women),
+            _see_all_users = (_see_all_man && _see_all_women);
 
 
 

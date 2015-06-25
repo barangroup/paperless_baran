@@ -49,17 +49,19 @@ module.exports = (function() {
                     }
                 });
             } else if (req.body && req.body.type == "edit" && req.body.data) {
-                db.users.findOne({
+                db.stations.findOne({
                     _id: req.body.data._id
-                }, function(err, staion) {
+                }, function(err, station) {
                     if (err) {
                         console.log(err);
-                    } else if (staion) {
+                    } else if (station) {
                         for (i in req.body.data) {
-                            staion[i] = req.body.data[i];
+                            if(i.charAt(0) != "_")
+                                station[i] = req.body.data[i];
                         }
-                        staion.save(function(err) {
+                        station.save(function(err) {
                             if (err) {
+                                console.log(err);
                                 res.json({
                                     edit: false
                                 });
