@@ -111,7 +111,7 @@ module.exports.post = function(req, res) {
             _.includes(req.user._permissions, "add_dispatch")) {
             a.menus.push({
                 "title": "ثبت اعزام",
-                "icon": "fa-building-o",
+                "icon": "fa-bus",
                 "link": "#/submit-dispatch"
             });
         }
