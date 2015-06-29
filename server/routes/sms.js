@@ -10,7 +10,7 @@ module.exports = (function () {
             db.income_sms_archive
             .find({},{ _id : false })
             .populate({
-                path: '_writer',
+                path: '_owner',
                 select: 'first_name last_name -_id'
             })
             .lean()
