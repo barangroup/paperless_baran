@@ -18,7 +18,7 @@ module.exports = (function() {
         }
         */
 
-        console.open(req.body);
+        // console.open(req.body);
         if ((_.includes(req.user._permissions, "root") || _.includes(req.user._permissions, "stations"))) {
             if (req.body && req.body.type == "add" && req.body.data) {
                 var station = req.body.data;
@@ -33,7 +33,9 @@ module.exports = (function() {
                         res.json({
                             add: true,
                             data: data
-                        })
+                        });
+                        console.log(req.user.first_name + " " + req.user.last_name + " add a new station -> " +
+                            data.name);
                     }
                 });
             } else if (req.body && req.body.type == "list") {
@@ -56,7 +58,7 @@ module.exports = (function() {
                         console.log(err);
                     } else if (station) {
                         for (i in req.body.data) {
-                            if(i.charAt(0) != "_")
+                            if (i.charAt(0) != "_")
                                 station[i] = req.body.data[i];
                         }
                         station.save(function(err) {
@@ -69,6 +71,7 @@ module.exports = (function() {
                                 res.json({
                                     edit: true
                                 });
+                                console.log(req.user.first_name + " " + req.user.last_name + " edit a station.");
                             }
                         });
                     }
