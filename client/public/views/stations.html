@@ -24,7 +24,7 @@
 						</tr>
 					</tbody>
 					<tfoot>
-						<tr><td colspan="2"><button type="button" class="btn btn-default" ng-click="_type = 'add'; SelectedStation = DefaultStation() ">افزودن مرکز 	<i class="fa fa-plus-circle"></i></button></td></tr>
+						<tr><td colspan="2"><button type="button" class="btn btn-default" ng-click="_type = 'add'; SelectedStation = DefaultStation(); AddStationForm.$setPristine()">افزودن مرکز 	<i class="fa fa-plus-circle"></i></button></td></tr>
 					</tfoot>
 				</table>
 			</div>
@@ -38,48 +38,48 @@
 			</div>
 			<form class="form-horizontal" name="AddStationForm">
 				<div class="box-body">
-					<div class="form-group" ng-class="{'has-error' : AddStationForm.station_name.$invalid}">
-						<label for="inputStationName" class="col-sm-2 control-label">نام مرکز<span class="text-red">*</span></label>
+					<div class="form-group" ng-class="{'has-error' : AddStationForm.station_name.$dirty && AddStationForm.station_name.$invalid}">
+						<label for="inputStationName" class="col-sm-2 control-label">نام مرکز  <i class="fa fa-asterisk text-red"></i></label>
 						<div class="col-lg-8 col-sm-10">
 							<input type="text" name="station_name" ng-model="SelectedStation.name" id="inputStationName" class="form-control" required="required" >
 						</div>
 					</div>
-					<div class="form-group" ng-class="{'has-error' : AddStationForm.address.$invalid}">
-						<label for="inputAddress" class="col-sm-2 control-label">آدرس<span class="text-red">*</span></label>
+					<div class="form-group" ng-class="{'has-error' : AddStationForm.address.$dirty && AddStationForm.address.$invalid}">
+						<label for="inputAddress" class="col-sm-2 control-label">آدرس  <i class="fa fa-asterisk text-red"></i></label>
 						<div class="col-sm-10 col-lg-8">
 							<input type="text" name="address" ng-model="SelectedStation.address" id="inputAddress" class="form-control" required="required">
 						</div>
 					</div>
-					<div class="form-group" ng-class="{'has-error' : !SelectedStation.male && !SelectedStation.female}">
-						<label class="col-sm-2 control-label">جنسیت<span class="text-red">*</span></label>
+					<div class="form-group" ng-class="{'has-error' : (AddStationForm.female.$dirty ||  AddStationForm.male.$dirty) && (!SelectedStation.male && !SelectedStation.female)}">
+						<label class="col-sm-2 control-label">جنسیت <i class="fa fa-asterisk text-red"></i></label>
 						<label class="inine-checkbox col-lg-4 col-sm-5">
-							<input type="checkbox" ng-model="SelectedStation.male">
+							<input type="checkbox" name="male" ng-model="SelectedStation.male">
 							پسر
 						</label>
 						<label class="inine-checkbox col-lg-4 col-sm-5">
-							<input type="checkbox" ng-model="SelectedStation.female">
+							<input type="checkbox" name="female" ng-model="SelectedStation.female">
 							دختر
 						</label>
 					</div>
 					<div class="form-group">
-						<label for="inputAge_from" class="col-sm-2 control-label">رده سنی<span class="text-red">*</span> از</label>
-						<div class="col-sm-4 col-lg-3" ng-class="{'has-error' : AddStationForm.age_from.$invalid || SelectedStation.age_from > SelectedStation.age_to}">
+						<label for="inputAge_from" class="col-sm-2 control-label">رده سنی  <i class="fa fa-asterisk text-red"></i> از</label>
+						<div class="col-sm-4 col-lg-3" ng-class="{'has-error' : AddStationForm.age_from.$dirty && AddStationForm.age_from.$invalid || SelectedStation.age_from > SelectedStation.age_to}">
 							<input type="number" ng-model="SelectedStation.age_from" name="age_from" id="inputAge_from" class="form-control" min="1" max="70" step="1" required="required" >
 						</div>
 						<label for="inputAge_to" class="col-sm-2 control-label">تا</label>
-						<div class="col-sm-4 col-lg-3" ng-class="{'has-error' : AddStationForm.age_to.$invalid || SelectedStation.age_from > SelectedStation.age_to}">
+						<div class="col-sm-4 col-lg-3" ng-class="{'has-error' : AddStationForm.age_to.$dirty && AddStationForm.age_to.$invalid || SelectedStation.age_from > SelectedStation.age_to}">
 							<input type="number" ng-model="SelectedStation.age_to" name="age_to" id="inputAge_to" class="form-control" min="1" max="70" step="1" required="required" >
 						</div>
 					</div>
 					<div class="form-group" ng-class="{'has-error' : AddStationForm.mobile.$invalid}">
 						<label for="inputMobile" class="col-sm-2 control-label">موبایل</label>
 						<div class="col-sm-10 col-lg-8">
-							<input type="text" name="mobile" id="inputMobile" class="form-control" ng-model="SelectedStation.mobile_number" ng-pattern="/^09[0-9]{9}$/">
+							<input type="text" name="mobile" id="inputMobile" class="form-control" ng-model="SelectedStation.mobile_number" ng-pattern="/^09[0-9]{9}$/" placeholder="مثال: 09151234568">
 						</div>
 					</div>
 					<table class="table table-hover">
 						<thead>
-							<th>شماره های تماس</th>
+							<th>شماره های تماس <i class="fa fa-asterisk text-red"></i></th>
 							<th width="60px">حذف</th>
 						</thead>
 						<tbody>
@@ -89,7 +89,7 @@
 								</td>
 							</tr>
 							<tr ng-repeat="number in SelectedStation.phone_numbers track by $index">
-								<td ng-class="{'has-error' : !SelectedStation.phone_numbers[$index]}">
+								<td ng-class="{'has-error' : SelectedStation.phone_numbers[$index] == null}">
 									<input type="text" name="telephone_number" class="form-control" ng-model="SelectedStation.phone_numbers[$index]" ng-pattern="/^0[0-9]{10}$/" placeholder="مثال: 05138471234" required>
 								</td>
 								<td>
@@ -109,7 +109,7 @@
 				<div class="box-footer">
 					<button type="submit" class="btn btn-primary" ng-disabled="hasError()" ng-click="EditStation(SelectedStation)" ng-if="_type=='edit'">ویرایش	<i class="fa fa-edit"></i></button>
 					<button type="submit" class="btn btn-primary" ng-disabled="hasError()" ng-click="AddStation(SelectedStation)" ng-if="_type=='add'">افزودن	<i class="fa fa-plus-circle"></i></button>
-					<button type="button" class="btn btn-danger" ng-click="SelectedStation = null	">لغو	<i class="fa fa-times"></i></button>
+					<button type="button" class="btn btn-danger" ng-click="SelectedStation = null;AddStationForm.$setPristine()">لغو	<i class="fa fa-times"></i></button>
 				</div>
 			</form>
 			<div class="overlay" ng-show="isSending"><i class="fa fa-spinner fa-spin"></i></div>

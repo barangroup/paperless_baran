@@ -1,13 +1,11 @@
 /*!
-*   BaranGroup System v0.0.13
+*   BaranGroup System v0.0.16
 *   Author: Mehran Arjmand & Elyas Ghasemi
 *   Website: Baran Group <http://barang.ir>
 *   License: Open source - GNU
 !*/
 
-
 function setBirthDate(user) {
-
   if (user.birth_date) {
     var date = user.birth_date;
     date = date.split("/");
@@ -57,8 +55,6 @@ function getGravatar (email) {
 var app = angular.module('Baran', ['ngRoute']);
 app.controller('MainController', ['$scope', '$http', '$location', '$timeout', function($scope, $http, $location, $timeout) {
 
-
-
     // Static params
 
     $scope.majorsList = [{"name": "نرم افزار", "group": "کامپیوتر"}, {"name": "سخت افزار", "group": "کامپیوتر"}, {"name": "آی تی", "group": "کامپیوتر"}, {"name": "کاردانی", "group": "کامپیوتر"}, {"name": "قدرت", "group": "برق"}, {"name": "الکترونیک", "group": "برق"}, {"name": "کنترل", "group": "برق"}, {"name": "مخابرات", "group": "برق"}, {"name": "مهندسی پزشکی", "group": "مهندسی"}, {"name": "عمران", "group": "مهندسی"}, {"name": "مکانیک", "group": "مهندسی"}, {"name": "صنایع", "group": "مهندسی"}, {"name": "مواد", "group": "مهندسی"}, {"name": "نقشه برداری", "group": ""}, {"name": "شیمی", "group": ""}, {"name": "نقاشی", "group": ""}, {"name": "گرافیک", "group": ""}, {"name": "عکاسی", "group": ""}, {"name": "ادبیات فارسی", "group": ""}, {"name": "الهیات", "group": ""}, {"name": "حقوق", "group": ""}, {"name": "حسابداری", "group": ""}, {"name": "دندانپزشکی", "group": ""}, {"name": "فن آوری اطلاعات سلامت", "group": ""}]; $scope.lessonsList = ["عربی", "فلسفه", "زیست شناسی", "زبان خارجه", "معماری", "ریاضیات", "شیمی", "فیزیک", "گرافیک", "حسابداری"];
@@ -94,9 +90,9 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
         // $scope.user.avatar = getGravatar($scope.user.email);
         $scope.messages = $json.messages;
         $scope.menus = $json.menus;
+        $scope.notifications = $json.notifications;
         $scope.page = $json.page;
         $scope.version = $json.version;
-
       })
     .error(function($data, $status) {
       $scope.toast.error('error!\nError Code' + $status);
@@ -123,7 +119,11 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     }
 
     $scope.getMessageTitle = function() {
-      return $scope.messages.length > 0 ? 'شما ' + $scope.messages.length + ' پیام جدید دارید' : 'پیام جدیدی وجود ندارد.';
+      return $scope.messages && $scope.messages.length > 0 ? 'شما ' + $scope.messages.length + ' پیام جدید دارید' : 'پیام جدیدی وجود ندارد.';
+    }
+
+    $scope.getNotificationTitle = function() {
+      return $scope.notifications && $scope.notifications.length > 0 ? $scope.notifications.length + ' اعلامیه' : 'اعلامیه ای وجود ندارد.';
     }
 
   }])
@@ -227,7 +227,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
       setBirthDate(newuser);
 
         ///////////////////////////
-
+        trimArray(newuser.skills);
         $scope.isSending = true;
         $http.post("/my_data", newuser)
         .success(function(data) {
@@ -654,8 +654,138 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 }])
 .controller('SubmitDispatchController', ['$scope', '$http', function ($scope, $http) {
 
+  $scope.DefaultDispatch = function () {
+    return {
+      costs:[]
+    }
+  }
+  $scope.isLoading = true;
+  $http.get('/new_dispatch')
+  .success(function (data) {
+    $scope.isLoading = false;
+    $scope.Stations = data.stations;
+  })
+  .error(function (data, code) {
+    $scope.isLoading = false;
+    $scope.toast.error('خطا رد دریافت لیست مراکز');
+  });
+
+  $scope.SendDispatch = function () {
+    if ($scope.hasError()) {
+      return;
+    };
+
+    trimArray($scope.dispatch.costs,'costs');
+    $scope.isSending = true;
+    $http.post('/new_dispatch', $scope.dispatch)
+    .success(function (data) {
+      $scope.isSending = false;
+      $scope.dispatch = $scope.DefaultDispatchps();
+      $scope.toast.success('ثبت اعزام موفقی آمیز بود.');
+    })
+    .error(function (data, code) {
+      $scope.isSending = false;
+      $scope.toast.error('خطا ثبت اعزام.');
+    });
+  }
+
+  $scope.hasError = function () {
+    return $scope.SubmitDispatchForm.$invalid;
+  }  
+
+  $scope.dispatch = $scope.DefaultDispatch();
+
 }])
 .controller('StationController', ['$scope', '$http', function ($scope, $http) {
+  $scope.DefaultStation = function () {
+    return {
+      phone_numbers:[""]
+    }
+  }
+
+
+  $scope.GetStations = function () {
+    $scope.isLoading = true;
+
+    $http.post("/station",{type:'list'})
+    .success(function (data) {
+      $scope.isLoading = false;
+      $scope.StationList = data;
+    })
+    .error(function (data, code) {
+      $scope.isLoading = false;
+      $scope.toast.error("خطا در دریافت لیست مراکز")
+    });
+  }
+
+  $scope.AddStation = function (station) {
+
+    if (hasError()) {
+      return;
+    };
+
+    trimArray(station.phone_numbers);
+
+    $scope.isSending = true;
+
+    $http.post("/station",{type:'add',data: station})
+    .success(function (data) {
+
+      $scope.isSending = false;
+      if (data.add) {
+        $scope.StationList.push(data.data);
+        $scope.toast.success("مرکز با موفقیت اضافه شد.");
+        $scope.SelectedStation = null;
+      }else{
+        $scope.toast.error("خطا در ذخیره اطلاعات مرکز.")  
+      };
+    })
+    .error(function (data, code) {
+      $scope.isSending = false;
+      $scope.toast.error("خطا در ذخیره اطلاعات مرکز.")
+    });
+  }
+
+  $scope.EditStation = function (station) {
+
+    if (hasError()) {
+      return;
+    };
+
+    trimArray(station.phone_numbers);
+    $scope.isSending = true;
+
+    $http.post("/station",{type:'edit',data: station})
+    .success(function (data) {
+
+      $scope.isSending = false;
+      if (data.add) {
+        station = data.data;
+        $scope.toast.success("مرکز با موفقیت ویرایش شد.");
+        $scope.SelectedStation = null;
+      }else{
+        $scope.toast.error("خطا در ویرایش مرکز.")  
+      };
+    })
+    .error(function (data, code) {
+      $scope.isSending = false;
+      $scope.toast.error("خطا در ویرایش مرکز.")
+    });
+  }
+
+  $scope.selectStation = function (station) {
+    if ($scope.SelectedStation == null || $scope.SelectedStation._id != station._id) {
+      $scope.SelectedStation = angular.copy(station);
+      $scope._type = 'edit';
+      $scope.AddStationForm.$setPristine();
+    }
+  }
+
+  $scope.hasError = function () {
+    return ($scope.AddStationForm.$invalid || (!$scope.SelectedStation.male && !$scope.SelectedStation.female) || $scope.SelectedStation.age_from > $scope.SelectedStation.age_to && !$scope.SelectedStation.phone_numbers[0])
+  }
+
+  $scope.GetStations();
 
 }])
 .controller('SendSmsController',['$scope', '$http', function ($scope, $http) {
@@ -684,8 +814,8 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     $scope.sendSMS = function () {
 
       if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
-          $scope.toast.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
-          return;
+        $scope.toast.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
+        return;
       };
 
       $http.post("/send_sms", $scope.sms)
@@ -742,11 +872,11 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     templateUrl: 'views/submit-dispatch.html',
     controller: 'SubmitDispatchController'
           // redirectTo: '/under-construct'
-  })
+        })
   .when('/stations', {
-    // templateUrl: 'views/stations.html',
-    // controller: 'StationController'
-          redirectTo: '/under-construct'
+    templateUrl: 'views/stations.html',
+    controller: 'StationController'
+          // redirectTo: '/under-construct'
         })
   .when('/bug-report', {
     templateUrl: 'views/bug-report.html',
@@ -772,3 +902,13 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     redirectTo: '/404'
   });
 }]);
+
+var dictionary = {
+
+  getStatusColor: function (status) {
+      return 'text-'+status;
+    },
+    toPersian : function (word){
+
+    }
+  }
