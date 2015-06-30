@@ -17,7 +17,7 @@ module.exports = (function () {
         //-----------------------------------------------------------------------
         if(data["task"] == "login"){
             if(data.username && data.password){
-                db.mali.findOne(
+                db.mali_api.findOne(
                     { username : data.username },
                     { password : true ,_id : false }).lean().exec(function(err,user){
                         if(err) {
@@ -41,7 +41,7 @@ module.exports = (function () {
 
             console.log("mali_api -> try to register");
             if(data.username && data.password){
-                db.mali.findOne({ username : data.username },{ _id : true })
+                db.mali_api.findOne({ username : data.username },{ _id : true })
                     .lean().exec(function(err,user){
                         if(err) {
                             res.send("error");
@@ -50,7 +50,7 @@ module.exports = (function () {
                             console.log("mali_api -> user exists");
                             res.send("");
                         } else {
-                            db.mali.count(function(err,c){
+                            db.mali_api.count(function(err,c){
                                 if(err) {
                                     res.send("error");
                                     console.log(err);
@@ -58,7 +58,7 @@ module.exports = (function () {
                                 else if( c < 500 ) { // limit size of registration on 500 !
                                     enc.hash(data.password,function(hash){
                                         data.password = hash ;
-                                        new db.mali(data).save(function(err){
+                                        new db.mali_api(data).save(function(err){
                                             if(err) {
                                                 res.send("error");
                                                 console.log('mali_api -> error in saving');
@@ -79,7 +79,7 @@ module.exports = (function () {
         //-----------------------------------------------------------------------
         else if (data["task"] == "get_data"){
             if(data.username){
-                db.mali.findOne({ username : data.username },
+                db.mali_api.findOne({ username : data.username },
                     { _id : false ,password : false , __v : false })
                     .lean().exec(function(err,user){
                         if(err) {
@@ -94,7 +94,7 @@ module.exports = (function () {
         //-----------------------------------------------------------------------
         else if (data["task"] == "update"){
             if( data.username ){
-                db.mali.findOne({ username : data.username },function(err,user){
+                db.mali_api.findOne({ username : data.username },function(err,user){
                     if(data.name) user.name = data.name ;
                     if(data.family) user.family = data.family ;
                     if(data.age) user.age = data.age ;
