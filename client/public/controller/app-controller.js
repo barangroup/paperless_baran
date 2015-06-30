@@ -675,7 +675,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
       return;
     };
 
-    trimArray($scope.dispatch.costs,'costs');
+    trimArray($scope.dispatch.costs,'cost');
     $scope.isSending = true;
     $http.post('/new_dispatch', $scope.dispatch)
     .success(function (data) {
@@ -720,7 +720,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 
   $scope.AddStation = function (station) {
 
-    if (hasError()) {
+    if ($scope.hasError()) {
       return;
     };
 
@@ -748,7 +748,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 
   $scope.EditStation = function (station) {
 
-    if (hasError()) {
+    if ($scope.hasError()) {
       return;
     };
 

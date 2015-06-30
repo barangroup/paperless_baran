@@ -34,7 +34,7 @@
 					<div class="form-group">
 						<label for="inputDescription" class="col-sm-2 control-label">توضیحات</label>
 						<div class="col-sm-10 col-lg-6">
-							<textarea style="resize: vertical" class="form-control" rows="3"></textarea>
+							<textarea ng-model="dispatch.comment" style="resize: vertical" class="form-control" rows="3"></textarea>
 						</div>
 					</div>
 					<table class="table table-hover">
@@ -54,7 +54,7 @@
 									<input type="text" name="purpose" class="form-control" ng-model="dispatch.costs[$index].comment"  >
 								</td>
 								<td ng-class="{'has-error' : dispatch.costs[$index].cost == null}">
-									<input type="number" name="cost" class="form-control pr-numb" ng-model="dispatch.costs[$index].cost" min="0" step="1000" >
+									<input type="number" name="cost" class="form-control pr-numb" ng-model="dispatch.costs[$index].cost" min="0" step="100" >
 								</td>
 								<td>
 									<button type="button" class="btn btn-danger" ng-click="dispatch.costs.splice($index,1)" ><i class="fa fa-remove"></i></button>
