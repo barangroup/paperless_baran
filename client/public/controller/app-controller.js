@@ -680,7 +680,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     $http.post('/new_dispatch', $scope.dispatch)
     .success(function (data) {
       $scope.isSending = false;
-      $scope.dispatch = $scope.DefaultDispatchps();
+      $scope.dispatch = $scope.DefaultDispatch();
       $scope.toast.success('ثبت اعزام موفقی آمیز بود.');
     })
     .error(function (data, code) {
