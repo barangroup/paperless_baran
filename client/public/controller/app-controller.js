@@ -224,15 +224,18 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
   $scope.editUser = function(newuser) {
     if (!$scope.hasError() && !$scope.isSending) {
 
-      setBirthDate(newuser);
+      setBirthDate($scope.userCopy);
 
         ///////////////////////////
-        trimArray(newuser.skills);
+        trimArray($scope.userCopy.skills);
         $scope.isSending = true;
-        $http.post("/my_data", newuser)
+        $http.post("/my_data", $scope.userCopy)
         .success(function(data) {
-          $scope.toast.success("پروفایل شما با موفقیت بروزرسانی گردید");
-          $scope.isSending = false;
+          if (data.edit) {
+            $scope.toast.success("پروفایل شما با موفقیت بروزرسانی گردید");
+            $scope.isSending = false;
+            $scope.userCopy = data.data;
+          };
         })
         .error(function(data, code) {
           $scope.toast.error("متاسفانه در ارسال اطلاعات خطایی رخ داده.\nکد خطا: "+code);
@@ -243,19 +246,19 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 
     $scope.commitFreeTimes = function () {
       // TODO Complete this part
-      console.log(userCopy.freeTimes);
+      console.log($scope.userCopy.freeTimes);
     }
 
     $scope.getMajorValue = function(major) {
-      return major.group ? major.group + '-' + major.name : major.name;
-    }
+     return major.group ? major.group + '-' + major.name : major.name;
+   }
 
-    $scope.showPassword = function(id) {
-      $('#'+id).attr("type","text");
-    }
-    $scope.hidePassword = function(id) {
-      $('#'+id).attr("type","password");
-    }
+   $scope.showPassword = function(id) {
+     $('#'+id).attr("type","text");
+   }
+   $scope.hidePassword = function(id) {
+     $('#'+id).attr("type","password");
+   }
         // TODO Check this again
         $scope.getPasswordStrength = function() {
           $scope.passwordStrength = 0;
@@ -329,15 +332,15 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     };
 
     $scope.hasError = function() {
-      return $scope.myForm.$error.required || $scope.myForm.email.$invalid || $scope.myForm.mobile.$invalid;
-    };
+     return $scope.myForm.$error.required || $scope.myForm.email.$invalid || $scope.myForm.mobile.$invalid;
+   };
 
-    $scope.getMajorValue = function(major) {
-      return major.group ? major.group + '-' + major.name : major.name;
-    };
+   $scope.getMajorValue = function(major) {
+     return major.group ? major.group + '-' + major.name : major.name;
+   };
 
 
-  }])
+ }])
 .controller('ContactListController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 
   $scope.Deactive = false;
@@ -452,56 +455,56 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
       }
 
       $scope.removeComment = function(user, commentIndex) {
-        if ($scope.canEdit && !user._comments[commentIndex]._writer) {
-          user._comments.splice(commentIndex, 1);
-        };
-      }
+       if ($scope.canEdit && !user._comments[commentIndex]._writer) {
+        user._comments.splice(commentIndex, 1);
+      };
+    }
 
-      $scope.addComment = function(user) {
-        if ($scope.canEdit) {
-          if (!user._comments) {
-            user._comments = [];
-          };
-          user._comments.push({});
-        };
-      }
+    $scope.addComment = function(user) {
+     if ($scope.canEdit) {
+      if (!user._comments) {
+       user._comments = [];
+     };
+     user._comments.push({});
+   };
+ }
 
-      $scope.removeSkill = function(user, skillIndex) {
-        if ($scope.canEdit) {
-          user.skills.splice(skillIndex, 1);
-        };
-      }
+ $scope.removeSkill = function(user, skillIndex) {
+   if ($scope.canEdit) {
+    user.skills.splice(skillIndex, 1);
+  };
+}
 
-      $scope.addSkill = function(user) {
-        if ($scope.canEdit) {
-          if (!user.skills) {
-            user.skills = [];
-          };
-          user.skills.push("");
-        };
-      }
+$scope.addSkill = function(user) {
+ if ($scope.canEdit) {
+  if (!user.skills) {
+   user.skills = [];
+ };
+ user.skills.push("");
+};
+}
 
-      $scope.search = function() {
-        if ($scope._query.quick_search == "") {
-          $scope.clearSearch();
-        };
-        $scope.selectedUser = null;
-        $scope.query = angular.copy($scope._query);
-        $scope._query = null;
-        $scope.paging(1, true);
-      }
+$scope.search = function() {
+ if ($scope._query.quick_search == "") {
+  $scope.clearSearch();
+};
+$scope.selectedUser = null;
+$scope.query = angular.copy($scope._query);
+$scope._query = null;
+$scope.paging(1, true);
+}
 
-      $scope.clearSearch = function () {
-        $scope.query = null;
-        $scope._query = null;
-        $scope.paging(1, true);
-      }
+$scope.clearSearch = function () {
+ $scope.query = null;
+ $scope._query = null;
+ $scope.paging(1, true);
+}
 
-      $scope.RemoveCriteria = function (param) {
-        delete $scope.query[param];
-        $scope.paging(1, true); 
-      }
-    }])
+$scope.RemoveCriteria = function (param) {
+ delete $scope.query[param];
+ $scope.paging(1, true); 
+}
+}])
 .controller('SendFeedBackController', ['$scope', '$http', function ($scope, $http) {
   $scope.isSending = false;
   $scope.Deactive = false;
@@ -561,27 +564,27 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 
     $http.get("/birthday_sms")
     .success(function (data) {
-      $scope.smsSetting = data;
-    })
+     $scope.smsSetting = data;
+   })
     .error(function (data, code) {
-      $scope.toast.error("خطا در دریافت اطلاعات");
-    });
+     $scope.toast.error("خطا در دریافت اطلاعات");
+   });
 
     $scope.saveSetting = function () {
-      $scope.isSending = true;
-      $http.post("/birthday_sms", $scope.smsSetting)
-      .success(function (data) {
-        $scope.isSending = false;
-        $scope.toast.success("تنظیمات با موفقیت ذخیره شد.");
-        $scope.backToDashboard();
-      })
-      .error(function (data, code) {
-        $scope.isSending = false;
-        $scope.toast.error("در ارسال با خطا مواجه شدیم");
-      })
-    }
+     $scope.isSending = true;
+     $http.post("/birthday_sms", $scope.smsSetting)
+     .success(function (data) {
+      $scope.isSending = false;
+      $scope.toast.success("تنظیمات با موفقیت ذخیره شد.");
+      $scope.backToDashboard();
+    })
+     .error(function (data, code) {
+      $scope.isSending = false;
+      $scope.toast.error("در ارسال با خطا مواجه شدیم");
+    })
+   }
 
-  }])
+ }])
 .controller('UserReportController', ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
   $scope.report = [];
 
@@ -813,26 +816,26 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 
     $scope.sendSMS = function () {
 
-      if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
-        $scope.toast.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
-        return;
-      };
+     if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
+      $scope.toast.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
+      return;
+    };
 
-      $http.post("/send_sms", $scope.sms)
-      .success(function (data) {
-        if(data.send == true)
-          $scope.toast.success(data.count + " پیام با موفقیت ارسال شد.");
-        else
-          $scope.toast.error("خطا در ارسال");
-      })
-      .error( function (data, code) {
-        $scope.toast.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
-      });
-    }
+    $http.post("/send_sms", $scope.sms)
+    .success(function (data) {
+      if(data.send == true)
+       $scope.toast.success(data.count + " پیام با موفقیت ارسال شد.");
+     else
+       $scope.toast.error("خطا در ارسال");
+   })
+    .error( function (data, code) {
+      $scope.toast.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
+    });
+  }
 
-    $scope.getPanelDetail();
+  $scope.getPanelDetail();
 
-  }])
+}])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider
   .when('/', {
@@ -866,18 +869,19 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
   .when('/users-report', {
     templateUrl: 'views/users-report.html',
     controller: 'UserReportController'
-          // redirectTo: '/under-construct'
-        })
+  })
+  .when('/task-assign', {
+    templateUrl: 'views/task-assign.html',
+    controller: 'TaskAssignController'
+  })
   .when('/submit-dispatch', {
     templateUrl: 'views/submit-dispatch.html',
     controller: 'SubmitDispatchController'
-          // redirectTo: '/under-construct'
-        })
+  })
   .when('/stations', {
     templateUrl: 'views/stations.html',
     controller: 'StationController'
-          // redirectTo: '/under-construct'
-        })
+  })
   .when('/bug-report', {
     templateUrl: 'views/bug-report.html',
     controller: 'BugReportController'
@@ -906,9 +910,9 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 var dictionary = {
 
   getStatusColor: function (status) {
-      return 'text-'+status;
-    },
-    toPersian : function (word){
+    return 'text-'+status;
+  },
+  toPersian : function (word){
 
-    }
   }
+}
