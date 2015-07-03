@@ -107,12 +107,21 @@ module.exports.post = function(req, res, next) {
                                         });
                                     } else if (data) {
                                         data.mobile = String.dec_mobile(data.mobile);
-                                        String.remove_empty_data(data);
                                         if (data.birth_date) {
                                             Date.en_to_persion_date(data.birth_date, function(date) {
                                                 data.birth_date = date.date;
                                             });
                                         }
+                                        data = data.toJSON();
+
+                                        delete data.password;
+                                        delete data.task;
+                                        for (index in data) {
+                                            if (index.charAt(0) == "_") {
+                                                delete data[index];
+                                            }
+                                        }
+                                        
                                         res.json({
                                             edit: true,
                                             data: data
@@ -129,13 +138,23 @@ module.exports.post = function(req, res, next) {
                                         edit: false
                                     });
                                 } else if (data) {
+
                                     data.mobile = String.dec_mobile(data.mobile);
-                                    String.remove_empty_data(data);
                                     if (data.birth_date) {
                                         Date.en_to_persion_date(data.birth_date, function(date) {
                                             data.birth_date = date.date;
                                         });
                                     }
+                                    data = data.toJSON();
+
+                                    delete data.password;
+                                    delete data.task;
+                                    for (index in data) {
+                                        if (index.charAt(0) == "_") {
+                                            delete data[index];
+                                        }
+                                    }
+
                                     res.json({
                                         edit: true,
                                         data: data
