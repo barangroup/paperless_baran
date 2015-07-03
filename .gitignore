@@ -6,3 +6,5 @@ node_modules/
 client/public/plugins/
 client/public/lib/
 server/test/
+*.log
+*~
