@@ -40,12 +40,14 @@
 					<table class="table table-hover">
 						<thead>
 							<th>لیست هزینه ها</th>
-							<th width="150px">هزینه</th>
+							<th width="120px">هزینه</th>
+							<th width="120px">فاکتور دارد</th>
+							<th width="120px">دریافت شده</th>
 							<th width="60px">حذف</th>
 						</thead>
 						<tbody>
 							<tr>
-								<td colspan="3" ng-if="!dispatch.costs || dispatch.costs.length == 0">
+								<td colspan="5" ng-if="!dispatch.costs || dispatch.costs.length == 0">
 									هزینه ای انجام نشده.
 								</td>
 							</tr>
@@ -55,6 +57,12 @@
 								</td>
 								<td ng-class="{'has-error' : dispatch.costs[$index].cost == null}">
 									<input type="number" name="cost" class="form-control pr-numb" ng-model="dispatch.costs[$index].cost" min="0" step="100" >
+								</td>
+								<td>
+									<input type="checkbox" name="pony" ng-model="dispatch.costs[$index].pony" >
+								</td>
+								<td>
+									<input type="checkbox" name="have_factor" ng-model="dispatch.costs[$index].have_factor" >
 								</td>
 								<td>
 									<button type="button" class="btn btn-danger" ng-click="dispatch.costs.splice($index,1)" ><i class="fa fa-remove"></i></button>

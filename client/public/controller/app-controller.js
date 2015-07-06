@@ -683,8 +683,8 @@ $scope.RemoveCriteria = function (param) {
     $http.post('/new_dispatch', $scope.dispatch)
     .success(function (data) {
       $scope.isSending = false;
-      $scope.dispatch = $scope.DefaultDispatch();
       $scope.toast.success('ثبت اعزام موفقی آمیز بود.');
+      $scope.backToDashboard();
     })
     .error(function (data, code) {
       $scope.isSending = false;
