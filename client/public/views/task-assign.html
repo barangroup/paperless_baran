@@ -1,0 +1,54 @@
+<link type="text/css" href="../bootstrap/loopj-jquery-tokeninput-201d2d1/styles/token-input.css" rel="stylesheet" />
+<link type="text/css" href="bootstrap/loopj-jquery-tokeninput-201d2d1/styles/token-input-baran.css" rel="stylesheet" />
+<div class="row">
+	<div class="col-lg-6">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<p class="box-title"><i class="fa fa-tasks"></i> دسترسی ها (وظایف)</p>
+			</div>
+			<form name="taskForm" class="form-horizontal" ng-submit="assigntask()">
+				<div class="box-body">
+					<div class="form-group" ng-class="{'has-error' : taskForm.task.$dirty && taskForm.task.$invalid}">
+						<label for="input-task" class="col-sm-2">وظایف<strong class="text-red">*</strong></label>
+						<div class="col-md-8">
+							<select class="form-control" id="input-task" ng-model="task.task" ng-options="x._id as getTaskTitle(x) for x in taskList" name="task" required>
+								<option value="">&lt;انتخاب کنید&gt;</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : taskForm.members.$dirty && taskForm.members.$invalid}">
+						<label for="input-member" class="col-sm-2">اعضا <strong class="text-red">*</strong></label>
+						<div class="col-md-8">
+							<input id="input-member" class="form-control token" ng-model="task.members" ng-list="," name="members" required>
+						</div>
+					</div>
+				</div>
+				<div class="box-footer">
+					<button class="btn btn-primary" type="submit" ng-disabled="hasError()">ذخیره	<i class="fa fa-save"></i></button>
+				</div>
+			</form>
+			<div class="overlay" ng-show="isLoading || isSending"><i class="fa fa-spinner fa-spin"></i></div>
+		</div>
+	</div>
+</div>
+<script src="bootstrap/loopj-jquery-tokeninput-201d2d1/src/jquery.tokeninput.min.js"></script>
+<script>
+	$(".token").tokenInput(
+		'/users' , {
+			method: 'GET',
+			queryParam: 'search',
+			searchDelay: 523,
+			minChars: 3,
+			jsonContainer: null,
+			hintText: 'نام یا نام خانوادگی را وارد نمایید.(حداقل 3 حرف)',
+			noResultsText: 'شخصی با چنین نامی موجود نیست.',
+			searchingText: 'در حال جستجو <i class="fa fa-spinner fa-spin"></i>',
+			theme: 'baran',
+			tokenDelimiter:',',
+			tokenValue: '_id',
+			deleteText:'<i class="fa fa-times"></i>',
+			propertyToSearch: 'name',
+			preventDuplicates: true,
+			tokenLimit: null
+		});
+</script>

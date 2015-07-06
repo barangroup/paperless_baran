@@ -57,7 +57,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
 
     // Static params
 
-    $scope.majorsList = [{"name": "نرم افزار", "group": "کامپیوتر"}, {"name": "سخت افزار", "group": "کامپیوتر"}, {"name": "آی تی", "group": "کامپیوتر"}, {"name": "کاردانی", "group": "کامپیوتر"}, {"name": "قدرت", "group": "برق"}, {"name": "الکترونیک", "group": "برق"}, {"name": "کنترل", "group": "برق"}, {"name": "مخابرات", "group": "برق"}, {"name": "مهندسی پزشکی", "group": "مهندسی"}, {"name": "عمران", "group": "مهندسی"}, {"name": "مکانیک", "group": "مهندسی"}, {"name": "صنایع", "group": "مهندسی"}, {"name": "مواد", "group": "مهندسی"}, {"name": "نقشه برداری", "group": ""}, {"name": "شیمی", "group": ""}, {"name": "نقاشی", "group": ""}, {"name": "گرافیک", "group": ""}, {"name": "عکاسی", "group": ""}, {"name": "ادبیات فارسی", "group": ""}, {"name": "الهیات", "group": ""}, {"name": "حقوق", "group": ""}, {"name": "حسابداری", "group": ""}, {"name": "دندانپزشکی", "group": ""}, {"name": "فن آوری اطلاعات سلامت", "group": ""}]; $scope.lessonsList = ["عربی", "فلسفه", "زیست شناسی", "زبان خارجه", "معماری", "ریاضیات", "شیمی", "فیزیک", "گرافیک", "حسابداری"];
+    $scope.majorsList = [{"name": "نرم افزار", "group": "کامپیوتر"}, {"name": "سخت افزار", "group": "کامپیوتر"}, {"name": "آی تی", "group": "کامپیوتر"}, {"name": "کاردانی", "group": "کامپیوتر"}, {"name": "قدرت", "group": "برق"}, {"name": "الکترونیک", "group": "برق"}, {"name": "کنترل", "group": "برق"}, {"name": "مخابرات", "group": "برق"}, {"name": "مهندسی پزشکی", "group": "مهندسی"}, {"name": "عمران", "group": "مهندسی"}, {"name": "مکانیک", "group": "مهندسی"}, {"name": "صنایع", "group": "مهندسی"}, {"name": "مواد", "group": "مهندسی"}, {"name": "معماری", "group": ""}, {"name": "نقشه برداری", "group": ""}, {"name": "شیمی", "group": ""}, {"name": "نقاشی", "group": ""}, {"name": "گرافیک", "group": ""}, {"name": "عکاسی", "group": ""}, {"name": "ادبیات فارسی", "group": ""}, {"name": "الهیات", "group": ""}, {"name": "حقوق", "group": ""}, {"name": "حسابداری", "group": ""}, {"name": "دندانپزشکی", "group": ""}, {"name": "فن آوری اطلاعات سلامت", "group": ""}]; $scope.lessonsList = ["عربی", "فلسفه", "زیست شناسی", "زبان خارجه", "معماری", "ریاضیات", "شیمی", "فیزیک", "گرافیک", "حسابداری"];
     $scope.agesList = ["ابتدایی", "راهنمایی", "دبیرستان"];
     $scope.freeTimes = {
       days : [{title:"شنبه",value:"saturday"},{title:"یکشنبه",value:"sunday"},{title:"دوشنبه",value:"monday"},{title:"سه شنبه",value:"tuesday"},{title:"چهارشنبه",value:"wednesday"},{title:"پنجشنبه",value:"thursday"},{title:"جمعه",value:"friday"}],
@@ -836,7 +836,83 @@ $scope.RemoveCriteria = function (param) {
   $scope.getPanelDetail();
 
 }])
-.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+.controller('TaskAssignController',['$scope', '$http', function ($scope, $http) {
+
+  $scope.getTasks = function () {
+    $scope.isLoading = true;
+    $http.get('/tasks')
+    .success(function (data) {
+      $scope.taskList = data;
+      $scope.taskList = $scope.sortTasksRecursive($scope.taskList);
+      $scope.isLoading = false;
+    })
+    .error(function() {
+      $scope.toast.error("دریافت لیست وظایف با مشکل مواجه شد.")
+      $scope.isLoading = false;
+    });
+  }
+
+  $scope.init = function () {
+    $scope.isLoading = true;
+    $scope.getTasks();
+    $scope.task = {
+      members : []
+    };
+    $('#input-member').tokenInput('clear');
+    angular.forEach($scope.task.members, function (value) {
+      $('#input-member').tokenInput('add',
+        {_id:value._id,name:value.name}
+        );
+    });
+    $scope.isLoading = false;
+  }
+
+  $scope.sortTasksRecursive = function (tasks, array, _parent) {
+    if (!array) {
+      var array = [];
+    };
+    for (var i = 0; i < tasks.length; i++) {
+      if (tasks[i]._parent == _parent) {
+        var data = tasks.splice(i,1)[0];
+        array.push(data);
+        $scope.sortTasksRecursive(tasks,array,data._id);
+        i--;
+      };
+    };
+    return array;
+  }
+
+  $scope.hasError = function () {
+    return $scope.taskForm.$invalid;
+  }
+
+  $scope.getTaskTitle = function (task){
+    return s.repeat('-',task.depth*2)+' '+task.title;
+  }
+
+  $scope.assigntask = function () {
+    if($scope.hasError()){
+      return;
+    }
+    $scope.isSending = true;
+    $http.post('/task_members', $scope.task)
+    .success(function (data) {
+      $scope.isSending = false;
+      $scope.init();
+      $scope.toast.success("با موفقت ثبت شد.");
+    })
+    .error(function() {
+      $scope.isSending = false;
+      $scope.toast.error("با خطا مواجه شد.");
+    });;
+  }
+
+  $scope.init();
+}])
+.controller('NewsController',['$scope', '$http', function ($scope, $http) {
+  
+}])
+.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/', {
     templateUrl: 'views/dashboard.html',
@@ -877,6 +953,10 @@ $scope.RemoveCriteria = function (param) {
   .when('/submit-dispatch', {
     templateUrl: 'views/submit-dispatch.html',
     controller: 'SubmitDispatchController'
+  })
+  .when('/news', {
+    templateUrl: 'views/news.html',
+    controller: 'NewsController'
   })
   .when('/stations', {
     templateUrl: 'views/stations.html',

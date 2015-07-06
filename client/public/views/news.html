@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-sm-12 col-md-8 col-lg-6">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-newspaper-o"></i>	اخبار</h3>
+			</div>
+			<form name="news-form"  class="form-horizontal">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="input-title" class="col-sm-2">عنوان خبر <strong class="text-red">*</strong></label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" name="title" ng-model="news.title" id="input-title" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-text" class="col-sm-2">خبر <strong class="text-red">*</strong></label>
+						<div class="col-md-10	">
+							<textarea rows="3" class="form-control" name="news" ng-model="news.text" id="input-text" required></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input-link" class="col-sm-2">لینک</label>
+						<div class="col-md-6">
+							<input type="text" class="form-control pr-en" name="link" ng-model="news.link" id="input-link">
+						</div>
+					</div>
+				</div>
+				<div class="box-footer">
+				<button class="btn btn-success" type="submit">ذخیره <i class="fa fa-save"></i></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
