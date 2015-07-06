@@ -59,10 +59,10 @@
 									<input type="number" name="cost" class="form-control pr-numb" ng-model="dispatch.costs[$index].cost" min="0" step="100" >
 								</td>
 								<td>
-									<input type="checkbox" name="pony" ng-model="dispatch.costs[$index].pony" >
+									<input type="checkbox" name="have_factor" ng-model="dispatch.costs[$index].have_factor" >
 								</td>
 								<td>
-									<input type="checkbox" name="have_factor" ng-model="dispatch.costs[$index].have_factor" >
+									<input type="checkbox" name="pony" ng-model="dispatch.costs[$index].pony" >
 								</td>
 								<td>
 									<button type="button" class="btn btn-danger" ng-click="dispatch.costs.splice($index,1)" ><i class="fa fa-remove"></i></button>
