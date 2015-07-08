@@ -106,13 +106,13 @@ module.exports.post = function(req, res, next) {
                                             edit: false
                                         });
                                     } else if (data) {
+                                        data = data.toJSON();
                                         data.mobile = String.dec_mobile(data.mobile);
                                         if (data.birth_date) {
                                             Date.en_to_persion_date(data.birth_date, function(date) {
                                                 data.birth_date = date.date;
                                             });
                                         }
-                                        data = data.toJSON();
 
                                         delete data.password;
                                         delete data.task;
@@ -121,7 +121,7 @@ module.exports.post = function(req, res, next) {
                                                 delete data[index];
                                             }
                                         }
-                                        
+
                                         res.json({
                                             edit: true,
                                             data: data
@@ -138,6 +138,7 @@ module.exports.post = function(req, res, next) {
                                         edit: false
                                     });
                                 } else if (data) {
+                                    data = data.toJSON();
 
                                     data.mobile = String.dec_mobile(data.mobile);
                                     if (data.birth_date) {
@@ -145,7 +146,6 @@ module.exports.post = function(req, res, next) {
                                             data.birth_date = date.date;
                                         });
                                     }
-                                    data = data.toJSON();
 
                                     delete data.password;
                                     delete data.task;
@@ -173,27 +173,6 @@ module.exports.post = function(req, res, next) {
                     edit: false
                 });
             }
-            // else {
-            //     if(user.data.password){
-            //             encrypt.hash(user.data.password,function(hash){
-            //                 console.log("hash : " + hash);
-            //                 u.password = hash ;
-            //                 u.save(function(err){
-            //                     if(err){
-            //                         console.log(err);
-            //                         res.json({edit : false});
-            //                     } else res.json( { edit : true } );
-            //                 });
-            //             });
-            //     } else {
-            //         u.save(function(err){
-            //             if(err){
-            //                 console.log(err);
-            //                 res.json({edit : false});
-            //             } else res.json( { edit : true } );
-            //         });
-            //     }
-            // }
         });
     }
 };

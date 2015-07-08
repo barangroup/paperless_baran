@@ -8,7 +8,6 @@ module.exports = (function() {
     };
 
     _return.post = function(req, res, next) {
-        console.log('in');
         if (req.body && req.body.mobile) {
             db.users.findOne({
                 mobile: String.enc_mobile(req.body.mobile)
