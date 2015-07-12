@@ -5,9 +5,11 @@ module.exports = (function() {
     var _return = {};
 
     _return.get = function(req, res, next) {
-        db.news.find({}, {
-                _id: false
-            }).limit(5)
+        db.news.find({}, {})
+            .sort({
+                _id: -1
+            })
+            .limit(5)
             .populate({
                 path: '_writer',
                 select: 'first_name last_name -_id'
@@ -25,6 +27,7 @@ module.exports = (function() {
 
         if (_.includes(req.user._permissions, "root") || _.includes(req.user._permissions, "news")) {
             if (req.body.type == "add" && income_data && income_data.text && income_data.title) {
+                income_data._writer = req.user._id;
                 new db.news(income_data).save(function(err) {
                     if (err) {
                         console.log(err);
