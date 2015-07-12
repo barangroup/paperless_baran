@@ -115,6 +115,23 @@ module.exports.post = function(req, res) {
                 "link": "#/submit-dispatch"
             });
         }
+
+        if (_.includes(req.user._permissions, "root") ||
+            _.includes(req.user._permissions, "news")) {
+            a.menus.push({
+                "title": "ثبت خبر جدید",
+                "icon": "fa-bus",
+                "link": "#/news"
+            });
+        }
+
+        if (_.includes(req.user._permissions, "root")) {
+            a.menus.push({
+                "title": "وظایف (مسئولیت ها)",
+                "icon": "fa-bus",
+                "link": "#/task-assign"
+            });
+        }
     }
 
     res.json(a);
