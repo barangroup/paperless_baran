@@ -12,6 +12,7 @@ db.tasks.count(function(err, c) {
                 "define_task_child",
                 "logs",
                 "sms_root",
+                "news",
                 "sms_to_child",
                 "birthday_sms",
                 "edit_users",
