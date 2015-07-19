@@ -40,10 +40,12 @@ module.exports = (function() {
                         });
                     }
                 });
+            } else {
+                res.json({
+                    err: "low args"
+                });
             }
-            res.json({
-                err: "low args"
-            });
+
         } else next();
     };
 
