@@ -5,7 +5,7 @@ var fs = require('fs');
 var debug_mode = false;
 
 //var simple_routes = ['dashborad'];
-var file_routes = ['mali', 'news', 'poll', 'exists', 'new_dispatch', 'sms', 'change_password', 'station', 'mali_store', 'tasks', 'send_sms', 'edit_users', 'users_report', 'contact_list', 'dashboard', 'page_data', 'my_data', 'users', 'new_user', 'profile', 'del', 'star', '54f5fa3ada03d906ce5af', 'register', 'feedback', 'birthday_sms'];
+var file_routes = ['dispatch', 'mali', 'news', 'poll', 'exists', 'new_dispatch', 'sms', 'change_password', 'station', 'mali_store', 'tasks', 'send_sms', 'edit_users', 'users_report', 'contact_list', 'dashboard', 'page_data', 'my_data', 'users', 'new_user', 'profile', 'del', 'star', '54f5fa3ada03d906ce5af', 'register', 'feedback', 'birthday_sms'];
 
 app.route('/*').get(require('./star').get).post(require('./star').post);
 app.route('/').get(require('./index').get).post(require('./index').post);
