@@ -24,8 +24,6 @@ module.exports = (function() {
                         }
                 }
 
-                console.open(query);
-
                 db.mali.find({}, {
                     __v: false
                 }).populate({
@@ -43,9 +41,10 @@ module.exports = (function() {
                         });
                     } else {
                         String.sync_for(m.length, function(loop) {
-                            console.open(m[loop.iteration()]._owner);
-                            if (m[loop.iteration()]._owner) {
-                                db.dispatch.populate(m[loop.iteration()]._dispatch, {
+                            var i = loop.iteration();
+                            if (m.length == 0) loop.break(true);
+                            if (m[i] && m[i]._owner) {
+                                db.dispatch.populate(m[i]._dispatch, {
                                     path: '_station',
                                     select: 'name -_id'
                                 }, function(err, rr) {
@@ -56,12 +55,12 @@ module.exports = (function() {
                                     }
                                 });
                             } else {
-                                m.splice(loop.iteration(), 1);
+                                m.splice(i, 1);
                                 loop.minmin();
                                 loop.next();
                             }
                         }, function() {
-                            res.json(m)
+                            res.json(m.slice(req.query.from, req.query.to)); // memory leak here!
                         });
                     }
                 });
@@ -74,7 +73,6 @@ module.exports = (function() {
     };
 
     _return.post = function(req, res, next) {
-
         if (_.includes(req.user._permissions, "root") || _.includes(req.user._permissions, "add_cost")) {
             if (req.body.type == "add") {
                 var mali = req.body.data || {};
