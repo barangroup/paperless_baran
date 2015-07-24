@@ -32,7 +32,8 @@ db.tasks.count(function(err, c) {
                 "see_all_woman_dispatch_notification",
                 "mali_dispatch",
                 "add_cost",
-                "mali",
+                "man_mali",
+                "woman_mali",
                 "mali_report",
                 "mali_store",
                 "see_all_mali_notification"
