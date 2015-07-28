@@ -53,7 +53,7 @@ function getGravatar (email) {
 
 
 var app = angular.module('Baran', ['ngRoute']);
-app.controller('MainController', ['$scope', '$http', '$location', '$timeout', function($scope, $http, $location, $timeout) {
+app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 'toaster', function($scope, $http, $location, $timeout, toaster) {
 
     // Static params
 
@@ -76,13 +76,8 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     $scope.user = {};
     $scope.messages = [];
     $scope.menus = [];
-    $scope.alerts = [];
     $scope.showModal = 'none';
     $scope.count = 0;
-
-    $scope.toast = new function() {
-      this.startDestroyer = function(time) {$timeout(function() {$scope.alerts.shift(); }, time); }; this.info = function(message) {$scope.alerts.push({cssClass: "alert-info", description: message }); this.startDestroyer(2500); }; this.warning = function(message) {$scope.alerts.push({cssClass: "alert-warning", description: message }); this.startDestroyer(2500); }; this.error = function(message) {$scope.alerts.push({cssClass: "alert-danger", description: message }); this.startDestroyer(2500); }; this.success = function(message) {$scope.alerts.push({cssClass: "alert-success", description: message }); this.startDestroyer(2500); };
-    };
 
     $http.post("/page_data")
     .success(function($json) {
@@ -95,7 +90,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
         $scope.version = $json.version;
     })
     .error(function($data, $status) {
-      $scope.toast.error('error!\nError Code' + $status);
+      toaster.error('error!\nError Code' + $status);
     });
 
 
@@ -127,7 +122,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     }
 
 }])
-.controller("DashboardController", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
+.controller("DashboardController", ['$scope', '$http', '$sce', 'toaster', function($scope, $http, $sce, toaster) {
 
       //TODO get this from server
       $scope.quote = {
@@ -152,7 +147,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
           $scope.news = data;
         })
         .error(function() {
-          $scope.toast.error('خطا در بارگذاری اخبار');
+          toaster.error('خطا در بارگذاری اخبار');
         });
       }
 
@@ -166,11 +161,11 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
         .success(function (data) {
           $scope.vote.isSending = false;
           $scope.vote.answer = "";
-          $scope.toast.success("ممنون، رای شما با موفقیت ثبت شد.");
+          toaster.success("ممنون، رای شما با موفقیت ثبت شد.");
         })
         .error(function (data, code) {
           $scope.vote.isSending = false;
-          $scope.toast.error("متسافانه به مشکل برخوردیم لطفا دوباره تلاش کنید");
+          toaster.error("متسافانه به مشکل برخوردیم لطفا دوباره تلاش کنید");
         });
       }
 
@@ -191,7 +186,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
       $scope.logs = data.reverse();
     })
     .error(function (data, code) {
-      $scope.toast.error("خطا در دریافت اطلاعات");
+      toaster.error("خطا در دریافت اطلاعات");
       $scope.isLoading = false;
     })
   }
@@ -205,7 +200,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
   }, 3000);
 
 }])
-.controller("ProfileController", ['$scope', '$http', function($scope, $http) {
+.controller("ProfileController", ['$scope', '$http', 'toaster', function($scope, $http, toaster) {
 
   $scope.isSending = false;
 
@@ -214,7 +209,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
     $scope.userCopy = data;
   })
   .error(function(data, code) {
-    $scope.toast.error("خطا در بارگذاری اطلاعات")
+    toaster.error("خطا در بارگذاری اطلاعات")
   });
 
   $scope.removeSkill = function(skillIndex) {
@@ -245,13 +240,13 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
         $http.post("/my_data", $scope.userCopy)
         .success(function(data) {
           if (data.edit) {
-            $scope.toast.success("پروفایل شما با موفقیت بروزرسانی گردید");
+            toaster.success("پروفایل شما با موفقیت بروزرسانی گردید");
             $scope.isSending = false;
             $scope.userCopy = data.data;
           };
         })
         .error(function(data, code) {
-          $scope.toast.error("متاسفانه در ارسال اطلاعات خطایی رخ داده.\nکد خطا: "+code);
+          toaster.error("متاسفانه در ارسال اطلاعات خطایی رخ داده.\nکد خطا: "+code);
           $scope.isSending = false;
         });
     };
@@ -326,19 +321,19 @@ $scope.commitFreeTimes = function () {
         $http.post('/new_user', $scope.contact).
         success(function(data) {
           if (data.add == true) {
-            $scope.toast.info('اطلاعات شما با موفقیت ثبت شد');
+            toaster.info('اطلاعات شما با موفقیت ثبت شد');
             $scope.reset();
           } else if (data.exists == true) {
-            $scope.toast.error('شماره تلفن در سایت موجود است');
+            toaster.error('شماره تلفن در سایت موجود است');
           } else if (data.have_permission == false) {
-            $scope.toast.info('شما مجاز به ارسال این درخواست نیستید');
+            toaster.info('شما مجاز به ارسال این درخواست نیستید');
           } else {
-            $scope.toast.error('اطلاعات معتبر نیستند');
+            toaster.error('اطلاعات معتبر نیستند');
           };
           $scope.Deactive = false;
         }).
         error(function(data, code) {
-          $scope.toast.error('خطا در برقراری ارتباط با سرور');
+          toaster.error('خطا در برقراری ارتباط با سرور');
           $scope.Deactive = false;
         });
     }
@@ -354,7 +349,7 @@ $scope.getMajorValue = function(major) {
 
 
 }])
-.controller('ContactListController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+.controller('ContactListController', ['$scope', '$http', '$timeout', 'toaster', function($scope, $http, $timeout, toaster) {
 
   $scope.Deactive = false;
   $scope.isLoading = false;
@@ -375,7 +370,7 @@ $scope.getMajorValue = function(major) {
     $scope.paging(1);
   }).
   error(function($data, $status) {
-    $scope.toast.error('error!\nError Code' + $status);
+    toaster.error('error!\nError Code' + $status);
   });
 
   $scope.selectUser = function(user) {
@@ -420,7 +415,7 @@ $scope.getMajorValue = function(major) {
       $scope.isLoading = false;
     })
     .error(function($data, $status) {
-      $scope.toast.info('error!\nError Code' + $status);
+      toaster.info('error!\nError Code' + $status);
       $scope.isLoading = false;
     });
   }
@@ -451,17 +446,17 @@ $scope.getMajorValue = function(major) {
           $http.post("/edit_users", newUser)
           .success(function(data) {
             if(data.exists == true)
-              $scope.toast.info("شماره تلفن وارد شده در سیستم موجود است!");
+              toaster.info("شماره تلفن وارد شده در سیستم موجود است!");
             else if(data.edit)
-              $scope.toast.info("کاربر مورد نظر ویرایش گردید");
+              toaster.info("کاربر مورد نظر ویرایش گردید");
             else
-              $scope.toast.info("ویرایش نشد!");
+              toaster.info("ویرایش نشد!");
             $scope.selectedUser = null;
             $scope.paging($scope.datatable.currentPage, true);
             $scope.isSending = false;
           })
           .error(function(data, code) {
-            $scope.toast.info("خطا در ارتباط با سرور");
+            toaster.info("خطا در ارتباط با سرور");
             $scope.isSending = false;
           });
       }
@@ -518,7 +513,7 @@ $scope.getMajorValue = function(major) {
     $scope.paging(1, true); 
   }
 }])
-.controller('SendFeedBackController', ['$scope', '$http', function ($scope, $http) {
+.controller('SendFeedBackController', ['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
   $scope.isSending = false;
   $scope.Deactive = false;
 
@@ -527,17 +522,17 @@ $scope.getMajorValue = function(major) {
     $http.post("/feedback", $scope.feedback)
     .success(function(data) {
       $scope.isSending = false;
-      $scope.toast.success('پیام شما با موفقیت ارسال شد.');
+      toaster.success('پیام شما با موفقیت ارسال شد.');
       $scope.backToDashboard();
     })
     .error(function(code) {
       $scope.isSending = false;
-      $scope.toast.error('ارسال با خطا مواجه شد.');
+      toaster.error('ارسال با خطا مواجه شد.');
     });
   }
 
 }])
-.controller('BugReportController', ['$scope', '$http', function ($scope, $http) {
+.controller('BugReportController', ['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
 
   $scope.isSending = false;
 
@@ -552,19 +547,19 @@ $scope.getMajorValue = function(major) {
         }
         $http.post("/feedback", feedback)
         .success(function (data) {
-          $scope.toast.success("درخواست شما ارسال شد.");
+          toaster.success("درخواست شما ارسال شد.");
           $scope.isSending = false;
           $scope.backToDashboard();
         })
         .error(function (data, code) {
-          $scope.toast.error("ارسال با خطا مواجه شد.\nکد خطا: " + code);
+          toaster.error("ارسال با خطا مواجه شد.\nکد خطا: " + code);
           $scope.isSending = false;
         })
     };
 }
 
 }])
-.controller('BirthdaySmsController',['$scope', '$http', function ($scope, $http) {
+.controller('BirthdaySmsController',['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
 
   $isSending = false;
   $scope.maxCharCount = 70;
@@ -580,7 +575,7 @@ $scope.getMajorValue = function(major) {
     $scope.smsSetting = data;
   })
   .error(function (data, code) {
-    $scope.toast.error("خطا در دریافت اطلاعات");
+    toaster.error("خطا در دریافت اطلاعات");
   });
 
   $scope.saveSetting = function () {
@@ -588,17 +583,17 @@ $scope.getMajorValue = function(major) {
     $http.post("/birthday_sms", $scope.smsSetting)
     .success(function (data) {
       $scope.isSending = false;
-      $scope.toast.success("تنظیمات با موفقیت ذخیره شد.");
+      toaster.success("تنظیمات با موفقیت ذخیره شد.");
       $scope.backToDashboard();
     })
     .error(function (data, code) {
       $scope.isSending = false;
-      $scope.toast.error("در ارسال با خطا مواجه شدیم");
+      toaster.error("در ارسال با خطا مواجه شدیم");
     })
   }
 
 }])
-.controller('UserReportController', ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
+.controller('UserReportController', ['$scope', '$http', '$sce', 'toaster', function ($scope, $http, $sce, toaster) {
   $scope.report = [];
 
   $http.get("/users_report")
@@ -606,7 +601,7 @@ $scope.getMajorValue = function(major) {
     $scope.drawChart(data["report_by_year"]);
   })
   .error(function(data, code) {
-    $scope.toast.error("خطا در بارگذاری اطلاعات\nکد خطا: " + code);
+    toaster.error("خطا در بارگذاری اطلاعات\nکد خطا: " + code);
   })
 
   $scope.drawChart = function (enteredData) {
@@ -668,7 +663,7 @@ $scope.getMajorValue = function(major) {
   }
 
 }])
-.controller('SubmitDispatchController', ['$scope', '$http', function ($scope, $http) {
+.controller('SubmitDispatchController', ['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
 
   $scope.DefaultDispatch = function () {
     return {
@@ -683,7 +678,7 @@ $scope.getMajorValue = function(major) {
   })
   .error(function (data, code) {
     $scope.isLoading = false;
-    $scope.toast.error('خطا رد دریافت لیست مراکز');
+    toaster.error('خطا رد دریافت لیست مراکز');
   });
 
   $scope.SendDispatch = function () {
@@ -696,12 +691,12 @@ $scope.getMajorValue = function(major) {
     $http.post('/new_dispatch', $scope.dispatch)
     .success(function (data) {
       $scope.isSending = false;
-      $scope.toast.success('ثبت اعزام موفقی آمیز بود.');
+      toaster.success('ثبت اعزام موفقی آمیز بود.');
       $scope.backToDashboard();
     })
     .error(function (data, code) {
       $scope.isSending = false;
-      $scope.toast.error('خطا ثبت اعزام.');
+      toaster.error('خطا ثبت اعزام.');
     });
   }
 
@@ -712,7 +707,7 @@ $scope.getMajorValue = function(major) {
   $scope.dispatch = $scope.DefaultDispatch();
 
 }])
-.controller('StationController', ['$scope', '$http', function ($scope, $http) {
+.controller('StationController', ['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
   $scope.DefaultStation = function () {
     return {
       phone_numbers:[""]
@@ -730,7 +725,7 @@ $scope.getMajorValue = function(major) {
     })
     .error(function (data, code) {
       $scope.isLoading = false;
-      $scope.toast.error("خطا در دریافت لیست مراکز")
+      toaster.error("خطا در دریافت لیست مراکز")
     });
   }
 
@@ -750,15 +745,15 @@ $scope.getMajorValue = function(major) {
       $scope.isSending = false;
       if (data.add) {
         $scope.StationList.push(data.data);
-        $scope.toast.success("مرکز با موفقیت اضافه شد.");
+        toaster.success("مرکز با موفقیت اضافه شد.");
         $scope.SelectedStation = null;
       }else{
-        $scope.toast.error("خطا در ذخیره اطلاعات مرکز.")  
+        toaster.error("خطا در ذخیره اطلاعات مرکز.")  
       };
     })
     .error(function (data, code) {
       $scope.isSending = false;
-      $scope.toast.error("خطا در ذخیره اطلاعات مرکز.")
+      toaster.error("خطا در ذخیره اطلاعات مرکز.")
     });
   }
 
@@ -775,17 +770,16 @@ $scope.getMajorValue = function(major) {
     .success(function (data) {
 
       $scope.isSending = false;
-      if (data.add) {
-        station = data.data;
-        $scope.toast.success("مرکز با موفقیت ویرایش شد.");
+      if (data.edit) {
+        toaster.success("مرکز با موفقیت ویرایش شد.");
         $scope.SelectedStation = null;
       }else{
-        $scope.toast.error("خطا در ویرایش مرکز.")  
+        toaster.error("خطا در ویرایش مرکز.")  
       };
     })
     .error(function (data, code) {
       $scope.isSending = false;
-      $scope.toast.error("خطا در ویرایش مرکز.")
+      toaster.error("خطا در ویرایش مرکز.")
     });
   }
 
@@ -804,7 +798,7 @@ $scope.getMajorValue = function(major) {
   $scope.GetStations();
 
 }])
-.controller('MaliReportController',['$scope', '$http', function ($scope, $http) {
+.controller('MaliReportController',['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
   $scope.init = function () {
     $scope.isLoading = true;
 
@@ -818,13 +812,13 @@ $scope.getMajorValue = function(major) {
     })
     .error(function(data, code) {
       $scope.isLoading = false;
-        $scope.toast.error("خطا در بارگزاری.")
+        toaster.error("خطا در بارگزاری.")
     });
   }
 
   $scope.init();
 }])
-.controller('SendSmsController',['$scope', '$http', function ($scope, $http) {
+.controller('SendSmsController',['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
 
   $scope.sms = {
     text: '',
@@ -850,26 +844,26 @@ $scope.getMajorValue = function(major) {
   $scope.sendSMS = function () {
 
     if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
-      $scope.toast.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
+      toaster.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
       return;
     };
 
     $http.post("/send_sms", $scope.sms)
     .success(function (data) {
       if(data.send == true)
-        $scope.toast.success(data.count + " پیام با موفقیت ارسال شد.");
+        toaster.success(data.count + " پیام با موفقیت ارسال شد.");
       else
-        $scope.toast.error("خطا در ارسال");
+        toaster.error("خطا در ارسال");
     })
     .error( function (data, code) {
-      $scope.toast.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
+      toaster.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
     });
   }
 
   $scope.getPanelDetail();
 
 }])
-.controller('TaskAssignController',['$scope', '$http', function ($scope, $http) {
+.controller('TaskAssignController',['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
 
   $scope.getTasks = function () {
     $scope.isLoading = true;
@@ -880,7 +874,7 @@ $scope.getMajorValue = function(major) {
       $scope.isLoading = false;
     })
     .error(function() {
-      $scope.toast.error("دریافت لیست وظایف با مشکل مواجه شد.")
+      toaster.error("دریافت لیست وظایف با مشکل مواجه شد.")
       $scope.isLoading = false;
     });
   }
@@ -932,17 +926,17 @@ $scope.getMajorValue = function(major) {
     .success(function (data) {
       $scope.isSending = false;
       $scope.init();
-      $scope.toast.success("با موفقت ثبت شد.");
+      toaster.success("با موفقت ثبت شد.");
     })
     .error(function() {
       $scope.isSending = false;
-      $scope.toast.error("با خطا مواجه شد.");
+      toaster.error("با خطا مواجه شد.");
     });
   }
 
   $scope.init();
 }])
-.controller('NewsController',['$scope', '$http', function ($scope, $http) {
+.controller('NewsController',['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
 
   $scope.init = function () {
     $scope.news = {};
@@ -964,15 +958,15 @@ $scope.getMajorValue = function(major) {
     .success(function (data) {
       $scope.isSending = false;
       if (data.err) {
-        $scope.toast.error("با خطا مواجه شد.");
+        toaster.error("با خطا مواجه شد.");
         return;
       };
       $scope.init();
-      $scope.toast.success("با موفقت ثبت شد.");
+      toaster.success("با موفقت ثبت شد.");
     })
     .error(function(data, code) {
       $scope.isSending = false;
-      $scope.toast.error("با خطا مواجه شد.");
+      toaster.error("با خطا مواجه شد.");
     });
   }
 }])
@@ -1055,12 +1049,27 @@ $scope.getMajorValue = function(major) {
   });
 }]);
 
-var dictionary = {
+app.factory('toaster', ['$rootScope','$timeout', function($rootScope, $timeout){
+  $rootScope.alerts = [];
+  return {
+    success : function (message) {
+      $rootScope.alerts.push({cssClass: "alert-success", description: message });
+      console.log(message);
+      this.startDestroyer(2500);
+    },
+    error : function (message) {
+      $rootScope.alerts.push({cssClass: "alert-danger", description: message });
+      this.startDestroyer(2500); 
+    },
+    info : function (message) {
+      $rootScope.alerts.push({cssClass: "alert-info", description: message });
+      this.startDestroyer(2500); 
+    },
+    startDestroyer : function (time) {
+      $timeout(function () {
+        $rootScope.alerts.shift();
+      },time);
+    }
 
-  getStatusColor: function (status) {
-    return 'text-'+status;
-  },
-  toPersian : function (word){
-
-  }
-}
+  };
+}]);

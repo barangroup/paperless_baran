@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>گروه دانشجویی باران</title>
-  <link href="dist/img/fav-icon.png"  rel="shortcut icon" >
+  <link href="dist/img/favicon.ico"  rel="shortcut icon" >
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
   <!-- Bootstrap 3.3.2 -->
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -181,10 +181,9 @@
 
       <section class="content" ng-view>
 
-
       </section>
       <!-- /.content -->
-      <div class="alert-container">
+      <div class="alert-container" ng-cloak>
         <div ng-repeat="alert in alerts" class="alert alert-dismissable" ng-class="alert.cssClass">
           <button type="button" class="close pull-left" ng-click="alerts.splice($index,1)">×</button>
           {{alert.description}}
