@@ -93,7 +93,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
         $scope.notifications = $json.notifications;
         $scope.page = $json.page;
         $scope.version = $json.version;
-      })
+    })
     .error(function($data, $status) {
       $scope.toast.error('error!\nError Code' + $status);
     });
@@ -126,7 +126,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
       return $scope.notifications && $scope.notifications.length > 0 ? $scope.notifications.length + ' اعلامیه' : 'اعلامیه ای وجود ندارد.';
     }
 
-  }])
+}])
 .controller("DashboardController", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 
       //TODO get this from server
@@ -138,12 +138,23 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
         author:null
       }
       $scope.quote.text = $sce.trustAsHtml($scope.quote.text);
+
       $scope.vote = {
         header: {title:"نظر سنجی",icon:"fa-ticket"},
         question: "چه نامی را برای سایت پیشنهاد میکنید؟",
         answer: "",
         isSending: false
       };
+
+      $scope.getNews = function () {
+        $http.get('/news')
+        .success(function (data) {
+          $scope.news = data;
+        })
+        .error(function() {
+          $scope.toast.error('خطا در بارگذاری اخبار');
+        });
+      }
 
       $scope.sendVote = function () {
         $scope.vote.isSending = true;
@@ -163,7 +174,9 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
         });
       }
 
-    }])
+      $scope.getNews();
+
+  }])
 .controller("LogController",['$scope', '$http', '$interval','$routeParams', function($scope, $http, $interval, $routeParams) {
 
   $scope.logsLength = $routeParams.size;
@@ -241,24 +254,24 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
           $scope.toast.error("متاسفانه در ارسال اطلاعات خطایی رخ داده.\nکد خطا: "+code);
           $scope.isSending = false;
         });
-      };
-    }
+    };
+}
 
-    $scope.commitFreeTimes = function () {
+$scope.commitFreeTimes = function () {
       // TODO Complete this part
       console.log($scope.userCopy.freeTimes);
-    }
+  }
 
-    $scope.getMajorValue = function(major) {
-     return major.group ? major.group + '-' + major.name : major.name;
-   }
+  $scope.getMajorValue = function(major) {
+    return major.group ? major.group + '-' + major.name : major.name;
+  }
 
-   $scope.showPassword = function(id) {
-     $('#'+id).attr("type","text");
-   }
-   $scope.hidePassword = function(id) {
-     $('#'+id).attr("type","password");
-   }
+  $scope.showPassword = function(id) {
+    $('#'+id).attr("type","text");
+  }
+  $scope.hidePassword = function(id) {
+    $('#'+id).attr("type","password");
+  }
         // TODO Check this again
         $scope.getPasswordStrength = function() {
           $scope.passwordStrength = 0;
@@ -275,7 +288,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
             $scope.passwordStrength += 20;
           }
         }
-      }])
+    }])
 .controller("AddContactController",['$scope','$http', function($scope, $http) {
 
   $scope.Deactive = false;
@@ -328,19 +341,19 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
           $scope.toast.error('خطا در برقراری ارتباط با سرور');
           $scope.Deactive = false;
         });
-      }
-    };
+    }
+};
 
-    $scope.hasError = function() {
-     return $scope.myForm.$error.required || $scope.myForm.email.$invalid || $scope.myForm.mobile.$invalid;
-   };
+$scope.hasError = function() {
+  return $scope.myForm.$error.required || $scope.myForm.email.$invalid || $scope.myForm.mobile.$invalid;
+};
 
-   $scope.getMajorValue = function(major) {
-     return major.group ? major.group + '-' + major.name : major.name;
-   };
+$scope.getMajorValue = function(major) {
+  return major.group ? major.group + '-' + major.name : major.name;
+};
 
 
- }])
+}])
 .controller('ContactListController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 
   $scope.Deactive = false;
@@ -451,59 +464,59 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', fu
             $scope.toast.info("خطا در ارتباط با سرور");
             $scope.isSending = false;
           });
-        }
       }
+  }
 
-      $scope.removeComment = function(user, commentIndex) {
-       if ($scope.canEdit && !user._comments[commentIndex]._writer) {
-        user._comments.splice(commentIndex, 1);
-      };
-    }
+  $scope.removeComment = function(user, commentIndex) {
+    if ($scope.canEdit && !user._comments[commentIndex]._writer) {
+      user._comments.splice(commentIndex, 1);
+    };
+  }
 
-    $scope.addComment = function(user) {
-     if ($scope.canEdit) {
+  $scope.addComment = function(user) {
+    if ($scope.canEdit) {
       if (!user._comments) {
-       user._comments = [];
-     };
-     user._comments.push({});
-   };
- }
+        user._comments = [];
+      };
+      user._comments.push({});
+    };
+  }
 
- $scope.removeSkill = function(user, skillIndex) {
-   if ($scope.canEdit) {
-    user.skills.splice(skillIndex, 1);
-  };
-}
+  $scope.removeSkill = function(user, skillIndex) {
+    if ($scope.canEdit) {
+      user.skills.splice(skillIndex, 1);
+    };
+  }
 
-$scope.addSkill = function(user) {
- if ($scope.canEdit) {
-  if (!user.skills) {
-   user.skills = [];
- };
- user.skills.push("");
-};
-}
+  $scope.addSkill = function(user) {
+    if ($scope.canEdit) {
+      if (!user.skills) {
+        user.skills = [];
+      };
+      user.skills.push("");
+    };
+  }
 
-$scope.search = function() {
- if ($scope._query.quick_search == "") {
-  $scope.clearSearch();
-};
-$scope.selectedUser = null;
-$scope.query = angular.copy($scope._query);
-$scope._query = null;
-$scope.paging(1, true);
-}
+  $scope.search = function() {
+    if ($scope._query.quick_search == "") {
+      $scope.clearSearch();
+    };
+    $scope.selectedUser = null;
+    $scope.query = angular.copy($scope._query);
+    $scope._query = null;
+    $scope.paging(1, true);
+  }
 
-$scope.clearSearch = function () {
- $scope.query = null;
- $scope._query = null;
- $scope.paging(1, true);
-}
+  $scope.clearSearch = function () {
+    $scope.query = null;
+    $scope._query = null;
+    $scope.paging(1, true);
+  }
 
-$scope.RemoveCriteria = function (param) {
- delete $scope.query[param];
- $scope.paging(1, true); 
-}
+  $scope.RemoveCriteria = function (param) {
+    delete $scope.query[param];
+    $scope.paging(1, true); 
+  }
 }])
 .controller('SendFeedBackController', ['$scope', '$http', function ($scope, $http) {
   $scope.isSending = false;
@@ -547,10 +560,10 @@ $scope.RemoveCriteria = function (param) {
           $scope.toast.error("ارسال با خطا مواجه شد.\nکد خطا: " + code);
           $scope.isSending = false;
         })
-      };
-    }
+    };
+}
 
-  }])
+}])
 .controller('BirthdaySmsController',['$scope', '$http', function ($scope, $http) {
 
   $isSending = false;
@@ -560,31 +573,31 @@ $scope.RemoveCriteria = function (param) {
   $scope.getSMSCount = function () {
       // TODO fix this
       return Math.ceil($scope.smsSetting.text.length / $scope.maxCharCount);
-    }
+  }
 
-    $http.get("/birthday_sms")
+  $http.get("/birthday_sms")
+  .success(function (data) {
+    $scope.smsSetting = data;
+  })
+  .error(function (data, code) {
+    $scope.toast.error("خطا در دریافت اطلاعات");
+  });
+
+  $scope.saveSetting = function () {
+    $scope.isSending = true;
+    $http.post("/birthday_sms", $scope.smsSetting)
     .success(function (data) {
-     $scope.smsSetting = data;
-   })
-    .error(function (data, code) {
-     $scope.toast.error("خطا در دریافت اطلاعات");
-   });
-
-    $scope.saveSetting = function () {
-     $scope.isSending = true;
-     $http.post("/birthday_sms", $scope.smsSetting)
-     .success(function (data) {
       $scope.isSending = false;
       $scope.toast.success("تنظیمات با موفقیت ذخیره شد.");
       $scope.backToDashboard();
     })
-     .error(function (data, code) {
+    .error(function (data, code) {
       $scope.isSending = false;
       $scope.toast.error("در ارسال با خطا مواجه شدیم");
     })
-   }
+  }
 
- }])
+}])
 .controller('UserReportController', ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
   $scope.report = [];
 
@@ -791,6 +804,26 @@ $scope.RemoveCriteria = function (param) {
   $scope.GetStations();
 
 }])
+.controller('MaliReportController',['$scope', '$http', function ($scope, $http) {
+  $scope.init = function () {
+    $scope.isLoading = true;
+
+    $scope.from = 0;
+    $scope.to = 5;
+
+    $http.get("/mali?from="+$scope.from+"&to="+$scope.to)
+    .success(function (data) {
+      $scope.isLoading = false;
+      $scope.finance = data;
+    })
+    .error(function(data, code) {
+      $scope.isLoading = false;
+        $scope.toast.error("خطا در بارگزاری.")
+    });
+  }
+
+  $scope.init();
+}])
 .controller('SendSmsController',['$scope', '$http', function ($scope, $http) {
 
   $scope.sms = {
@@ -812,11 +845,11 @@ $scope.RemoveCriteria = function (param) {
   $scope.getSMSCount = function () {
       // TODO fix this
       return Math.ceil($scope.sms.text.length / $scope.maxCharCount);
-    }
+  }
 
-    $scope.sendSMS = function () {
+  $scope.sendSMS = function () {
 
-     if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
+    if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
       $scope.toast.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
       return;
     };
@@ -824,10 +857,10 @@ $scope.RemoveCriteria = function (param) {
     $http.post("/send_sms", $scope.sms)
     .success(function (data) {
       if(data.send == true)
-       $scope.toast.success(data.count + " پیام با موفقیت ارسال شد.");
-     else
-       $scope.toast.error("خطا در ارسال");
-   })
+        $scope.toast.success(data.count + " پیام با موفقیت ارسال شد.");
+      else
+        $scope.toast.error("خطا در ارسال");
+    })
     .error( function (data, code) {
       $scope.toast.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
     });
@@ -904,13 +937,44 @@ $scope.RemoveCriteria = function (param) {
     .error(function() {
       $scope.isSending = false;
       $scope.toast.error("با خطا مواجه شد.");
-    });;
+    });
   }
 
   $scope.init();
 }])
 .controller('NewsController',['$scope', '$http', function ($scope, $http) {
-  
+
+  $scope.init = function () {
+    $scope.news = {};
+    $scope.newsForm.$setPristine();
+    $scope.isSending = false;
+  }
+
+  $scope.hasError = function () {
+    return $scope.newsForm.$invalid;
+  }
+
+  $scope.addNews = function (news) {
+    if ($scope.hasError()) {
+      return;
+    };
+    $scope.isSending = true;
+    
+    $http.post('/news', {type: 'add', data:news})
+    .success(function (data) {
+      $scope.isSending = false;
+      if (data.err) {
+        $scope.toast.error("با خطا مواجه شد.");
+        return;
+      };
+      $scope.init();
+      $scope.toast.success("با موفقت ثبت شد.");
+    })
+    .error(function(data, code) {
+      $scope.isSending = false;
+      $scope.toast.error("با خطا مواجه شد.");
+    });
+  }
 }])
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -961,6 +1025,10 @@ $scope.RemoveCriteria = function (param) {
   .when('/stations', {
     templateUrl: 'views/stations.html',
     controller: 'StationController'
+  })
+  .when('/mali', {
+    templateUrl: 'views/mali-report.html',
+    controller: 'MaliReportController'
   })
   .when('/bug-report', {
     templateUrl: 'views/bug-report.html',

@@ -4,31 +4,38 @@
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-newspaper-o"></i>	اخبار</h3>
 			</div>
-			<form name="news-form"  class="form-horizontal">
+			<form name="newsForm"  class="form-horizontal" ng-submit="addNews(news)">
 				<div class="box-body">
-					<div class="form-group">
+					<div class="form-group" ng-class="{'has-error' : newsForm.title.$dirty && newsForm.title.$invalid}">
 						<label for="input-title" class="col-sm-2">عنوان خبر <strong class="text-red">*</strong></label>
 						<div class="col-md-6">
 							<input type="text" class="form-control" name="title" ng-model="news.title" id="input-title" required>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" ng-class="{'has-error' : newsForm.text.$dirty && newsForm.text.$invalid}">
 						<label for="input-text" class="col-sm-2">خبر <strong class="text-red">*</strong></label>
-						<div class="col-md-10	">
-							<textarea rows="3" class="form-control" name="news" ng-model="news.text" id="input-text" required></textarea>
+						<div class="col-md-10">
+							<textarea rows="8" style="resize: vertical" class="form-control" name="text" ng-model="news.text" id="input-text" required></textarea>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" ng-class="{'has-error' : newsForm.link.$dirty && newsForm.link.$invalid}">
 						<label for="input-link" class="col-sm-2">لینک</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control pr-en" name="link" ng-model="news.link" id="input-link">
+							<input type="text" class="form-control pr-en" name="link" ng-model="news.link" id="input-link" ng-pattern="/^(http:\/\/|https:\/\/|ftp:\/\/www.|www\.)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/">
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : newsForm.image.$dirty && newsForm.link.$invalid}">
+						<label for="input-image" class="col-sm-2">لینک تصویر</label>
+						<div class="col-md-6">
+							<input type="text" class="form-control pr-en" name="image" ng-model="news.image" id="input-image" ng-pattern="/^(http:\/\/|https:\/\/|ftp:\/\/www.|www\.)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/">
 						</div>
 					</div>
 				</div>
 				<div class="box-footer">
-				<button class="btn btn-success" type="submit">ذخیره <i class="fa fa-save"></i></button>
+				<button class="btn btn-success" type="submit" ng-disabled="hasError()">ذخیره <i class="fa fa-save"></i></button>
 				</div>
 			</form>
+			<div class="overlay" ng-show="isSending"> <i class="fa fa-spinner fa-pulse"></i></div>
 		</div>
 	</div>
 </div>

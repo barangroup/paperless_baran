@@ -120,7 +120,7 @@ module.exports.post = function(req, res) {
             _.includes(req.user._permissions, "news")) {
             a.menus.push({
                 "title": "ثبت خبر جدید",
-                "icon": "fa-bus",
+                "icon": "fa-newspaper-o",
                 "link": "#/news"
             });
         }
@@ -128,7 +128,7 @@ module.exports.post = function(req, res) {
         if (_.includes(req.user._permissions, "root")) {
             a.menus.push({
                 "title": "وظایف (مسئولیت ها)",
-                "icon": "fa-bus",
+                "icon": "fa-tasks",
                 "link": "#/task-assign"
             });
         }

@@ -1,5 +1,5 @@
 <div class="row" ng-cloak>
-	<div class="col-lg-8 col-md	-6">
+	<div class="col-lg-6 col-md-6">
 		<div class="box box-solid">
 			<div class="box-body">
 				<h3>سلام، <a href="#/profile" class="text-orange">{{getFullName(user)}}</a></h3>
@@ -12,10 +12,34 @@
 		</div>
 		<div class="box box-solid">
 			<div class="box-header with-border">
-				<p class="box-title"><i class="fa fa-newspaper-o"></i>	اخبار باران</p>
+				<p class="box-title"><i class="fa fa-newspaper-o fa-fw"></i>	آخرین اخبار</p>
 			</div>
-			<div class="box-body">
-				<i class="fa fa-gears"></i>	در حال راه اندازی
+			<div class="box-body" ng-cloak>
+				<ul class="products-list product-list-in-box">
+					<li class="item" ng-if="!news || news.length == 0">
+						<div class="product-info"><i class="fa fa-exclamation fa-fw"></i>خبری موجود نیست</div>
+					</li>
+                    <li class="item" ng-repeat="x in news">
+                      <div class="product-img">
+                        <img ng-src="{{x.image ? x.image : 'http://placehold.it/50x50/d2d6de/ffffff'}}" alt="Product Image">
+                      </div>
+                      <div class="product-info">
+                        <a ng-href="{{x.link}}" class="product-title">{{x.title}}</a>
+                        <span class="product-description">{{x.text}}</span>
+                      </div>
+                    </li>
+                </ul>
+				<!-- <ul class="nav nav-pills nav-stacked no-padding">
+					<li ng-if="!news || news.length == 0">
+						<a><i class="fa fa-exclamation fa-fw"></i>خبری موجود نیست</a>
+					</li>
+					<li ng-repeat="x in news">
+					<a ng-href="{{x.link}}">
+						<h3>{{x.title}}</h3>
+						<p>{{x.text}}</p>
+					</a>
+					</li>
+				</ul> -->
 			</div>
 		</div>
 	</div>
