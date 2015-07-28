@@ -6,7 +6,25 @@ module.exports = (function() {
     var _return = {};
 
     _return.get = function(req, res, next) {
-        next();
+        db.stations
+            .find({}, {
+                name: true,
+                male: true,
+                female: true,
+                age_from: true,
+                age_to: true
+            })
+            .populate({
+                path: '_creator',
+                select: 'first_name last_name -_id'
+            }).lean().exec(function(err, stations) {
+                if (err) {
+                    console.log(err);
+                } else if (stations) {
+                    // todo : add persion date to each on
+                    res.json(stations);
+                }
+            });
     };
 
     _return.post = function(req, res, next) {
