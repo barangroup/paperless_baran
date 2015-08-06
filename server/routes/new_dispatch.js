@@ -18,14 +18,18 @@ module.exports = (function() {
                         stations: String.remove_empty_data(re)
                     });
                 });
-        } else res.status(403).send("premission deny!");
+        } else res.status(403).json({
+            err: "premission denied"
+        });
     };
 
 
     _return.post = function(req, res, next) {
-        // console.open(req.body);
         if (_.includes(req.user._permissions, "root") || _.includes(req.user._permissions, "add_dispatch")) {
             var dispatch = req.body;
+            if (!(_.includes(dispatch.members, req.user._id))) {
+                dispatch.members.push(req.user._id);
+            }
             var costs = req.body.costs;
             var cost_ids = [];
 
@@ -91,7 +95,9 @@ module.exports = (function() {
                     }
                 }); // new dispatch
             }); // exit callback
-        } else next();
+        } else res.status(403).json({
+            err: "permission denied"
+        });
     };
 
     return _return;
