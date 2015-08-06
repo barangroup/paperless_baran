@@ -15,7 +15,8 @@
     "mongo_logs_limit": 5000,
     "sms_credit_cron": false,
     "req_per_min": 60,
-    "income_sms" : false ,
-    "income_sms_loop_time": 10 ,
-    "domain" : "-"
+    "income_sms": false,
+    "income_sms_loop_time": 10,
+    "under_cosnstruct_mode": false,
+    "domain": "-"
 }

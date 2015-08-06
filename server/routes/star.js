@@ -22,89 +22,102 @@ module.exports = (function() {
 
     _return.get = function(req, res, next) {
 
-        black_list[req.ip] = black_list[req.ip] + 1 || 1;
 
-        if (black_list[req.ip] < global.init.req_per_min) {
-
-            // console.log("get -> " + req.url);
-
-            if (req.url == '/del') {
-                next();
-            } else if (req.session.q) {
-                db.users.findOne({
-                        _id: req.session.q
-                    }, {
-                        __v: false
-                    })
-                    .populate("task").lean().exec(
-                        function(err, user) {
-                            if (user) {
-                                user._permissions = [];
-
-                                if (user.task && user.task.length > 0) {
-                                    user.task.forEach(function(t) {
-                                        user._permissions = Array.merge(user._permissions, t.permissions);
-                                    });
-                                }
-                                req.user = user;
-                                next();
-                            } else {
-                                res.redirect('/del');
-                            }
-                        });
-            } else if (_.includes(include_guest_get, req.url)) {
-                next();
-            } else {
-                res.redirect('/del');
-            }
+        if (global.init.under_cosnstruct_mode) {
+            res.send("<br><br><h3 align=\"center\">با عرض پوزش سایت موقتا به دلیل بعضی تغییرات بسته است، لطفا کمی بعد مجدد تلاش کنید.</h3>");
         } else {
-            res.status(403).send('u r blocked for sending too many request...');
-            if (!printed_black_list[req.ip]) {
-                console.log("*** too many requests from -> " + req.ip);
-                printed_black_list[req.ip] = true;
-            }
+            black_list[req.ip] = black_list[req.ip] + 1 || 1;
 
+            if (black_list[req.ip] < global.init.req_per_min) {
+
+                // console.log("get -> " + req.url);
+
+                if (req.url == '/del') {
+                    next();
+                } else if (req.session.q) {
+                    db.users.findOne({
+                            _id: req.session.q
+                        }, {
+                            __v: false
+                        })
+                        .populate("task").lean().exec(
+                            function(err, user) {
+                                if (user) {
+                                    user._permissions = [];
+
+                                    if (user.task && user.task.length > 0) {
+                                        user.task.forEach(function(t) {
+                                            user._permissions = Array.merge(user._permissions, t.permissions);
+                                        });
+                                    }
+                                    req.user = user;
+                                    next();
+                                } else {
+                                    res.redirect('/del');
+                                }
+                            });
+                } else if (_.includes(include_guest_get, req.url)) {
+                    next();
+                } else {
+                    res.redirect('/del');
+                }
+            } else {
+                res.status(403).send('u r blocked for sending too many request...');
+                if (!printed_black_list[req.ip]) {
+                    console.log("*** too many requests from -> " + req.ip);
+                    printed_black_list[req.ip] = true;
+                }
+
+            }
         }
+
     };
 
     _return.post = function(req, res, next) {
 
-        black_list[req.ip] = black_list[req.ip] + 1 || 1;
-
-        if (black_list[req.ip] < global.init.req_per_min) {
-            // console.log("post -> " + req.url);
-            if (req.session.q) {
-                db.users.findOne({
-                        _id: req.session.q
-                    }, {
-                        __v: false
-                    })
-                    .populate("task").lean().exec(
-                        function(err, user) {
-                            if (user) {
-                                user._permissions = [];
-
-                                if (user.task && user.task.length > 0) {
-                                    user.task.forEach(function(t) {
-                                        user._permissions = Array.merge(user._permissions, t.permissions);
-                                    });
-                                }
-
-                                req.user = user;
-                                next();
-                            } else {
-                                res.redirect('/del');
-                            }
-                        });
-            } else next();
+        if (global.init.under_cosnstruct_mode) {
+            res.status(500).json({
+                err: "under_cosnstruct_mode is on"
+            });
         } else {
-            res.status(403).send('u r blocked for sending too many request...');
-            if (!printed_black_list[req.ip]) {
-                console.log("*** too many requests from -> " + req.ip);
-                printed_black_list[req.ip] = true;
-            }
+            black_list[req.ip] = black_list[req.ip] + 1 || 1;
 
+            if (black_list[req.ip] < global.init.req_per_min) {
+                // console.log("post -> " + req.url);
+                if (req.session.q) {
+                    db.users.findOne({
+                            _id: req.session.q
+                        }, {
+                            __v: false
+                        })
+                        .populate("task").lean().exec(
+                            function(err, user) {
+                                if (user) {
+                                    user._permissions = [];
+
+                                    if (user.task && user.task.length > 0) {
+                                        user.task.forEach(function(t) {
+                                            user._permissions = Array.merge(user._permissions, t.permissions);
+                                        });
+                                    }
+
+                                    req.user = user;
+                                    next();
+                                } else {
+                                    res.redirect('/del');
+                                }
+                            });
+                } else next();
+            } else {
+                res.status(403).send('u r blocked for sending too many request...');
+                if (!printed_black_list[req.ip]) {
+                    console.log("*** too many requests from -> " + req.ip);
+                    printed_black_list[req.ip] = true;
+                }
+
+            }
         }
+
     };
 
     return _return;
