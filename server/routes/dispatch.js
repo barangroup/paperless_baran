@@ -6,7 +6,7 @@
 
  	_return.get = function(req, res, next) {
 
- 		if (req.user && req.query  && req.query.to && req.query.from ) {
+ 		if (req.user && req.query) {
  			var _root = _.includes(req.user._permissions, "root"),
  				_see_all_women = _.includes(req.user._permissions, "see_all_woman_dispatch"),
  				_see_all_man = _.includes(req.user._permissions, "see_all_man_dispatch"),
@@ -21,52 +21,143 @@
  					} else if (_see_all_women) {
  						query.female = true;
  					}
+ 				} else {
+ 					query.male = true;
+ 					query.female = true;
  				}
 
- 				db.dispatch.find({}, {
- 					__v: false
- 				}).populate({
- 					path: 'members',
- 					select: 'first_name last_name -_id'
- 				}).populate({
- 					path: '_leader',
- 					select: 'first_name last_name -_id'
- 				}).populate({
- 					path: '_station',
- 					select: 'name male female -_id',
- 					match: query
- 				}).populate({
- 					path: 'costs',
- 					select: 'cost comment -_id'
- 				}).lean().exec(function(err, dispatchs) {
- 					if (err) {
- 						console.log(err);
- 						res.json({
- 							err: true
- 						});
- 					} else if (dispatchs) {
+ 				if (req.query.type && req.query.type == "list") {
+ 					db.dispatch.find({}, {
+ 						_station: true,
+ 						_leader: true,
+ 					}).populate({
+ 						path: '_leader',
+ 						select: 'first_name last_name -_id'
+ 					}).populate({
+ 						path: '_station',
+ 						select: 'name male female -_id'
+ 					}).lean().exec(function(err, dispatchs) {
+ 						if (err) {
+ 							console.log(err);
+ 							res.json({
+ 								err: err
+ 							});
+ 						} else if (dispatchs) {
+ 							for (var i = 0; i < dispatchs.length; i++) {
+ 								if (!(query.male && query.female)) {
+ 									if (query.male) {
+ 										if (!dispatchs[i]._station.male) {
+ 											dispatchs.splice(i--, 1);
+ 										}
+ 									} else if (query.female) {
+ 										if (!dispatchs[i]._station.female) {
+ 											dispatchs.splice(i--, 1);
+ 										}
+ 									}
+ 								}
 
- 						for (var i = 0; i < dispatchs.length; i++) {
- 							if (!dispatchs[i]._station) {
- 								dispatchs.splice(i--, 1);
+ 							}
+ 							res.json(dispatchs);
+ 						};
+ 					});
+ 				} else if (req.query.type = "get_data", req.query.data && req.query.date._id) {
+ 					db.dispatch.findOne({
+ 						_id: req.query._id
+ 					}, {
+ 						__v: false
+ 					}).populate({
+ 						path: '_station',
+ 						select: 'name male female -_id'
+ 					}).populate({
+ 						path: 'members',
+ 						select: 'first_name last_name -_id'
+ 					}).populate({
+ 						path: '_leader',
+ 						select: 'first_name last_name -_id'
+ 					}).populate({
+ 						path: 'costs',
+ 						select: 'cost comment -_id'
+ 					}).lean().exec(function(err, dispatch) {
+ 						if (err) {
+ 							console.log(err);
+ 							res.json({
+ 								err: err
+ 							});
+ 						} else if (dispatch) {
+ 							if ((dispatch._station && dispatch._station.male && !query.male) || (dispatch._station && dispatch._station.female && !query.female)) {
+ 								res.status(403).json({
+ 									err: "permission denied"
+ 								});
  							} else {
  								var c = 0;
- 								dispatchs[i].costs.forEach(function(cost) {
+ 								dispatch.costs.forEach(function(cost) {
  									c += cost.cost;
  								});
- 								dispatchs[i].costs = c;
- 								if (dispatchs[i].date) {
- 									Date.en_to_persion_date(dispatchs[i].date, function(date) {
- 										dispatchs[i].date = date.date;
+ 								dispatch.costs = c;
+ 								if (dispatch.date) {
+ 									Date.en_to_persion_date(dispatch.date, function(date) {
+ 										dispatch.date = date.date;
  									});
  								}
+ 								res.json(dispatch);
  							}
- 						}
- 						res.json(dispatchs.slice(req.query.from,req.query.to)); // What The HELL!
- 					}
- 				});
 
- 			} else res.json({});
+ 						} else {
+ 							res.json({
+ 								err: "not found"
+ 							});
+ 						}
+ 					});
+ 				}
+
+ 				// Old Strategy
+
+ 				// db.dispatch.find({}, {
+ 				// 	__v: false
+ 				// }).populate({
+ 				// 	path: 'members',
+ 				// 	select: 'first_name last_name -_id'
+ 				// }).populate({
+ 				// 	path: '_leader',
+ 				// 	select: 'first_name last_name -_id'
+ 				// }).populate({
+ 				// 	path: '_station',
+ 				// 	select: 'name male female -_id',
+ 				// 	match: query
+ 				// }).populate({
+ 				// 	path: 'costs',
+ 				// 	select: 'cost comment -_id'
+ 				// }).lean().exec(function(err, dispatchs) {
+ 				// 	if (err) {
+ 				// 		console.log(err);
+ 				// 		res.json({
+ 				// 			err: true
+ 				// 		});
+ 				// 	} else if (dispatchs) {
+
+ 				// 		for (var i = 0; i < dispatchs.length; i++) {
+ 				// 			if (!dispatchs[i]._station) {
+ 				// 				dispatchs.splice(i--, 1);
+ 				// 			} else {
+ 				// 				var c = 0;
+ 				// 				dispatchs[i].costs.forEach(function(cost) {
+ 				// 					c += cost.cost;
+ 				// 				});
+ 				// 				dispatchs[i].costs = c;
+ 				// 				if (dispatchs[i].date) {
+ 				// 					Date.en_to_persion_date(dispatchs[i].date, function(date) {
+ 				// 						dispatchs[i].date = date.date;
+ 				// 					});
+ 				// 				}
+ 				// 			}
+ 				// 		}
+ 				// 		res.json(dispatchs.slice(req.query.from, req.query.to)); // What The HELL!
+ 				// 	}
+ 				// });
+
+ 			} else res.status(403).json({
+ 				err: "permission denied"
+ 			});
  		} else res.json({
  			err: "low args"
  		});
