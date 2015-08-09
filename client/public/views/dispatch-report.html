@@ -3,25 +3,25 @@
 	<div class="col-md-6">
 		<div class="box box-solid">
 			<div class="box-header with-border">
-				<h2 class="box-title"><i class="fa fa-shopping-cart fa-fw"></i> گزارش مالی</h2>
+				<h2 class="box-title"><i class="fa fa-globe fa-fw"></i> گزارش اعزام به مراکز</h2>
 			</div>
 			<div class="box-body no-padding" ng-cloak>
 				<table class="table table-hover table-striped selectable-row">
 					<thead>
 						<tr>
-							<th>نام صادر کننده</th>
-							<th>هزینه</th>
+							<th>رابط</th>
+							<th>مرکز</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-if="!finance || !finance.length">
+						<tr ng-if="!dispatches || !dispatches.length">
 							<td colspan="2">
-								<h4><i class="fa fa-coffee fa-fw"></i>لیست خالیست</h4>
+								<h4><i class="fa fa-coffee fa-fw"></i> لیست خالیست</h4>
 							</td>
 						</tr>
-					<tr ng-if="finance && finance.length" ng-repeat="x in finance" ng-click="selectRow(x)" ng-class="{'bg-blue' : x._id == selected._id}">
-							<td>{{getFullName(x._owner)}}</td>
-							<td>{{x.cost}}</td>
+					<tr ng-if="dispatches && dispatches.length" ng-repeat="x in dispatches" ng-click="selectRow(x)" ng-class="{'bg-blue' : x._id == selected._id}">
+							<td>{{getFullName(x._leader)}}</td>
+							<td>{{x._station.name}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -37,20 +37,14 @@
 			</div>
 			<div class="box-body">
 				<dl class="dl-horizontal">
-					<dt>صادر کننده:</dt>
-					<dd>{{getFullName(selected._owner)}}</dd>
+					<dt>رابط:</dt>
+					<dd>{{getFullName(selected._leader)}}</dd>
 					<dt>تاریخ:</dt>
-					<dd>{{x.dispatch.date}}</dd>
+					<dd>{{x.date}}</dd>
 					<dt>مرکز:</dt>
-					<dd>{{x.dispatch._station.name}}</dd>
-					<dt>هزینه:</dt>
-					<dd>{{x.cost}}</dd>
-					<dt>فاکتور دارد:</dt>
-					<dd>{{x.have_facor}}</dd>
-					<dt>دریافت شده:</dt>
-					<dd>{{x.pony}}</dd>
-					<dt></dt>
-					<dd></dd>
+					<dd>{{x._station.name}}</dd>
+					<dt>توضیحات</dt>
+					<dd>{{x.comment}}</dd>
 				</dl>
 			</div>
 		</div>
