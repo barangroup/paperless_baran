@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>گروه دانشجویی باران | ثبت نام</title>
-        <link href="dist/img/favicon.ico"  rel="shortcut icon" >
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <!-- Bootstrap 3.3.2 -->
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- Font Awesome Icons -->
-        <link href="dist/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" >
-        <link type="text/css" href="bootstrap/persiandatepicker/styles/datepicker.css" rel="stylesheet" />
-        <!-- Theme style -->
-        <link href="dist/css/style.min.css" rel="stylesheet" type="text/css" />
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<head>
+    <meta charset="UTF-8">
+    <title>گروه دانشجویی باران | ثبت نام</title>
+    <link href="dist/img/favicon.ico"  rel="shortcut icon" >
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link href="dist/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" >
+    <link type="text/css" href="bootstrap/persiandatepicker/styles/datepicker.css" rel="stylesheet" />
+    <!-- Theme style -->
+    <link href="dist/css/style.min.css" rel="stylesheet" type="text/css" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -65,58 +65,58 @@
                             زن
                         </label>
                     </div>
-                    <h4><a href data-toggle="collapse" data-target="#more-detail">اطلاعات تکمیلی <i class="fa fa-plus"></i></a></h4>
+                    <h4><a href data-toggle="collapse" data-target="#more-detail"><i class="fa fa-plus fa-fw"></i> اطلاعات تکمیلی</a></h4>
                     <section id="more-detail" class="collapse">
-                    <div class="input-group form-group" ng-class="{'has-error' : myForm.email.$invalid}">
-                        <span class="input-group-addon">ایمیل</span>
-                        <input type="email" class="form-control pr-en" name="email" ng-model="user.email">
-                    </div>
-                    <div class="form-group input-group" ng-class="{'has-error' : registerForm.telephone_number.$dirty && registerForm.telephone_number.$invalid}">
-                        <span class="input-group-addon">
-                            تلفن ثابت
-                        </span>
-                        <input type="text" class="form-control pr-numb" name="telephone_number"
-                        ng-model="user.telephone_number" ng-pattern="/^0[0-9]{10}$/" placeholder="مثال: 05138471234">
-                    </div>
-                    <div class="form-group input-group">
-                        <span class="input-group-addon">ساکن</span>
-                        <input type="text" class="form-control" name="city" ng-model="user.city" ng-disabled="user.native"/>
-                        <span class="input-group-addon">
-                            <label>
-                                <input type="checkbox" name="native" ng-model="user.native"
-                                ng-change="user.native ?  user.city = 'مشهد' : user.city=''">
-                                ساکن مشهد
-                            </label>
-                        </span>
-                    </div>
-                    <div class="form-group input-group">
-                        <span class="input-group-addon">
-                            آدرس
-                        </span>
-                        <input type="text" class="form-control" name="address" ng-model="user.address">
-                    </div>
-                    <div class="form-group input-group" ng-class="{'has-error' : registerForm.birth_date.$invalid}">
-                        <span class="input-group-addon">تاریخ تولد</span>
-                        <input type="text" class="form-control pr-numb datePicker" name="birth_date" placeholder="ماه/روز/سال" ng-model="user.birth_date" ng-pattern="/^1[3-4][0-9]{2}/[0-9]{1,2}/[0-9]{1,2}$/">
-                    </div>
-                    <div class="input-group form-group">
-                        <span class="input-group-addon">دانشگاه</span>
-                        <input type="text" class="form-control" name="university" ng-model="user.university" ng-disabled="user.sadjad_uni_student">
-                        <span class="input-group-addon">
-                            <label class="pr-sml">
-                                <input type="checkbox" name="sadjad_student" ng-model="user.sadjad_uni_student"  ng-change="user.sadjad_uni_student ?  user.university = 'صنعتی سجاد' : user.university=''">
-                                صنعتی سجاد
-                            </label>
-                        </span>
-                    </div>
-                    <div class="input-group form-group">
-                        <span class="input-group-addon">رشته</span>
-                        <select class="form-control text-right" ng-model="user.major"
-                        ng-options="getMajorValue(major) as major.name group by major.group for major in majorsList"></select>
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">سال ورود به دانشگاه</span>
-                        <select class="form-control" ng-model="user.entering_uni_year"
+                        <div class="input-group form-group" ng-class="{'has-error' : myForm.email.$invalid}">
+                            <span class="input-group-addon">ایمیل</span>
+                            <input type="email" class="form-control pr-en" name="email" ng-model="user.email">
+                        </div>
+                        <div class="form-group input-group" ng-class="{'has-error' : registerForm.telephone_number.$dirty && registerForm.telephone_number.$invalid}">
+                            <span class="input-group-addon">
+                                تلفن ثابت
+                            </span>
+                            <input type="text" class="form-control pr-numb" name="telephone_number"
+                            ng-model="user.telephone_number" ng-pattern="/^0[0-9]{10}$/" placeholder="مثال: 05138471234">
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">ساکن</span>
+                            <input type="text" class="form-control" name="city" ng-model="user.city" ng-disabled="user.native"/>
+                            <span class="input-group-addon">
+                                <label>
+                                    <input type="checkbox" name="native" ng-model="user.native"
+                                    ng-change="user.native ?  user.city = 'مشهد' : user.city=''">
+                                    ساکن مشهد
+                                </label>
+                            </span>
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                آدرس
+                            </span>
+                            <input type="text" class="form-control" name="address" ng-model="user.address">
+                        </div>
+                        <div class="form-group input-group" ng-class="{'has-error' : registerForm.birth_date.$invalid}">
+                            <span class="input-group-addon">تاریخ تولد</span>
+                            <input type="text" class="form-control pr-numb datePicker" name="birth_date" placeholder="ماه/روز/سال" ng-model="user.birth_date" ng-pattern="/^1[3-4][0-9]{2}/[0-9]{1,2}/[0-9]{1,2}$/">
+                        </div>
+                        <div class="input-group form-group">
+                            <span class="input-group-addon">دانشگاه</span>
+                            <input type="text" class="form-control" name="university" ng-model="user.university" ng-disabled="user.sadjad_uni_student">
+                            <span class="input-group-addon">
+                                <label class="pr-sml">
+                                    <input type="checkbox" name="sadjad_student" ng-model="user.sadjad_uni_student"  ng-change="user.sadjad_uni_student ?  user.university = 'صنعتی سجاد' : user.university=''">
+                                    صنعتی سجاد
+                                </label>
+                            </span>
+                        </div>
+                        <div class="input-group form-group">
+                            <span class="input-group-addon">رشته</span>
+                            <select class="form-control text-right" ng-model="user.major"
+                            ng-options="getMajorValue(major) as major.name group by major.group for major in majorsList"></select>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">سال ورود به دانشگاه</span>
+                            <select class="form-control" ng-model="user.entering_uni_year"
                             ng-options="year for year in entryYear">
                         </select>
                     </div>
@@ -132,37 +132,37 @@
                             <tr ng-repeat="skill in user.skills track by $index">
                                 <td><input type="text" name="skill" class="form-control" ng-model="user.skills[$index]"></td>
                                 <td><button type="button" class="btn btn-danger" ng-click="user.skills.splice($index,1)"><i
-                                class="fa fa-remove"></i></button></td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="2">
-                                <button ng-init="user.skills=[]" type="button" class="btn btn-default" ng-click="user.skills.push('')">افزودن <i class="fa fa-plus"></i></button>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                    <div class="row">
-                        <label class="col-lg-12">
-                            <input type="checkbox" name="" ng-model="_AcceptRules" required/>
-                            من تمامی <a href data-toggle="collapse" data-target="#rules">قوانین</a> را مطالعه کردم و می پذیرم.
-                        </label>
-                    </div>
-                    <div id="rules" class="collapse" style="border-top: solid 4px #ccc; padding: 5px 10px">
-                        <ol>
-                            <li>دانشجویان دانشگاه صنعتی سجاد به عنوان عضو رسمی و دیگر اعضا به عنوان عضو افتخاری باران شناخته شده و اعضای افتخاری نمیتوانند به عنوان مسئول در گروه فعالیت نمایند.</li>
-                            <li> گروه یک تشکل دانشجویی با اهداف مشخص می باشد و هرگونه فعالیت سیاسی یا فعالیت هایی که از دامنه خط مشی باران خارج باشد، ممنوع است.</li>
-                            <li>حضور شما در هر کارگروه مستلزم پذیرفتن آیین نامه آن کارگروه است که در ابتدای شروع فعالیت در هر کارگروه، آیین نامه ان کارگروه در اختیارتان قرار داده می شود.</li>
-                            <li>رعایت شئونات اسلامی و اخلاقی حین فعالیت در گروه الزامی است. در صورت عدم رعایت قوانین فوق از فعالیت شما ممانعت به عمل خواهد امد.</li>
-                        </ol>
-                    </div>
+                                    class="fa fa-remove"></i></button></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <button ng-init="user.skills=[]" type="button" class="btn btn-default" ng-click="user.skills.push('')">افزودن <i class="fa fa-plus"></i></button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </section>
+                        <div class="row">
+                            <label class="col-lg-12">
+                                <input type="checkbox" name="" ng-model="_AcceptRules" required/>
+                                من تمامی <a href data-toggle="collapse" data-target="#rules">قوانین</a> را مطالعه کردم و می پذیرم.
+                            </label>
+                        </div>
+                        <div id="rules" class="collapse" style="border-top: solid 4px #ccc; padding: 5px 10px">
+                            <ol>
+                                <li>دانشجویان دانشگاه صنعتی سجاد به عنوان عضو رسمی و دیگر اعضا به عنوان عضو افتخاری باران شناخته شده و اعضای افتخاری نمیتوانند به عنوان مسئول در گروه فعالیت نمایند.</li>
+                                <li> گروه یک تشکل دانشجویی با اهداف مشخص می باشد و هرگونه فعالیت سیاسی یا فعالیت هایی که از دامنه خط مشی باران خارج باشد، ممنوع است.</li>
+                                <li>حضور شما در هر کارگروه مستلزم پذیرفتن آیین نامه آن کارگروه است که در ابتدای شروع فعالیت در هر کارگروه، آیین نامه ان کارگروه در اختیارتان قرار داده می شود.</li>
+                                <li>رعایت شئونات اسلامی و اخلاقی حین فعالیت در گروه الزامی است. در صورت عدم رعایت قوانین فوق از فعالیت شما ممانعت به عمل خواهد امد.</li>
+                            </ol>
+                        </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <button type="submit" class="btn btn-block btn-flat btn-success " ng-disabled="Deactive || registerForm.$invalid">
-                            <i class="fa fa-refresh fa-spin" ng-show="Deactive"></i>
-                            <span ng-hide="Deactive">ثبت نام</span>
+                                <i class="fa fa-refresh fa-spin" ng-show="Deactive"></i>
+                                <span ng-hide="Deactive">ثبت نام</span>
                             </button>
                         </div>
                     </div>
@@ -187,19 +187,19 @@
         <script type="text/javascript" src="bootstrap/persiandatepicker/scripts/jquery.ui.datepicker-cc.all.min.js"></script>
         <script type="text/javascript"></script>
         <script type="text/javascript">
-        var date = new Date();
-        date.setYear(date.getYear() - 21);
-        new Date()
-        $('.datePicker').datepicker({
-        dateFormat: 'yy/m/d',
-        defaultDate: date,
-        changeYear: true,
-        changeMonth: true,
-        minDate: '-35y',
-        maxDate: '-17y',
-        showOtherMonths: true,
-        selectOtherMonths: false
-        });
+            var date = new Date();
+            date.setYear(date.getYear() - 21);
+            new Date()
+            $('.datePicker').datepicker({
+                dateFormat: 'yy/m/d',
+                defaultDate: date,
+                changeYear: true,
+                changeMonth: true,
+                minDate: '-35y',
+                maxDate: '-17y',
+                showOtherMonths: true,
+                selectOtherMonths: false
+            });
         </script>
     </body>
-</html>
+    </html>
