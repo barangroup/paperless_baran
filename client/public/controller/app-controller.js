@@ -88,7 +88,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         $scope.notifications = $json.notifications;
         $scope.page = $json.page;
         $scope.version = $json.version;
-    })
+      })
     .error(function($data, $status) {
       toaster.error('error!\nError Code' + $status);
     });
@@ -121,7 +121,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
       return $scope.notifications && $scope.notifications.length > 0 ? $scope.notifications.length + ' اعلامیه' : 'اعلامیه ای وجود ندارد.';
     }
 
-}])
+  }])
 .controller("DashboardController", ['$scope', '$http', '$sce', 'toaster', function($scope, $http, $sce, toaster) {
 
       //TODO get this from server
@@ -171,7 +171,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
 
       $scope.getNews();
 
-  }])
+    }])
 .controller("LogController",['$scope', '$http', '$interval','$routeParams', function($scope, $http, $interval, $routeParams) {
 
   $scope.logsLength = $routeParams.size;
@@ -249,24 +249,24 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
           toaster.error("متاسفانه در ارسال اطلاعات خطایی رخ داده.\nکد خطا: "+code);
           $scope.isSending = false;
         });
-    };
-}
+      };
+    }
 
-$scope.commitFreeTimes = function () {
+    $scope.commitFreeTimes = function () {
       // TODO Complete this part
       console.log($scope.userCopy.freeTimes);
-  }
+    }
 
-  $scope.getMajorValue = function(major) {
-    return major.group ? major.group + '-' + major.name : major.name;
-  }
+    $scope.getMajorValue = function(major) {
+      return major.group ? major.group + '-' + major.name : major.name;
+    }
 
-  $scope.showPassword = function(id) {
-    $('#'+id).attr("type","text");
-  }
-  $scope.hidePassword = function(id) {
-    $('#'+id).attr("type","password");
-  }
+    $scope.showPassword = function(id) {
+      $('#'+id).attr("type","text");
+    }
+    $scope.hidePassword = function(id) {
+      $('#'+id).attr("type","password");
+    }
         // TODO Check this again
         $scope.getPasswordStrength = function() {
           $scope.passwordStrength = 0;
@@ -283,7 +283,7 @@ $scope.commitFreeTimes = function () {
             $scope.passwordStrength += 20;
           }
         }
-    }])
+      }])
 .controller("AddContactController",['$scope','$http', function($scope, $http) {
 
   $scope.Deactive = false;
@@ -336,19 +336,19 @@ $scope.commitFreeTimes = function () {
           toaster.error('خطا در برقراری ارتباط با سرور');
           $scope.Deactive = false;
         });
-    }
-};
+      }
+    };
 
-$scope.hasError = function() {
-  return $scope.myForm.$error.required || $scope.myForm.email.$invalid || $scope.myForm.mobile.$invalid;
-};
+    $scope.hasError = function() {
+      return $scope.myForm.$error.required || $scope.myForm.email.$invalid || $scope.myForm.mobile.$invalid;
+    };
 
-$scope.getMajorValue = function(major) {
-  return major.group ? major.group + '-' + major.name : major.name;
-};
+    $scope.getMajorValue = function(major) {
+      return major.group ? major.group + '-' + major.name : major.name;
+    };
 
 
-}])
+  }])
 .controller('ContactListController', ['$scope', '$http', '$timeout', 'toaster', function($scope, $http, $timeout, toaster) {
 
   $scope.Deactive = false;
@@ -459,60 +459,60 @@ $scope.getMajorValue = function(major) {
             toaster.info("خطا در ارتباط با سرور");
             $scope.isSending = false;
           });
+        }
       }
-  }
 
-  $scope.removeComment = function(user, commentIndex) {
-    if ($scope.canEdit && !user._comments[commentIndex]._writer) {
-      user._comments.splice(commentIndex, 1);
-    };
-  }
+      $scope.removeComment = function(user, commentIndex) {
+        if ($scope.canEdit && !user._comments[commentIndex]._writer) {
+          user._comments.splice(commentIndex, 1);
+        };
+      }
 
-  $scope.addComment = function(user) {
-    if ($scope.canEdit) {
-      if (!user._comments) {
-        user._comments = [];
-      };
-      user._comments.push({});
-    };
-  }
+      $scope.addComment = function(user) {
+        if ($scope.canEdit) {
+          if (!user._comments) {
+            user._comments = [];
+          };
+          user._comments.push({});
+        };
+      }
 
-  $scope.removeSkill = function(user, skillIndex) {
-    if ($scope.canEdit) {
-      user.skills.splice(skillIndex, 1);
-    };
-  }
+      $scope.removeSkill = function(user, skillIndex) {
+        if ($scope.canEdit) {
+          user.skills.splice(skillIndex, 1);
+        };
+      }
 
-  $scope.addSkill = function(user) {
-    if ($scope.canEdit) {
-      if (!user.skills) {
-        user.skills = [];
-      };
-      user.skills.push("");
-    };
-  }
+      $scope.addSkill = function(user) {
+        if ($scope.canEdit) {
+          if (!user.skills) {
+            user.skills = [];
+          };
+          user.skills.push("");
+        };
+      }
 
-  $scope.search = function() {
-    if ($scope._query.quick_search == "") {
-      $scope.clearSearch();
-    };
-    $scope.selectedUser = null;
-    $scope.query = angular.copy($scope._query);
-    $scope._query = null;
-    $scope.paging(1, true);
-  }
+      $scope.search = function() {
+        if ($scope._query.quick_search == "") {
+          $scope.clearSearch();
+        };
+        $scope.selectedUser = null;
+        $scope.query = angular.copy($scope._query);
+        $scope._query = null;
+        $scope.paging(1, true);
+      }
 
-  $scope.clearSearch = function () {
-    $scope.query = null;
-    $scope._query = null;
-    $scope.paging(1, true);
-  }
+      $scope.clearSearch = function () {
+        $scope.query = null;
+        $scope._query = null;
+        $scope.paging(1, true);
+      }
 
-  $scope.RemoveCriteria = function (param) {
-    delete $scope.query[param];
-    $scope.paging(1, true); 
-  }
-}])
+      $scope.RemoveCriteria = function (param) {
+        delete $scope.query[param];
+        $scope.paging(1, true); 
+      }
+    }])
 .controller('SendFeedBackController', ['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
   $scope.isSending = false;
   $scope.Deactive = false;
@@ -555,10 +555,10 @@ $scope.getMajorValue = function(major) {
           toaster.error("ارسال با خطا مواجه شد.\nکد خطا: " + code);
           $scope.isSending = false;
         })
-    };
-}
+      };
+    }
 
-}])
+  }])
 .controller('BirthdaySmsController',['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
 
   $isSending = false;
@@ -568,32 +568,32 @@ $scope.getMajorValue = function(major) {
   $scope.getSMSCount = function () {
       // TODO fix this
       return Math.ceil($scope.smsSetting.text.length / $scope.maxCharCount);
-  }
+    }
 
-  $http.get("/birthday_sms")
-  .success(function (data) {
-    $scope.smsSetting = data;
-  })
-  .error(function (data, code) {
-    toaster.error("خطا در دریافت اطلاعات");
-  });
-
-  $scope.saveSetting = function () {
-    $scope.isSending = true;
-    $http.post("/birthday_sms", $scope.smsSetting)
+    $http.get("/birthday_sms")
     .success(function (data) {
-      $scope.isSending = false;
-      toaster.success("تنظیمات با موفقیت ذخیره شد.");
-      $scope.backToDashboard();
+      $scope.smsSetting = data;
     })
     .error(function (data, code) {
-      $scope.isSending = false;
-      toaster.error("در ارسال با خطا مواجه شدیم");
-    })
-  }
+      toaster.error("خطا در دریافت اطلاعات");
+    });
 
-}])
-.controller('UserReportController', ['$scope', '$http', '$sce', 'toaster', function ($scope, $http, $sce, toaster) {
+    $scope.saveSetting = function () {
+      $scope.isSending = true;
+      $http.post("/birthday_sms", $scope.smsSetting)
+      .success(function (data) {
+        $scope.isSending = false;
+        toaster.success("تنظیمات با موفقیت ذخیره شد.");
+        $scope.backToDashboard();
+      })
+      .error(function (data, code) {
+        $scope.isSending = false;
+        toaster.error("در ارسال با خطا مواجه شدیم");
+      })
+    }
+
+  }])
+.controller('UserReportController', ['$scope', '$http', '$sce', '$filter', 'toaster', function ($scope, $http, $sce, $filter, toaster) {
   $scope.report = [];
 
   $http.get("/users_report")
@@ -630,7 +630,7 @@ $scope.getMajorValue = function(major) {
       angular.forEach(value, function (innerValue, innerName) {
         data.datasets[data.datasets.length - 1].data.push(innerValue);
         if (createLabels) {
-          data.labels.push(innerName);
+          data.labels.push($filter('farsimal')(innerName));
         };
       });
       createLabels=false;
@@ -799,21 +799,91 @@ $scope.getMajorValue = function(major) {
 
 }])
 .controller('MaliReportController',['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
+
   $scope.init = function () {
     $scope.isLoading = true;
+    $scope.selected = null;
 
-    $scope.from = 0;
-    $scope.to = 5;
-
-    $http.get("/mali?from="+$scope.from+"&to="+$scope.to)
+    $http.get("/mali", {
+      params: {
+        type: 'list',
+      }
+    })
     .success(function (data) {
       $scope.isLoading = false;
       $scope.finance = data;
     })
     .error(function(data, code) {
       $scope.isLoading = false;
-        toaster.error("خطا در بارگزاری.")
+      toaster.error("خطا در بارگزاری.")
     });
+  }
+
+  $scope.selectRow = function (row) {
+    if ($scope.selected && row._id == $scope.selected._id) {
+      return;
+    };
+
+    $scope.selected = row;
+    // fixme: @elyas get_data dosen't work in /mali
+    $http.get('/mali', {
+      params: {
+        type: 'get_data',
+        data: {_id: row._id}
+      }
+    })
+    .success(function (data) {
+      $scope.selected = data;
+    })
+    .error(function (data, code){
+      toaster.error("خطای سرور.");
+    });
+}
+
+$scope.init();
+}])
+.controller('DispatchReportController', ['$scope', '$http', 'toaster', function($scope, $http, toaster){
+
+  $scope.init = function () {
+
+    $scope.isLoading = true;
+    $scope.selected = false;
+    $http.get('/dispatch', {
+      params:{
+        type: 'list'
+      }
+    })
+    .success(function (data) {
+      $scope.isLoading = false;
+      $scope.dispatches = data;
+    })
+    .error(function (data, code) {
+      $scope.isLoading = false;
+      toaster.error('خطای خواندن اطلاعات');
+    });
+  }
+
+  $scope.selectRow =function (row) {
+
+    if ($scope.selected && $scope.selected._id == row._id) {
+      return;
+    };
+
+    $scope.selected = row;
+    // fixme: @elyas get_data dosen't work in /dispatch 
+    $http.get('/dispatch', {
+      params: {
+        type: 'get_data',
+        data:{_id: row._id}
+      }
+    })
+    .success(function (data) {
+      $scope.selected = data;
+    })
+    .error(function (data, code){
+      toaster.error("خطای سرور.");
+    });
+
   }
 
   $scope.init();
@@ -839,30 +909,30 @@ $scope.getMajorValue = function(major) {
   $scope.getSMSCount = function () {
       // TODO fix this
       return Math.ceil($scope.sms.text.length / $scope.maxCharCount);
-  }
+    }
 
-  $scope.sendSMS = function () {
+    $scope.sendSMS = function () {
 
-    if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
-      toaster.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
-      return;
-    };
+      if (!$scope.sms.contacts.gender || !($scope.sms.contacts.gender.female || $scope.sms.contacts.gender.male)) {
+        toaster.warning("لطفا حداقل یک جنسیت را  انتخاب نمایید.");
+        return;
+      };
 
-    $http.post("/send_sms", $scope.sms)
-    .success(function (data) {
-      if(data.send == true)
-        toaster.success(data.count + " پیام با موفقیت ارسال شد.");
-      else
-        toaster.error("خطا در ارسال");
-    })
-    .error( function (data, code) {
-      toaster.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
-    });
-  }
+      $http.post("/send_sms", $scope.sms)
+      .success(function (data) {
+        if(data.send == true)
+          toaster.success(data.count + " پیام با موفقیت ارسال شد.");
+        else
+          toaster.error("خطا در ارسال");
+      })
+      .error( function (data, code) {
+        toaster.error("متاسفانه در حال حاظر قادر به ارسال پیامک نیستیم، لطفا دوباره تلاش کنید.");
+      });
+    }
 
-  $scope.getPanelDetail();
+    $scope.getPanelDetail();
 
-}])
+  }])
 .controller('TaskAssignController',['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
 
   $scope.getTasks = function () {
@@ -1024,6 +1094,10 @@ $scope.getMajorValue = function(major) {
     templateUrl: 'views/mali-report.html',
     controller: 'MaliReportController'
   })
+  .when('/dispatch', {
+    templateUrl: 'views/dispatch-report.html',
+    controller: 'DispatchReportController'
+  })
   .when('/bug-report', {
     templateUrl: 'views/bug-report.html',
     controller: 'BugReportController'
@@ -1073,3 +1147,59 @@ app.factory('toaster', ['$rootScope','$timeout', function($rootScope, $timeout){
 
   };
 }]);
+
+app.directive('datatable', function(){
+  // Runs during compile
+  return {
+    // name: '',
+    // priority: 1,
+    // terminal: true,
+    scope: {
+      rows : '=',
+      columns : '=',
+      selected : '=?',
+      emptyTemplate : '@',
+      pageSize : '=',
+      total : '='
+    }, // {} = isolate, true = child, false/undefined = no change
+    // controller: function($scope, $element, $attrs, $transclude) {},
+    // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+    restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+    // templateUrl: '',
+    replace: true,
+    template: 'hello world', // transclude: true, // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+    link: function($scope, iElm, iAttrs, controller) {
+      // $scope.columns = ['foo','bar'];
+    }
+  };
+});
+
+app.filter('farsimal', function () {
+  return function (item) {
+    // todo: @mehran complete dictionary
+    var dic = [
+      {en: 'true', fa:'بله'},
+      {en: 'false', fa:'خیر'},
+      {en: 'male', fa:'مرد'},
+      {en: 'female', fa:'زن'},
+      {en: 'all_active', fa:'فعال'},
+      {en: '', fa:''}
+    ];
+
+    for (var i = 0; i < dic.length; i++) {
+      if (item.toLowerCase() == dic[i].en.toLowerCase()) {
+        return dic[i].fa;
+      };
+    };
+    return item;
+  };
+});
+
+
+
+/*
+Todo: /mali with GET request : income data : { type : "list" } -> response is list of all mali this user can see income data : { type : get_data , data : { _id : "" } } -> response is data of this _id u send.
+TODO: /dispatch with GET request : income data : { type : "list" } -> response is list of all dipatches this user can see income data : { rype : get_data , data : { _id : "" } } -> response is data of this _id u send. 
+*/
+
+// note: [BOX HTML].box.box-solid>box-header.with-border>h2.box-title^.box-body+.box-footer
