@@ -40,11 +40,15 @@
 					<dt>رابط:</dt>
 					<dd>{{getFullName(selected._leader)}}</dd>
 					<dt>تاریخ:</dt>
-					<dd>{{x.date}}</dd>
+					<dd>{{selected.date}}</dd>
 					<dt>مرکز:</dt>
-					<dd>{{x._station.name}}</dd>
+					<dd>{{selected._station.name}}</dd>
 					<dt>توضیحات</dt>
-					<dd>{{x.comment}}</dd>
+					<dd>{{selected.comment}}</dd>
+					<dt>مجموع هزینه</dt>
+					<dd>{{selected.costs | toman}}</dd>
+					<dt>نیروها</dt>
+					<dd ng-repeat="x in selected.members">{{x | fullname}}</dd>
 				</dl>
 			</div>
 		</div>

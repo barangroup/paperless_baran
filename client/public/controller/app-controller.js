@@ -216,7 +216,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             return $scope.notifications && $scope.notifications.length > 0 ? $scope.notifications.length + ' اعلامیه' : 'اعلامیه ای وجود ندارد.';
         }
     }
-]).controller("DashboardController", ['$scope', '$http', '$sce', 'toaster',
+    ]).controller("DashboardController", ['$scope', '$http', '$sce', 'toaster',
     function($scope, $http, $sce, toaster) {
         //TODO get this from server
         $scope.quote = {
@@ -260,7 +260,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.getNews();
     }
-]).controller("LogController", ['$scope', '$http', '$interval', '$routeParams',
+    ]).controller("LogController", ['$scope', '$http', '$interval', '$routeParams',
     function($scope, $http, $interval, $routeParams) {
         $scope.logsLength = $routeParams.size;
         $scope.isLoading = false;
@@ -282,7 +282,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             };
         }, 3000);
     }
-]).controller("ProfileController", ['$scope', '$http', 'toaster',
+    ]).controller("ProfileController", ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.isSending = false;
         $http.get("/my_data").success(function(data) {
@@ -352,7 +352,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             }
         }
     }
-]).controller("AddContactController", ['$scope', '$http',
+    ]).controller("AddContactController", ['$scope', '$http',
     function($scope, $http) {
         $scope.Deactive = false;
         $scope.contact = {
@@ -405,7 +405,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             return major.group ? major.group + '-' + major.name : major.name;
         };
     }
-]).controller('ContactListController', ['$scope', '$http', '$timeout', 'toaster',
+    ]).controller('ContactListController', ['$scope', '$http', '$timeout', 'toaster',
     function($scope, $http, $timeout, toaster) {
         $scope.Deactive = false;
         $scope.isLoading = false;
@@ -538,7 +538,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             $scope.paging(1, true);
         }
     }
-]).controller('SendFeedBackController', ['$scope', '$http', 'toaster',
+    ]).controller('SendFeedBackController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.isSending = false;
         $scope.Deactive = false;
@@ -554,7 +554,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             });
         }
     }
-]).controller('BugReportController', ['$scope', '$http', 'toaster',
+    ]).controller('BugReportController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.isSending = false;
         $scope.sendBug = function() {
@@ -576,7 +576,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             };
         }
     }
-]).controller('BirthdaySmsController', ['$scope', '$http', 'toaster',
+    ]).controller('BirthdaySmsController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $isSending = false;
         $scope.maxCharCount = 70;
@@ -604,7 +604,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             })
         }
     }
-]).controller('UserReportController', ['$scope', '$http', '$sce', '$filter', 'toaster',
+    ]).controller('UserReportController', ['$scope', '$http', '$sce', '$filter', 'toaster',
     function($scope, $http, $sce, $filter, toaster) {
         $scope.report = [];
         $http.get("/users_report").success(function(data) {
@@ -664,7 +664,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             $scope.reportByYearChart.legend = $sce.trustAsHtml($scope.reportByYearChart.chart.generateLegend());
         }
     }
-]).controller('SubmitDispatchController', ['$scope', '$http', 'toaster',
+    ]).controller('SubmitDispatchController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.DefaultDispatch = function() {
             return {
@@ -699,7 +699,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.dispatch = $scope.DefaultDispatch();
     }
-]).controller('StationController', ['$scope', '$http', 'toaster',
+    ]).controller('StationController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.DefaultStation = function() {
             return {
@@ -775,7 +775,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.GetStations();
     }
-]).controller('MaliReportController', ['$scope', '$http', 'toaster',
+    ]).controller('MaliReportController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.init = function() {
             $scope.isLoading = true;
@@ -811,7 +811,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.init();
     }
-]).controller('DispatchReportController', ['$scope', '$http', 'toaster',
+    ]).controller('DispatchReportController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.init = function() {
             $scope.isLoading = true;
@@ -847,7 +847,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.init();
     }
-]).controller('SendSmsController', ['$scope', '$http', 'toaster',
+    ]).controller('SendSmsController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.sms = {
             text: '',
@@ -880,7 +880,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.getPanelDetail();
     }
-]).controller('TaskAssignController', ['$scope', '$http', 'toaster',
+    ]).controller('TaskAssignController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.getTasks = function() {
             $scope.isLoading = true;
@@ -944,7 +944,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.init();
     }
-]).controller('NewsController', ['$scope', '$http', 'toaster',
+    ]).controller('NewsController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.init = function() {
             $scope.news = {};
@@ -976,7 +976,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             });
         }
     }
-]).config(['$routeProvider',
+    ]).config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'views/dashboard.html',
@@ -1038,7 +1038,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             redirectTo: '/404'
         });
     }
-]);
+    ]);
 app.factory('toaster', ['$rootScope', '$timeout',
     function($rootScope, $timeout) {
         $rootScope.alerts = [];
@@ -1072,8 +1072,9 @@ app.factory('toaster', ['$rootScope', '$timeout',
             }
         };
     }
-]);
-app.run(function($rootScope, ngProgressFactory, toaster) {
+    ]);
+app.run(["$rootScope", "ngProgressFactory", "toaster",
+    function($rootScope, ngProgressFactory, toaster) {
     $rootScope.progressbar = ngProgressFactory.createInstance();
     $rootScope.progressbar.setParent(document.getElementById('wrapper'));
     $rootScope.progressbar.setColor('#F0AD4E');
@@ -1090,7 +1091,7 @@ app.run(function($rootScope, ngProgressFactory, toaster) {
         $rootScope.progressbar.stop();
         toaster.error('خطا در برقراری ارتباط...');
     });
-});
+}]);
 app.directive('datatable', function() {
     // Runs during compile
     return {
@@ -1119,6 +1120,9 @@ app.directive('datatable', function() {
 app.filter('farsimal', function() {
     return function(item) {
         // todo: @mehran complete dictionary
+        if (!item) {
+            return;
+        };
         var dic = [{
             en: 'true',
             fa: 'بله'
@@ -1139,12 +1143,35 @@ app.filter('farsimal', function() {
             fa: ''
         }];
         for (var i = 0; i < dic.length; i++) {
+            if (item === true) {
+                return 'بله';
+            }
+            if (item === false) {
+                return 'خیر';
+            };
             if (item.toLowerCase() == dic[i].en.toLowerCase()) {
                 return dic[i].fa;
             };
         };
         return item;
     };
+}).
+filter('fullname', function () {
+    return function (item) {
+        var text = "";
+        if (item.first_name) {
+            text = item.first_name + " ";
+        }
+        if (item.last_name) {
+            text += item.last_name;
+        };
+        return text;
+    }
+}).
+filter('toman', function () {
+    return function (item) {
+        return item + " تومان";
+    }
 });
 /*
 Todo: /mali with GET request : income data : { type : "list" } -> response is list of all mali this user can see income data : { type : get_data , data : { _id : "" } } -> response is data of this _id u send.

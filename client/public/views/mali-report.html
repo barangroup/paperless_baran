@@ -20,8 +20,8 @@
 							</td>
 						</tr>
 					<tr ng-if="finance && finance.length" ng-repeat="x in finance" ng-click="selectRow(x)" ng-class="{'bg-blue' : x._id == selected._id}">
-							<td>{{getFullName(x._owner)}}</td>
-							<td>{{x.cost}}</td>
+							<td>{{x._owner | fullname}}</td>
+							<td>{{x.cost | toman}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -38,19 +38,19 @@
 			<div class="box-body">
 				<dl class="dl-horizontal">
 					<dt>صادر کننده:</dt>
-					<dd>{{getFullName(selected._owner)}}</dd>
+					<dd>{{selected._owner | fullname}}</dd>
 					<dt>تاریخ:</dt>
-					<dd>{{x.dispatch.date}}</dd>
+					<dd>{{selected._dispatch.date}}</dd>
 					<dt>مرکز:</dt>
-					<dd>{{x.dispatch._station.name}}</dd>
+					<dd>{{selected._dispatch._station.name}}</dd>
 					<dt>هزینه:</dt>
-					<dd>{{x.cost}}</dd>
+					<dd>{{selected.cost | toman	}}</dd>
 					<dt>فاکتور دارد:</dt>
-					<dd>{{x.have_facor}}</dd>
+					<dd>{{selected.have_factor | farsimal}}</dd>
 					<dt>دریافت شده:</dt>
-					<dd>{{x.pony}}</dd>
-					<dt></dt>
-					<dd></dd>
+					<dd>{{selected.pony | farsimal}}</dd>
+					<dt>جزئیات:</dt>
+					<dd>{{selected.comment}}</dd>
 				</dl>
 			</div>
 		</div>
