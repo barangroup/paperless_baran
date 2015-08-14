@@ -62,7 +62,7 @@ module.exports = (function() {
                         });
                     }
                 });
-            } else if (req.query.type == "get_data" && req.query.data && req.query.data._id) {
+            } else if (req.query.type == "get_data" && req.query._id) {
                 db.mali.findOne({
                     _id: req.query._id
                 }, {

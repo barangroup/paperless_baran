@@ -60,7 +60,7 @@
  							res.json(dispatchs);
  						};
  					});
- 				} else if (req.query.type = "get_data", req.query.data && req.query.date._id) {
+ 				} else if (req.query.type = "get_data", req.query._id) {
  					db.dispatch.findOne({
  						_id: req.query._id
  					}, {
@@ -107,6 +107,10 @@
  								err: "not found"
  							});
  						}
+ 					});
+ 				} else {
+ 					res.json({
+ 						err: "low args"
  					});
  				}
 
