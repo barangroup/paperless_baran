@@ -141,7 +141,7 @@ module.exports.post = function(req, res) {
             _.includes(req.user._permissions, "man_mali")) {
             a.menus.push({
                 "title": "گزارش مالی",
-                "icon": "fa-tasks",
+                "icon": "fa-shopping-cart",
                 "link": "#/mali"
             });
         }
@@ -151,7 +151,7 @@ module.exports.post = function(req, res) {
             _.includes(req.user._permissions, "see_all_man_dispatch")) {
             a.menus.push({
                 "title": "گزارش اعزام ها",
-                "icon": "fa-tasks",
+                "icon": "fa-globe",
                 "link": "#/dispatch"
             });
         }
