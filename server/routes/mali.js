@@ -89,7 +89,7 @@ module.exports = (function() {
                                 if (err) {
                                     console.log(err);
                                 } else {
-                                    if (m._dispatch.date) {
+                                    if (m._dispatch && m._dispatch.date) {
                                         Date.en_to_persion_date(m._dispatch.date, function(date) {
                                             m._dispatch.date = date.date;
                                         });
