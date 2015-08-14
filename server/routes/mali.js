@@ -176,8 +176,32 @@ module.exports = (function() {
                     add: false
                 });
             } else if (req.body.type == "edit" && req.body.data && req.body.data._id) {
-                // comming soooooooooon
-                next();
+                db.mali.findOne({
+                    _id: req.body.data._id
+                }, function(err, mali) {
+                    if (req.body.data.pony) mali.pony = true;
+                    else mali.pony = undefined;
+
+                    if (req.body.data.have_factor) have_factor = true;
+                    else mali.have_factor = undefined;
+
+                    if (req.body.data.visited) mali.visited = true;
+                    else mali.visited = undefined;
+
+                    mali.save(function(err) {
+                        if (err) {
+                            console.log(err);
+                            res.json({
+                                edit: false,
+                                err: "internal error"
+                            });
+                        } else {
+                            res.json({
+                                edit: true
+                            });
+                        }
+                    });
+                });
             } else res.json({
                 err: "low args"
             });
