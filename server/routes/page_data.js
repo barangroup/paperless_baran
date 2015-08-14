@@ -16,6 +16,9 @@ module.exports.post = function(req, res) {
             task_title += req.user.task[i].title + " # ";
         }
 
+        if (task_title === " # ")
+            task_title = "عضو باران";
+
         var a = {
             "page": {
                 "title": "خانه"
@@ -130,6 +133,26 @@ module.exports.post = function(req, res) {
                 "title": "وظایف (مسئولیت ها)",
                 "icon": "fa-tasks",
                 "link": "#/task-assign"
+            });
+        }
+
+        if (_.includes(req.user._permissions, "root") ||
+            _.includes(req.user._permissions, "woman_mali") ||
+            _.includes(req.user._permissions, "man_mali")) {
+            a.menus.push({
+                "title": "گزارش مالی",
+                "icon": "fa-tasks",
+                "link": "#/mali"
+            });
+        }
+
+        if (_.includes(req.user._permissions, "root") ||
+            _.includes(req.user._permissions, "see_all_woman_dispatch") ||
+            _.includes(req.user._permissions, "see_all_man_dispatch")) {
+            a.menus.push({
+                "title": "گزارش اعزام ها",
+                "icon": "fa-tasks",
+                "link": "#/dispatch"
             });
         }
     }
