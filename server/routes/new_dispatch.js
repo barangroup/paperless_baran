@@ -27,7 +27,7 @@ module.exports = (function() {
     _return.post = function(req, res, next) {
         if (_.includes(req.user._permissions, "root") || _.includes(req.user._permissions, "add_dispatch")) {
             var dispatch = req.body;
-            if (!(_.includes(dispatch.members, req.user._id))) {
+            if (!(_.includes(dispatch.members, String(req.user._id)))) {
                 dispatch.members.push(req.user._id);
             }
             var costs = req.body.costs;
