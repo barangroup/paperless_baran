@@ -21,7 +21,7 @@ function choose(array) {
 }
 
 function trimArray(array, field) {
-    if (array == undefined) {
+    if (!array) {
         return;
     };
     for (var i = array.length - 1; i >= 0; i--) {
@@ -216,7 +216,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             return $scope.notifications && $scope.notifications.length > 0 ? $scope.notifications.length + ' اعلامیه' : 'اعلامیه ای وجود ندارد.';
         }
     }
-    ]).controller("DashboardController", ['$scope', '$http', '$sce', 'toaster',
+]).controller("DashboardController", ['$scope', '$http', '$sce', 'toaster',
     function($scope, $http, $sce, toaster) {
         //TODO get this from server
         $scope.quote = {
@@ -260,7 +260,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.getNews();
     }
-    ]).controller("LogController", ['$scope', '$http', '$interval', '$routeParams',
+]).controller("LogController", ['$scope', '$http', '$interval', '$routeParams',
     function($scope, $http, $interval, $routeParams) {
         $scope.logsLength = $routeParams.size;
         $scope.isLoading = false;
@@ -282,7 +282,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             };
         }, 3000);
     }
-    ]).controller("ProfileController", ['$scope', '$http', 'toaster',
+]).controller("ProfileController", ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.isSending = false;
         $http.get("/my_data").success(function(data) {
@@ -352,7 +352,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             }
         }
     }
-    ]).controller("AddContactController", ['$scope', '$http',
+]).controller("AddContactController", ['$scope', '$http',
     function($scope, $http) {
         $scope.Deactive = false;
         $scope.contact = {
@@ -405,7 +405,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             return major.group ? major.group + '-' + major.name : major.name;
         };
     }
-    ]).controller('ContactListController', ['$scope', '$http', '$timeout', 'toaster',
+]).controller('ContactListController', ['$scope', '$http', '$timeout', 'toaster',
     function($scope, $http, $timeout, toaster) {
         $scope.Deactive = false;
         $scope.isLoading = false;
@@ -538,7 +538,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             $scope.paging(1, true);
         }
     }
-    ]).controller('SendFeedBackController', ['$scope', '$http', 'toaster',
+]).controller('SendFeedBackController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.isSending = false;
         $scope.Deactive = false;
@@ -554,7 +554,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             });
         }
     }
-    ]).controller('BugReportController', ['$scope', '$http', 'toaster',
+]).controller('BugReportController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.isSending = false;
         $scope.sendBug = function() {
@@ -576,7 +576,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             };
         }
     }
-    ]).controller('BirthdaySmsController', ['$scope', '$http', 'toaster',
+]).controller('BirthdaySmsController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $isSending = false;
         $scope.maxCharCount = 70;
@@ -604,7 +604,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             })
         }
     }
-    ]).controller('UserReportController', ['$scope', '$http', '$sce', '$filter', 'toaster',
+]).controller('UserReportController', ['$scope', '$http', '$sce', '$filter', 'toaster',
     function($scope, $http, $sce, $filter, toaster) {
         $scope.report = [];
         $http.get("/users_report").success(function(data) {
@@ -664,7 +664,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             $scope.reportByYearChart.legend = $sce.trustAsHtml($scope.reportByYearChart.chart.generateLegend());
         }
     }
-    ]).controller('SubmitDispatchController', ['$scope', '$http', 'toaster',
+]).controller('SubmitDispatchController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.DefaultDispatch = function() {
             return {
@@ -687,7 +687,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             $scope.isSending = true;
             $http.post('/new_dispatch', $scope.dispatch).success(function(data) {
                 $scope.isSending = false;
-                toaster.success('ثبت اعزام موفقی آمیز بود.');
+                toaster.success('ثبت اعزام موفقیت آمیز بود.');
                 $scope.backToDashboard();
             }).error(function(data, code) {
                 $scope.isSending = false;
@@ -699,7 +699,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.dispatch = $scope.DefaultDispatch();
     }
-    ]).controller('StationController', ['$scope', '$http', 'toaster',
+]).controller('StationController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.DefaultStation = function() {
             return {
@@ -775,11 +775,11 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.GetStations();
     }
-    ]).controller('MaliReportController', ['$scope', '$http', 'toaster',
+]).controller('MaliReportController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.init = function() {
             $scope.isLoading = true;
-            $scope.selected = null;
+            $scope.selected = false;
             $http.get("/mali", {
                 params: {
                     type: 'list',
@@ -811,7 +811,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.init();
     }
-    ]).controller('DispatchReportController', ['$scope', '$http', 'toaster',
+]).controller('DispatchReportController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.init = function() {
             $scope.isLoading = true;
@@ -847,7 +847,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.init();
     }
-    ]).controller('SendSmsController', ['$scope', '$http', 'toaster',
+]).controller('SendSmsController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.sms = {
             text: '',
@@ -880,7 +880,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.getPanelDetail();
     }
-    ]).controller('TaskAssignController', ['$scope', '$http', 'toaster',
+]).controller('TaskAssignController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.getTasks = function() {
             $scope.isLoading = true;
@@ -944,7 +944,26 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.init();
     }
-    ]).controller('NewsController', ['$scope', '$http', 'toaster',
+]).controller('MyActivityController', ['$scope', '$http', 'toaster', function($scope, $http, toaster){
+
+    $scope.init = function () {
+        $http.get('/my_act', {
+            params: {
+                from: 0,
+                to: 10
+            }
+        })
+        .success(function (data) {
+            $scope.acts = data.data;
+        })
+        .error(function (data, code) {
+            toaster.error('خطا در برقراری ارتباط');
+        });
+    }
+
+    $scope.init();
+    
+}]).controller('NewsController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.init = function() {
             $scope.news = {};
@@ -976,7 +995,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             });
         }
     }
-    ]).config(['$routeProvider',
+]).config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'views/dashboard.html',
@@ -1026,6 +1045,9 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }).when('/feedback', {
             templateUrl: 'views/send-feedback.html',
             controller: 'SendFeedBackController'
+        }).when('/my-activity', {
+            templateUrl: 'views/my-activity.html',
+            controller: 'MyActivityController'
         }).when('/faq', {
             templateUrl: 'views/faq.html'
         }).when('/under-construct', {
@@ -1038,7 +1060,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             redirectTo: '/404'
         });
     }
-    ]);
+]);
 app.factory('toaster', ['$rootScope', '$timeout',
     function($rootScope, $timeout) {
         $rootScope.alerts = [];
@@ -1048,7 +1070,6 @@ app.factory('toaster', ['$rootScope', '$timeout',
                     cssClass: "alert-success",
                     description: message
                 });
-                console.log(message);
                 this.startDestroyer(2500);
             },
             error: function(message) {
@@ -1072,51 +1093,30 @@ app.factory('toaster', ['$rootScope', '$timeout',
             }
         };
     }
-    ]);
+]);
+
+// sevices
 app.run(["$rootScope", "ngProgressFactory", "toaster",
     function($rootScope, ngProgressFactory, toaster) {
-    $rootScope.progressbar = ngProgressFactory.createInstance();
-    $rootScope.progressbar.setParent(document.getElementById('wrapper'));
-    $rootScope.progressbar.setColor('#F0AD4E');
-    $rootScope.progressbar.setHeight('3px');
-    $rootScope.progressbar.setAbsolute();
+        $rootScope.progressbar = ngProgressFactory.createInstance();
+        $rootScope.progressbar.setParent(document.getElementById('wrapper'));
+        $rootScope.progressbar.setColor('#F0AD4E');
+        $rootScope.progressbar.setHeight('3px');
+        $rootScope.progressbar.setAbsolute();
+        $rootScope.$on('$routeChangeStart', function() {
+            $rootScope.progressbar.start();
+        });
+        $rootScope.$on('$routeChangeSuccess', function() {
+            $rootScope.progressbar.complete();
+        });
+        $rootScope.$on('$routeChangeError', function() {
+            $rootScope.progressbar.stop();
+            toaster.error('خطا در برقراری ارتباط...');
+        });
+    }
+]);
 
-    $rootScope.$on('$routeChangeStart', function() {
-        $rootScope.progressbar.start();
-    });
-    $rootScope.$on('$routeChangeSuccess', function() {
-        $rootScope.progressbar.complete();
-    });
-    $rootScope.$on('$routeChangeError', function() {
-        $rootScope.progressbar.stop();
-        toaster.error('خطا در برقراری ارتباط...');
-    });
-}]);
-app.directive('datatable', function() {
-    // Runs during compile
-    return {
-        // name: '',
-        // priority: 1,
-        // terminal: true,
-        scope: {
-            rows: '=',
-            columns: '=',
-            selected: '=?',
-            emptyTemplate: '@',
-            pageSize: '=',
-            total: '='
-        }, // {} = isolate, true = child, false/undefined = no change
-        // controller: function($scope, $element, $attrs, $transclude) {},
-        // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-        restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
-        // templateUrl: '',
-        replace: true,
-        template: 'hello world', // transclude: true, // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-        link: function($scope, iElm, iAttrs, controller) {
-            // $scope.columns = ['foo','bar'];
-        }
-    };
-});
+// filters
 app.filter('farsimal', function() {
     return function(item) {
         // todo: @mehran complete dictionary
@@ -1155,9 +1155,8 @@ app.filter('farsimal', function() {
         };
         return item;
     };
-}).
-filter('fullname', function () {
-    return function (item) {
+}).filter('fullname', function() {
+    return function(item) {
         var text = "";
         if (item.first_name) {
             text = item.first_name + " ";
@@ -1167,14 +1166,70 @@ filter('fullname', function () {
         };
         return text;
     }
-}).
-filter('toman', function () {
-    return function (item) {
-        return item + " تومان";
+}).filter('toman', function() {
+    return function(item) {
+        return item ? s.numberFormat(item, 0, ".", ",") + " تومان" : "";
     }
 });
-/*
-Todo: /mali with GET request : income data : { type : "list" } -> response is list of all mali this user can see income data : { type : get_data , data : { _id : "" } } -> response is data of this _id u send.
-TODO: /dispatch with GET request : income data : { type : "list" } -> response is list of all dipatches this user can see income data : { rype : get_data , data : { _id : "" } } -> response is data of this _id u send. 
-*/
+
+app.directive('ngtable', ['$http', function($http){
+    // Runs during compile
+    return {
+        // name: '',
+        // priority: 1,
+        // terminal: true,
+        scope: {
+            source : '=',
+            pageSize : "=",
+            selected : '=?',
+            columns : "=",
+            onSelect : '&'
+        }, // {} = isolate, true = child, false/undefined = no change
+        // controller: function($scope, $element, $attrs, $transclude) {},
+        // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+        restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+        replace: true,
+        template: function (element) {
+            element.columns = element[0].getElementsByTagName('ngcolumn');
+            return `<table class="table table-hover table-striped selectable-row">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="x in columns">{{x}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="x in source">
+                                <td>x.</td>
+                            </tr>
+                        </tbody>
+                    </table>`;
+        },
+        // templateUrl: '',
+        // transclude: true,
+        // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+        link: function($scope, iElm, iAttrs, controller) {
+        }
+    };
+}])
+.directive('starbox', function () {
+    return {
+      restrict: 'E',
+      replace : true,
+      template: '<ul class="rating">' +
+                  '<li ng-repeat="star in ratingValue track by $index" class="filled">' +
+                      'asd' +
+                  '</li>' +
+                '</ul>',
+      scope: {
+        ratingValue: '='
+      },
+      link: function (scope, elem, attrs) {
+        scope.stars = [];
+        for (var i = 0; i < scope.ratingValue; i++) {
+          scope.stars.push('');
+        }
+      }
+  }
+});
+
 // note: [BOX HTML].box.box-solid>box-header.with-border>h2.box-title^.box-body+.box-footer
