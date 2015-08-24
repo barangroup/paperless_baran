@@ -69,29 +69,36 @@ module.exports = (function() {
                         });
                     } else if (data) {
                         console.log(req.user.first_name + " " + req.user.last_name + " add a new dispatch.");
-                        db.mali.update({
-                            _id: {
-                                $in: cost_ids
-                            }
-                        }, {
-                            $set: {
-                                _dispatch: data._id
-                            }
-                        }, {
-                            multi: true
-                        }, function(err, rr) {
-                            if (err) {
-                                console.log(err);
-                                res.json({
-                                    save: false
-                                });
-                            } else if (rr) {
-                                // console.log(rr);
-                                res.json({
-                                    save: true
-                                });
-                            }
-                        });
+                        if (cost_ids.length > 0) {
+                            db.mali.update({
+                                _id: {
+                                    $in: cost_ids
+                                }
+                            }, {
+                                $set: {
+                                    _dispatch: data._id
+                                }
+                            }, {
+                                multi: true
+                            }, function(err, rr) {
+                                if (err) {
+                                    console.log(err);
+                                    res.json({
+                                        save: false
+                                    });
+                                } else if (rr) {
+                                    // console.log(rr);
+                                    res.json({
+                                        save: true
+                                    });
+                                }
+                            });
+                        } else {
+                            res.json({
+                                save: true
+                            });
+                        }
+
                     }
                 }); // new dispatch
             }); // exit callback
