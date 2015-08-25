@@ -46,7 +46,7 @@ function sms_loop() {
                 find_owner(sms);
             });
         } else if (data.error) {
-            console.log("error in unread messages -> " + data.error);
+            console.err("error in unread messages -> " + data.error);
         }
     })
 }
