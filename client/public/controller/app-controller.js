@@ -4,6 +4,8 @@
 *   Website: Baran Group <http://barang.ir>
 *   License: Open source - GNU
 !*/
+
+"use strict";
 function setBirthDate(user) {
     if (user.birth_date) {
         var date = user.birth_date;
@@ -352,8 +354,8 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             }
         }
     }
-]).controller("AddContactController", ['$scope', '$http',
-    function($scope, $http) {
+]).controller("AddContactController", ['$scope', '$http', 'toaster',
+    function($scope, $http, toaster) {
         $scope.Deactive = false;
         $scope.contact = {
             gender: true,
@@ -578,7 +580,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
     }
 ]).controller('BirthdaySmsController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
-        $isSending = false;
+        var $isSending = false;
         $scope.maxCharCount = 70;
         $scope.smsSetting = {
             text: ""
@@ -606,14 +608,16 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
     }
 ]).controller('UserReportController', ['$scope', '$http', '$sce', '$filter', 'toaster',
     function($scope, $http, $sce, $filter, toaster) {
+
         $scope.report = [];
+
         $http.get("/users_report").success(function(data) {
             $scope.drawChart(data["report_by_year"]);
         }).error(function(data, code) {
             toaster.error("خطا در بارگذاری اطلاعات\nکد خطا: " + code);
         })
         $scope.drawChart = function(enteredData) {
-            data = {
+            var data = {
                 labels: [],
                 datasets: []
             };
