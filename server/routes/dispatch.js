@@ -30,6 +30,8 @@
  					db.dispatch.find({}, {
  						_station: true,
  						_leader: true,
+ 					}).sort({
+ 						_id: -1
  					}).populate({
  						path: '_leader',
  						select: 'first_name last_name -_id'
