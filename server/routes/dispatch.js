@@ -30,6 +30,7 @@
  					db.dispatch.find({}, {
  						_station: true,
  						_leader: true,
+ 						date: true
  					}).sort({
  						_id: -1
  					}).populate({
@@ -59,6 +60,20 @@
  								}
 
  							}
+
+ 							dispatchs.sort(function(a, b) {
+ 								return a.date.getTime() < b.date.getTime()
+ 							});
+
+
+ 							dispatchs.forEach(function(dispatch) {
+ 								console.open(dispatch);
+ 								Date.en_to_persion_date(dispatch.date, function(date) {
+ 									dispatch.date = date.date;
+ 								});
+ 							});
+
+ 							
  							res.json(dispatchs);
  						};
  					});
