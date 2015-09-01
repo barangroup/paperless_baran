@@ -23,6 +23,9 @@ module.exports = (function() {
 
 			var user = req.body;
 
+			if (user.gender == false)
+				users.gender = undefined;
+
 			if (user.birth_date) {
 				var d = user.birth_date.split('/');
 				date_convert.to_miladi({
@@ -35,7 +38,7 @@ module.exports = (function() {
 			}
 
 
-			if (user.mobile) user.mobile = String.remove_space(user.mobile);
+			user.mobile = String.remove_space(user.mobile);
 
 			db.users.findOne({
 				mobile: String.enc_mobile(user.mobile)
@@ -99,7 +102,7 @@ module.exports = (function() {
 				}
 			});
 		} else {
-			console.log("not valid data send for sign up reoute.");
+			console.log("not valid data send for sign up route.");
 			res.json({
 				valid: false
 			});
