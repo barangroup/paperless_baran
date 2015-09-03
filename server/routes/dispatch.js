@@ -32,7 +32,7 @@
  						_leader: true,
  						date: true
  					}).sort({
- 						_id: -1
+ 						date: -1
  					}).populate({
  						path: '_leader',
  						select: 'first_name last_name -_id'
@@ -61,19 +61,13 @@
 
  							}
 
- 							dispatchs.sort(function(a, b) {
- 								return a.date.getTime() < b.date.getTime()
- 							});
-
-
  							dispatchs.forEach(function(dispatch) {
- 								console.open(dispatch);
  								Date.en_to_persion_date(dispatch.date, function(date) {
  									dispatch.date = date.date;
  								});
  							});
 
- 							
+
  							res.json(dispatchs);
  						};
  					});

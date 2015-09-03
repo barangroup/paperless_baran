@@ -26,7 +26,10 @@ module.exports = (function() {
             if (req.query.type == "list") {
                 db.mali.find({}, {
                     _owner: true,
-                    cost: true
+                    cost: true,
+                    _id: true
+                }).sort({
+                    _id: -1
                 }).populate({
                     path: '_owner',
                     select: 'first_name last_name -_id',
