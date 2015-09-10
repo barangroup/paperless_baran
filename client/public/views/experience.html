@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h2 class="box-title"><i class="fa fa-file-text-o fa-fw"></i>انتقال تجربیات</h2>
+			</div>
+			<form name="AddExperienceForm" class="form-horizontal">
+				<div class="box-body">
+					<div class="form-group" ng-class="{'has-error' : AddExperienceForm.task.$touched && AddExperienceForm.task.$invalid}">
+						<label for="selectTask" class="col-sm-3 control-label">انتخاب وظیفه <strong class="text-red">*</strong></label>
+						<div class="col-lg-6 col-sm-10">
+							<select id="selectTask" class="form-control" ng-model="experience._task" name="task" ng-options="task._id as task.title for task in tasks" required>
+								<option value="">&lt;انتخاب کنید&gt;</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : AddExperienceForm.title.$touched && AddExperienceForm.title.$invalid}">
+						<label for="titleInput" class="col-sm-3 contorl-label">عنوان تجربه<strong class="text-red">*</strong></label>
+						<div class="col-lg-6 col-sm-10">
+							<input id="titleInput" type="text" class="form-control" name="title" ng-model="experience.title" required>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : AddExperienceForm.experience.$touched && AddExperienceForm.experience.$invalid}">
+						<label for="textInput" class="col-sm-3 control-label">تجربه شما<strong class="text-red">*</strong></label>
+						<div class="col-lg-6 col-sm-10">
+							<textarea name="experience" id="textInput" rows="5" class="form-control" ng-model="experience.text" required></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="box-footer"><button class="btn btn-success radius" type="submit" ng-click="submitExperience();">ثبت <i class="fa fa-save fa-fw"></i></button></div>
+			</form>
+			<div class="overlay" ng-if="isSending"><i class="fa fa-spinner fa-pulse"></i></div>
+		</div>
+	</div>
+</div>

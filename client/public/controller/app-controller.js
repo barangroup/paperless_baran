@@ -779,7 +779,44 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }
         $scope.GetStations();
     }
-]).controller('MaliReportController', ['$scope', '$http', 'toaster',
+]).controller('ExperienceController', ['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
+
+    $scope.tasks = [];
+    $scope.task = {};
+
+    $scope.init = function() {
+        $http.get("/experience")
+        .success(function (data) {
+            $scope.tasks = data;
+        })
+        .error(function(data, code) {
+            toaster.error("خطا در برقراری ارتباط با سرور ...");
+            console.log("error" + code + data );
+        });
+    }
+
+    $scope.submitExperience = function () {
+        if (!$scope.AddExperienceForm.$invalid) {
+            $scope.isSending = true;
+            $http.post('/experience', $scope.task)
+            .success(function (data) {
+                $scope.isSending = false;
+                toaster.success("ممنون تجربه شما ثبت شد.");
+                $scope.backToDashboard();
+            })
+            .error(function(data, code) {
+                $scope.isSending = false;
+                toaster.error("خطا در برقراری ارتباط لطفا دوباره تلاش کنید.");
+                console.log("error" + code + data );
+            });
+        }else{
+            toaster.error("اطلاعات فرم کامل نیست.")
+        }
+    }
+
+    $scope.init();
+
+}]).controller('MaliReportController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.init = function() {
             $scope.isLoading = true;
@@ -1036,7 +1073,10 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             controller: 'NewsController'
         }).when('/stations', {
             templateUrl: 'views/stations.html',
-            controller: 'StationController'
+            controller: 'StationController'  
+        }).when('/experience', {
+            templateUrl: 'views/experience.html',
+            controller: 'ExperienceController'
         }).when('/mali', {
             templateUrl: 'views/mali-report.html',
             controller: 'MaliReportController'
@@ -1176,64 +1216,4 @@ app.filter('farsimal', function() {
     }
 });
 
-app.directive('ngtable', ['$http', function($http){
-    // Runs during compile
-    return {
-        // name: '',
-        // priority: 1,
-        // terminal: true,
-        scope: {
-            source : '=',
-            pageSize : "=",
-            selected : '=?',
-            columns : "=",
-            onSelect : '&'
-        }, // {} = isolate, true = child, false/undefined = no change
-        // controller: function($scope, $element, $attrs, $transclude) {},
-        // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-        restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
-        replace: true,
-        template: function (element) {
-            element.columns = element[0].getElementsByTagName('ngcolumn');
-            return `<table class="table table-hover table-striped selectable-row">
-                        <thead>
-                            <tr>
-                                <th ng-repeat="x in columns">{{x}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="x in source">
-                                <td>x.</td>
-                            </tr>
-                        </tbody>
-                    </table>`;
-        },
-        // templateUrl: '',
-        // transclude: true,
-        // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-        link: function($scope, iElm, iAttrs, controller) {
-        }
-    };
-}])
-.directive('starbox', function () {
-    return {
-      restrict: 'E',
-      replace : true,
-      template: '<ul class="rating">' +
-                  '<li ng-repeat="star in ratingValue track by $index" class="filled">' +
-                      'asd' +
-                  '</li>' +
-                '</ul>',
-      scope: {
-        ratingValue: '='
-      },
-      link: function (scope, elem, attrs) {
-        scope.stars = [];
-        for (var i = 0; i < scope.ratingValue; i++) {
-          scope.stars.push('');
-        }
-      }
-  }
-});
-
-// note: [BOX HTML].box.box-solid>box-header.with-border>h2.box-title^.box-body+.box-footer
+// note: [BOX HTML].box.box-solid>.box-header.with-border>h2.box-title^.box-body+.box-footer

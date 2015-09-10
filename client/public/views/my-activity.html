@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-sm-12 col-md-8">
+        <ul class="timeline">
+         <!--  timeline time label -->
+         <li class="time-label">
+            <span class="bg-green">
+                آخرین فعالیت های من
+            </span>
+        </li>
+        <li ng-repeat="x in acts" ng-switch="x.type">
+            <i ng-switch-when="dispatch" class="fa fa-bus bg-yellow"></i>
+            <i ng-switch-when="mali" class="fa fa-shopping-cart bg-red"></i>
+            <i class="fa fa-cc" ng-switch-default></i>
+            <div class="timeline-item">
+                <span class="time"><i class="fa fa-calendar-o"></i> {{x.date}}</span>  
+                <h3 class="timeline-header" ng-switch-when="dispatch">
+                    اعزام به مرکز {{x.station_name}}
+                </h3>
+                <h3 class="timeline-header" ng-switch-when="mali">
+                    ثبت هزینه
+                </h3>
+                <div class="timeline-body" ng-switch-when="mali">
+                    {{x.cost | toman}} برای {{x.comment}}
+                </div>
+            </div>
+
+        </li>
+            <!-- <li>
+                <i class="fa fa-clock-o"></i>
+                <div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+                    <h3 class="timeline-header">اعزام به مرکز</h3>
+                </div>
+            </li> -->
+            <!-- /.timeline-label -->
+            <!-- timeline item -->
+            <!-- <li>
+                timeline icon
+                <i class="fa fa-envelope bg-blue"></i>
+                <div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+                    <h3 class="timeline-header">اعزام به مرکز</h3>
+                    <div class="timeline-body">
+                        ...
+                        Content goes here
+                    </div>
+                    <div class='timeline-footer'>
+                        <a class="btn btn-primary btn-xs">...</a>
+                    </div>
+                </div>
+            </li> -->
+            <!-- <li>
+                timeline icon
+                <i class="fa fa-envelope bg-blue"></i>
+                <div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+                    <h3 class="timeline-header">اعزام به مرکز</h3>
+                </div>
+            </li> -->
+            <!-- END timeline item -->
+            <li>
+                <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+        </ul>
+
+    </div>
+</div>
