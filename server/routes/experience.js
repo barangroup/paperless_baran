@@ -11,7 +11,7 @@ module.exports = (function() {
                 _r.push({
                     title: task.title,
                     _id: task._id
-                })
+                });
             });
         }
         res.send(_r);
@@ -21,7 +21,7 @@ module.exports = (function() {
         var my_task_ids = [];
         if (req.user && req.user.task) {
             req.user.task.forEach(function(task) {
-                my_task_ids.push(task._id);
+                my_task_ids.push(String(task._id));
             });
         }
 
@@ -40,6 +40,16 @@ module.exports = (function() {
                     res.json({
                         save: true
                     });
+                    db.tasks.findOne({
+                        _id: exp._task
+                    }, {
+                        title: true,
+                        name: true,
+                        _id: false
+                    }).lean().exec(function(err, task) {
+                        console.log('new experience add by -> ' + req.user.first_name + " " + req.user.last_name + " as " + task.title + " / " + task.name);
+                    });
+
                 }
             });
 

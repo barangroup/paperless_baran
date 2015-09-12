@@ -155,6 +155,14 @@ module.exports.post = function(req, res) {
                 "link": "#/dispatch"
             });
         }
+
+        if (req.user && req.user.task && req.user.task.length > 0) {
+            a.menus.push({
+                "title": "انتقال تجربیات",
+                "icon": "fa-globe",
+                "link": "#/experience"
+            });
+        }
     }
 
     res.json(a);
