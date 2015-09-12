@@ -798,7 +798,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
     $scope.submitExperience = function () {
         if (!$scope.AddExperienceForm.$invalid) {
             $scope.isSending = true;
-            $http.post('/experience', $scope.task)
+            $http.post('/experience', $scope.experience)
             .success(function (data) {
                 $scope.isSending = false;
                 toaster.success("ممنون تجربه شما ثبت شد.");
