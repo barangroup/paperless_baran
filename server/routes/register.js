@@ -24,7 +24,7 @@ module.exports = (function() {
 			var user = req.body;
 
 			if (user.gender == false)
-				users.gender = undefined;
+				user.gender = undefined;
 
 			if (user.birth_date) {
 				var d = user.birth_date.split('/');
