@@ -35,7 +35,7 @@ module.exports = (function() {
             }
             //-----------------------------------------------------------------------
             else*/
-            if (data["task"] == "register" && data.mobile) {
+            if ( /*data["task"] == "register" && */ data.mobile) {
 
                 // todo : validate
                 // console.log("mali_api -> try to register");
