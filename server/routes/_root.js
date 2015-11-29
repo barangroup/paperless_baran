@@ -5,7 +5,14 @@ var fs = require('fs');
 var debug_mode = false;
 
 //var simple_routes = ['dashborad'];
-var file_routes = ['temp_users', 'contact_us', 'experience', 'task_members', 'dispatch', 'mali', 'news', 'poll', 'exists', 'new_dispatch', 'sms', 'change_password', 'station', 'mali_store', 'tasks', 'send_sms', 'edit_users', 'users_report', 'contact_list', 'dashboard', 'page_data', 'my_data', 'users', 'new_user', 'profile', 'del', 'star', '54f5fa3ada03d906ce5af', 'register', 'feedback', 'birthday_sms'];
+var file_routes = ['update_password', 'temp_users', 'contact_us',
+    'experience', 'task_members', 'dispatch', 'mali', 'news', 'poll',
+    'exists', 'new_dispatch', 'sms', 'change_password', 'station',
+    'mali_store', 'tasks', 'send_sms', 'edit_users', 'users_report',
+    'contact_list', 'dashboard', 'page_data', 'my_data', 'users',
+    'new_user', 'profile', 'del', 'star', '54f5fa3ada03d906ce5af',
+    'register', 'feedback', 'birthday_sms'
+];
 
 app.route('/*').get(require('./star').get).post(require('./star').post);
 app.route('/').get(require('./index').get).post(require('./index').post);
@@ -43,7 +50,8 @@ app.route('/').get(require('./index').get).post(require('./index').post);
 app.route('/logs?_?:line').get(function(req, res, next) {
     var n = req.params.line || 10;
     var m = 0;
-    if (_.includes(req.user._permissions, "logs") || _.includes(req.user._permissions, "root")) {
+    if (_.includes(req.user._permissions, "logs") || _.includes(req.user
+            ._permissions, "root")) {
         db.logs.count(function(err, c) {
             if (n < c) m = c - n;
             db.logs.find().sort({
