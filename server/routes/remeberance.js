@@ -61,7 +61,7 @@ module.exports = (function() {
                     });
                 }
             });
-        } else if ()
+        }
     };
 
     return _return;
