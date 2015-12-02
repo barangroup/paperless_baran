@@ -5,7 +5,43 @@ module.exports = (function() {
     var _return = {};
 
     _return.get = function(req, res, next) {
-        next();
+        if (req.query && req.query.type == "all") {
+            db.rememberance.find({}, {
+                __v: false,
+                text: false
+            }).lean().exec(function(err,
+                rememberances) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({
+                        add: false,
+                        err: err
+                    });
+                } else {
+                    res.json(rememberances);
+                }
+            })
+        } else if (req.query && req.query.type == "single" && req.query
+            ._id) {
+            db.rememberance.findOne({
+                _id: req.query
+                    ._id
+            }, {
+                _id: false,
+                __v: false
+            }).lean().exec(function(err,
+                rememberances) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({
+                        add: false,
+                        err: err
+                    });
+                } else {
+                    res.json(rememberances);
+                }
+            })
+        }
     };
 
     _return.post = function(req, res, next) {
@@ -25,7 +61,7 @@ module.exports = (function() {
                     });
                 }
             });
-        }
+        } else if ()
     };
 
     return _return;
