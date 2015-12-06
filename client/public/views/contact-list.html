@@ -40,6 +40,7 @@
             <tr>
               <th style="width: 50px;">ردیف</th>
               <th style="width: 300px;">نام</th>
+              <th style="width: 50px;" ng-if="canEdit"></th>
             </tr>
           </thead>
           <tbody>
@@ -48,6 +49,7 @@
             <tr ng-repeat="user in users" ng-model="user" ng-click="selectUser(user)" ng-class="{'bg-blue' : user._id == selectedUser._id}">
               <td>{{datatable.listSize * (datatable.currentPage - 1) + $index + 1}}</td>
               <td>{{user.first_name + ' ' + user.last_name}}</td>
+              <td  ng-if="canEdit"><a href ng-click="showPasswordModal(user)" title="تغییر کلمه عبور"><i class="fa fa-lock fa-fw"></i></a></td>
             </tr>
           </tbody>
         </table>
@@ -439,7 +441,7 @@
               <input type="text" class="form-control" name="city" ng-model="_query.city">
             </div>
             <div class="form-group col-lg-6">
-              <span>مهرات</span>
+              <span>مهارت</span>
               <input type="text" class="form-control" name="skill" ng-model="_query.skill">
             </div>
             <div class="form-group col-lg-6">
@@ -449,14 +451,49 @@
           </div>
         </div>
         <div class="modal-footer">
+          <button type="submit" class="btn btn-primary pull-left" ng-click="search();" data-dismiss="modal">جستجو  <i class="fa fa-search"></i></button>
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">لغو</button>
-          <button type="submit" class="btn btn-primary" ng-click="search();" data-dismiss="modal">جستجو  <i class="fa fa-search"></i></button>
         </div>
       </div>
     </form>
   </div>
 </div>
 
+<div class="modal fade modal-md" id="modal-password">
+  <div class="modal-dialog">
+    <form name="ChangePasswordForm" role="form" ng-submit="changePassword(selectedUser)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pull-left" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-fw"></i></button>
+          <h4 class="modal-title">تغییر کلمه عبور کاربر</h4>
+        </div>
+        <div class="modal-body">
+          <!-- <p class="help-block">تنها مواردی که مقدار دارند جستجو میشوند.</p> -->
+          <div class="row">
+            <div class="form-group col-lg-6" ng-class="{'has-error' : (ChangePasswordForm.password.$touched && ChangePasswordForm.password.$invalid)}">
+              <span>کلمه عبور جدید</span>
+              <input type="password" class="form-control" name="password" ng-model="selectedUser.password" required>
+            </div>
+            <div class="form-group col-lg-6" ng-class="{'has-error' : (ChangePasswordForm.password_repeat.$touched && selectedUser.password_repeat !=  selectedUser.password)}">
+              <span>تکرار کلمه عبور جدید</span>
+              <input type="password" class="form-control" name="password_repeat" ng-model="selectedUser.password_repeat">
+            </div>
+            <div class="form-group col-lg-6">
+              <label>
+                <input type="checkbox" name="send_sms" ng-model="selectedUser.send_sms">
+                ارسال با پیامک
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary pull-left" ng-disabled="ChangePasswordForm.$invalid || selectedUser.password_repeat !=  selectedUser.password">ذخیره</button>
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بیخیال</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script type="text/javascript" src="bootstrap/persiandatepicker/scripts/jquery.ui.datepicker-cc.all.min.js"></script>
 
