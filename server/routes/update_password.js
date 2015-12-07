@@ -13,7 +13,7 @@ module.exports.post = function(req, res, next) {
                 "root") ||
             _.includes(req.user._permissions, "edit_users"))) {
         var user = String.remove_empty_data(req.body);
-        // console.open(user);
+
         if (user._id && user.password) {
             db.users.findOne({
                 _id: user._id
@@ -26,7 +26,8 @@ module.exports.post = function(req, res, next) {
                             if (err) {
                                 console.log(err);
                             } else {
-                                if (user.send_sms) {
+                                if (typeof user.send_sms !=
+                                    undefined) {
                                     require(
                                         'send_sms_log'
                                     )({
