@@ -47,9 +47,13 @@ module.exports = (function() {
                         name: true,
                         _id: false
                     }).lean().exec(function(err, task) {
-                        console.log('new experience add by -> ' + req.user.first_name + " " + req.user.last_name + " as " + task.title + " / " + task.name);
+                        console.log(
+                            'new experience add by -> ' +
+                            req.user.first_name +
+                            " " + req.user.last_name +
+                            " as " + task.title +
+                            " / " + task.name);
                     });
-
                 }
             });
 

@@ -13,24 +13,41 @@ module.exports.post = function(req, res, next) {
                 "root") ||
             _.includes(req.user._permissions, "edit_users"))) {
         var user = String.remove_empty_data(req.body);
-
+        // console.open(user);
         if (user._id && user.password) {
             db.users.findOne({
                 _id: user._id
             }, function(err, u) {
                 if (err) console.log(err);
                 else if (u) {
-                    encrypt.hash(new_password, function(hash) {
+                    encrypt.hash(user.password, function(hash) {
                         u.password = hash;
                         u.save(function(err, user) {
                             if (err) {
                                 console.log(err);
                             } else {
+                                if (user.send_sms) {
+                                    require(
+                                        'send_sms_log'
+                                    )({
+                                            to: String
+                                                .dec_mobile(
+                                                    u
+                                                    .mobile
+                                                ),
+                                            message: "your new password in panel.barang.ir site is : \n" +
+                                                user
+                                                .password
+                                        },
+                                        "send"
+                                    );
+                                }
                                 console.log(
                                     "admin -> " +
                                     req.user.first_name +
                                     " " + req.user
                                     .first_name +
+                                    " " +
                                     " change password -> " +
                                     u.first_name +
                                     " " + u.last_name
