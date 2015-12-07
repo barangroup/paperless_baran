@@ -15,6 +15,7 @@ module.exports.post = function(req, res, next) {
         var user = String.remove_empty_data(req.body);
 
         if (user._id && user.password) {
+            var pass = user.password;
             db.users.findOne({
                 _id: user._id
             }, function(err, u) {
@@ -37,8 +38,7 @@ module.exports.post = function(req, res, next) {
                                                     .mobile
                                                 ),
                                             message: "your new password in panel.barang.ir site is : \n" +
-                                                user
-                                                .password
+                                                pass
                                         },
                                         "send"
                                     );
@@ -80,7 +80,9 @@ module.exports.post = function(req, res, next) {
             " " +
             "try to change a user's password without having permission!!!"
         );
-        else console.log();
-        "someone try to change a user's password without having permission!!!"
+        else console.log(
+            "someone try to change a user's password without having permission!!!"
+        );
+
     }
 };
