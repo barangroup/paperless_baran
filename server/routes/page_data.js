@@ -35,6 +35,11 @@ module.exports.post = function(req, res) {
                     "icon": "fa-home",
                     "link": "#/"
                 },
+                {
+                    "title": "خاطرات",
+                    "icon": "fa-sticky-note",
+                    "link": "#/remeberance"
+                },
 
             ],
             "messages": [],
