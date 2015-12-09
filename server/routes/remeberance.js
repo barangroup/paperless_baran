@@ -88,8 +88,8 @@ module.exports = (function() {
             // like a remembrane and add it to set of likers
         } else if (req.user && req.body.type == "like" && req.body.data &&
             req.body.data._remeberance_id) {
-            db.remeberance.update({
-                _id: _remeberance_id
+            db.rememberance.update({
+                _id: req.body.data._remeberance_id
             }, {
                 $addToSet: {
                     like: req.user._id
@@ -114,8 +114,8 @@ module.exports = (function() {
         } else if (req.user && req.body.type == "comment" && req.body
             .data && req.body.data._remeberance_id && req.body.data
             .text) {
-            db.remeberance.update({
-                _id: _remeberance_id
+            db.rememberance.update({
+                _id: req.body.data._remeberance_id
             }, {
                 $addToSet: {
                     comment: {
