@@ -74,26 +74,45 @@ module.exports = (function() {
             // like a remembrane and add it to set of likers
         } else if (req.user && req.body.type == "like" && req.body.data &&
             req.body.data._remeberance_id) {
-            db.rememberance.update({
-                _id: req.body.data._remeberance_id
-            }, {
-                $addToSet: {
-                    like: req.user._id
-                }
-            }, function(err, rr) {
+            db.rememberance.findOne({
+                _id: req.body.data._remeberance_id,
+                like: req.user._id
+            }).lean().exec(function(err, r) {
                 if (err) {
                     // console.log(err);
                     res.status(500).json({
                         like: false,
                         err: err
                     });
+                } else if (!r) {
+                    db.rememberance.update({
+                        _id: req.body.data._remeberance_id
+                    }, {
+                        $addToSet: {
+                            like: req.user._id
+                        }
+                    }, function(err, rr) {
+                        if (err) {
+                            // console.log(err);
+                            res.status(500).json({
+                                like: false,
+                                err: err
+                            });
+                        } else {
+                            console.open(rr);
+                            res.json({
+                                like: true
+                            });
+                        }
+                    });
                 } else {
-                    console.open(rr);
                     res.json({
-                        like: true
+                        like: false,
+                        exists: true
                     });
                 }
             });
+
             // add comment to a remembrane in it's array
         } else if (req.user && req.body.type == "comment" && req.body
             .data && req.body.data._remeberance_id && req.body.data
