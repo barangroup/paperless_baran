@@ -25,6 +25,17 @@ module.exports = (function() {
                             err: err
                         });
                     } else {
+                        rememberances.forEach(function(
+                            rememberance) {
+                            Date.en_to_persion_date(
+                                rememberance._id.getTimestamp(),
+                                function(date) {
+                                    rememberance.date =
+                                        date.date;
+                                    rememberance.time =
+                                        date.time;
+                                })
+                        })
                         res.json(rememberances);
                     }
                 })
