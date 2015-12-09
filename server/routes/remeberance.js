@@ -15,6 +15,13 @@ module.exports = (function() {
                 })
                 .skip(from)
                 .limit(to - from)
+                .populate({
+                    path: '_writer',
+                    select: 'first_name last_name -_id'
+                })
+                .sort({
+                    _id: -1
+                })
                 .lean()
                 .exec(function(err,
                     rememberances) {
@@ -33,43 +40,22 @@ module.exports = (function() {
                                     rememberance.date =
                                         date.date;
                                     rememberance.time =
-                                        date.time;
+                                        date.second_less_time;
                                 })
                         })
                         res.json(rememberances);
                     }
                 })
         }
-        // now this part in useless!
-
-        /*else if (req.query && req.query.type == "single" && req.query
-                   ._id) {
-                   db.rememberance.findOne({
-                       _id: req.query
-                           ._id
-                   }, {
-                       _id: false,
-                       __v: false
-                   }).lean().exec(function(err,
-                       rememberances) {
-                       if (err) {
-                           console.log(err);
-                           res.status(500).json({
-                               add: false,
-                               err: err
-                           });
-                       } else {
-                           res.json(rememberances);
-                       }
-                   })
-               }*/
     };
 
     _return.post = function(req, res, next) {
         // add rememberance is for users only
         // and other should register if wan to add
         if (req.user && req.body.type == "add") {
-            new db.rememberance(req.body.data).save(function(err) {
+            var data = req.body.data;
+            data._writer = req.user._id;
+            new db.rememberance(data).save(function(err) {
                 if (err) {
                     console.log(err);
                     res.status(500).json({
@@ -94,17 +80,15 @@ module.exports = (function() {
                 $addToSet: {
                     like: req.user._id
                 }
-            }, function(err) {
+            }, function(err, rr) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     res.status(500).json({
                         like: false,
                         err: err
                     });
                 } else {
-                    console.log(req.user.first_name + " " +
-                        req.user.last_name +
-                        " like a remeberance");
+                    console.open(rr);
                     res.json({
                         like: true
                     });
