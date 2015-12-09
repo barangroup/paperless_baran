@@ -61,6 +61,8 @@ module.exports = (function() {
                     });
                 }
             });
+        } else if (req.user && req.body.type == "like") {
+            // add
         }
     };
 

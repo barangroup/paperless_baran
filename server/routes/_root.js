@@ -5,7 +5,8 @@ var fs = require('fs');
 var debug_mode = false;
 
 //var simple_routes = ['dashborad'];
-var file_routes = ['update_password', 'temp_users', 'contact_us',
+var file_routes = ['remeberance', 'update_password', 'temp_users',
+    'contact_us',
     'experience', 'task_members', 'dispatch', 'mali', 'news', 'poll',
     'exists', 'new_dispatch', 'sms', 'change_password', 'station',
     'mali_store', 'tasks', 'send_sms', 'edit_users', 'users_report',
