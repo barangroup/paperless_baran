@@ -55,22 +55,28 @@ module.exports = (function() {
         if (req.user && req.body.type == "add") {
             var data = req.body.data;
             data._writer = req.user._id;
-            new db.rememberance(data).save(function(err) {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({
-                        add: false,
-                        err: err
-                    });
-                } else {
-                    console.log(req.user.first_name + " " +
-                        req.user.last_name +
-                        " add a new remeberance");
-                    res.json({
-                        add: true
-                    });
-                }
+            db.rememberance.count(function(err, c) {
+                data.index = c + 1;
+                new db.rememberance(data).save(function(err) {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).json({
+                            add: false,
+                            err: err
+                        });
+                    } else {
+                        console.log(req.user.first_name +
+                            " " +
+                            req.user.last_name +
+                            " add a new remeberance"
+                        );
+                        res.json({
+                            add: true
+                        });
+                    }
+                });
             });
+
             // like a remembrane and add it to set of likers
         } else if (req.user && req.body.type == "like" && req.body.data &&
             req.body.data._remeberance_id) {
@@ -99,7 +105,6 @@ module.exports = (function() {
                                 err: err
                             });
                         } else {
-                            console.open(rr);
                             res.json({
                                 like: true
                             });
