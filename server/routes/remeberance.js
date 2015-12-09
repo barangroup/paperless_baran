@@ -7,8 +7,7 @@ module.exports = (function() {
     _return.get = function(req, res, next) {
         if (req.query && req.query.type == "all") {
             db.rememberance.find({}, {
-                __v: false,
-                text: false
+                __v: false
             }).lean().exec(function(err,
                 rememberances) {
                 if (err) {
@@ -61,8 +60,52 @@ module.exports = (function() {
                     });
                 }
             });
-        } else if (req.user && req.body.type == "like") {
-            // add
+        } else if (req.user && req.body.type == "like" && req.body.data &&
+            req.body.data._remeberance_id) {
+            db.remeberance.update({
+                _id: _remeberance_id
+            }, {
+                $addToSet: {
+                    like: req.user._id
+                }
+            }, function(err) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({
+                        like: false,
+                        err: err
+                    });
+                } else {
+                    res.json({
+                        like: true
+                    });
+                }
+            });
+        } else if (req.user && req.body.type == "comment" && req.body
+            .data && req.body.data._remeberance_id && req.body.data
+            .text) {
+            db.remeberance.update({
+                _id: _remeberance_id
+            }, {
+                $addToSet: {
+                    comment: {
+                        _writer: req.user._id,
+                        text: req.body.data.text
+                    }
+                }
+            }, function(err) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({
+                        comment: false,
+                        err: err
+                    });
+                } else {
+                    res.json({
+                        comment: true
+                    });
+                }
+            });
         }
     };
 
