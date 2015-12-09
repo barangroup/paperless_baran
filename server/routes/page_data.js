@@ -24,18 +24,19 @@ module.exports.post = function(req, res) {
                 "title": "خانه"
             },
             "user": {
+                "_id": req.user._id,
                 "first_name": req.user.first_name,
                 "last_name": req.user.last_name,
                 "group": task_title,
-                "gender": typeof req.user.gender != "undefined" ? "male" : "female",
+                "gender": typeof req.user.gender != "undefined" ?
+                    "male" : "female",
                 "avatar": "dist/img/avatar-male.jpg"
             },
             "menus": [{
                     "title": "خانه",
                     "icon": "fa-home",
                     "link": "#/"
-                },
-                {
+                }, {
                     "title": "افزودن خاطرات",
                     "icon": "fa-sticky-note",
                     "link": "#/add_remeberance"
