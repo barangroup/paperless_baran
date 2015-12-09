@@ -36,9 +36,9 @@ module.exports.post = function(req, res) {
                     "link": "#/"
                 },
                 {
-                    "title": "خاطرات",
+                    "title": "افزودن خاطرات",
                     "icon": "fa-sticky-note",
-                    "link": "#/remeberance"
+                    "link": "#/add_remeberance"
                 },
 
             ],

@@ -147,6 +147,9 @@
           </li>
           <li class="header">
           </li>
+          <li ng-class="getMenuLinkClass('#/remeberance')">
+            <a href="#/remeberance"><i class="fa fa-book"></i> دفترچه خاطرات باران</a>
+          </li>
           <li ng-class="getMenuLinkClass('#/feedback')">
             <a href="#/feedback"><i class="fa fa-edit"></i> پیشنهاد و انتقاد</a>
           </li>
@@ -180,7 +183,7 @@
 
       <!-- Main content -->
 
-      <section class="content" ng-view>
+      <section class="content" ng-view autoscroll="true">
 
       </section>
       <!-- /.content -->
@@ -217,6 +220,7 @@
   <script src="../plugins/angularjs/angular.min.js" type="text/javascript"></script>
   <script src="../plugins/angular-route/angular-route.min.js" type="text/javascript"></script>
   <script src="../plugins/ngprogress/build/ngprogress.min.js" type="text/javascript"></script>
+  <script src="../plugins/angular-infinite-scroll/ng-infinite-scroll.min.js" type="text/javascript"></script>
   <!-- Controller -->
   <script src="../controller/app-controller.min.js" type="text/javascript"></script>
 
