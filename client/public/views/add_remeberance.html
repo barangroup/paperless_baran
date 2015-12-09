@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h2 class="box-title"><i class="fa fa-sticky-note fa-fw"></i>خاطرات</h2>
+			</div>
+			<form name="AddRemembranceForm" class="form-horizontal">
+				<div class="box-body">
+					<div class="form-group" ng-class="{'has-error' : AddRemembranceForm.title.$touched && AddRemembranceForm.title.$invalid}">
+						<label for="titleInput" class="col-sm-3 contorl-label">عنوان<strong class="text-red">*</strong></label>
+						<div class="col-lg-6 col-sm-10">
+							<input id="titleInput" type="text" class="form-control" name="title" ng-model="remembrance.title" required>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : AddRemembranceForm.text.$touched && AddRemembranceForm.text.$invalid}">
+						<label for="textInput" class="col-sm-3 contorl-label">متن<strong class="text-red">*</strong></label>
+						<div class="col-lg-9 col-sm-10">
+							<textarea id="textInput" class="form-control" name="text" ng-model="remembrance.text" rows="5" required></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="box-footer">
+					<button class="btn btn-success radius" type="submit" ng-click="submitRemembrance();">ثبت <i class="fa fa-save fa-fw"></i></button>
+				</div>
+			</form>
+			<div class="overlay" ng-if="isSending"><i class="fa fa-spinner fa-pulse"></i></div>
+		</div>
+	</div>
+</div>
