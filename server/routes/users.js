@@ -147,13 +147,20 @@ module.exports.post = function(req, res, next) {
                                         Date.en_to_persion_date(users[loop.iteration()]._id.getTimestamp(), function(d) {
                                             users[loop.iteration()].create_date = d.date;
                                             users[loop.iteration()].create_time = d.time;
+
+                                            if (users[loop.iteration()]._site_log) {
+                                                Date.en_to_persion_date(users[loop.iteration()]._site_log, function(d2) {
+                                                    users[loop.iteration()]._site_log = d2.date + " " + d2.time ;
+                                                });
+                                            }
+
                                             if (users[loop.iteration()].birth_date) {
                                                 Date.en_to_persion_date(users[loop.iteration()].birth_date, function(d2) {
                                                     users[loop.iteration()].birth_date = d2.date;
-                                                    loop.next();
                                                 });
-                                            } else
-                                                loop.next();
+                                            }
+
+                                            loop.next();
                                         });
                                     },
                                     function() {
@@ -174,9 +181,11 @@ module.exports.post = function(req, res, next) {
                     if (err) {
                         console.log(err);
                     } else if (c) {
+
                         var r = {
                             total_count: c
                         };
+
                         if (_.includes(req.user._permissions, "edit_users")) {
                             r.can_edit = true;
                         }
