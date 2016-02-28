@@ -123,10 +123,11 @@ module.exports.post = function(req, res, next) {
                         .populate({
                             path: '_creator',
                             select: 'first_name last_name -_id'
-                        }).populate({
-                            path: 'task',
-                            select: 'title'
                         })
+                        // .populate({
+                        //     path: 'task',
+                        //     select: 'title'
+                        // })
                         .populate({
                             path: '_comments._writer',
                             select: 'first_name last_name -_id'
@@ -179,6 +180,11 @@ module.exports.post = function(req, res, next) {
                         if (_.includes(req.user._permissions, "edit_users")) {
                             r.can_edit = true;
                         }
+
+                        if (_.includes(req.user._permissions, "root")) {
+                            r.root = true;
+                        }
+
                         res.json(r);
                     }
                 })

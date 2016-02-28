@@ -1,4 +1,14 @@
 var enc = require('date');
+// var db = require('mongo_schemas');
+
+// var text =
+//
+//     db.temp_users.find().lean().exec(function(err, rr) {
+//         rr.forEach(function(r) {
+//             console.temp(r.mobile);
+//         })
+//     })
+//
 
 // var db = require('mongo_schemas');
 

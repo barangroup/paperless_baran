@@ -1,0 +1,98 @@
+<div class="row">
+	<div class="col-md-5 col-lg-5">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h2 class="box-title"><i class="fa fa-building-o"></i> مسئولیت ها</h2>
+			</div>
+			<div class="box-body no-padding">
+				<table class="table table-hover table-striped selectable-row">
+					<thead>
+						<tr>
+							<th style="width: 50px;">ردیف</th>
+							<th style="width: 300px;">نام</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-if="!TaskList || TaskList.length == 0">
+							<td colspan="2">
+								مسئولیتی در لیست موجود نیست.
+							</td>
+						</tr>
+						<tr ng-repeat="task in TaskList" ng-model="task" ng-click="selectTask(task)" ng-class="{'bg-blue' : task._id == SelectedTask._id}">
+							<td>{{$index + 1}}</td>
+							<td>{{task.title}}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="2">
+								<button type="button" class="btn btn-default" ng-click="_type = 'add'; SelectedTask = {} ; AddTaskForm.$setPristine()">
+									افزودن مسئولیت <i class="fa fa-plus-circle"></i></button>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="overlay" ng-show="isLoading"><i class="fa fa-spinner fa-spin"></i></div>
+		</div>
+	</div>
+	<div class="col-md-7 col-lg-7" ng-show="SelectedTask">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h2 class="box-title"><i class="fa fa-wrench"></i> تنظیمات مسئولیت  </h2>
+			</div>
+			<form class="form-horizontal" name="AddTaskForm">
+				<div class="box-body">
+					<div class="form-group" ng-class="{'has-error' : AddTaskForm.title.$dirty && AddTaskForm.title.$invalid}">
+						<label for="inputTaskTitle" class="col-sm-2 control-label"> عنوان مسئولیت <strong class="text-red">*</strong></label>
+						<div class="col-lg-8 col-sm-10">
+							<input type="text" name="title" ng-model="SelectedTask.title" id="inputTaskTitle" class="form-control" required="required">
+						</div>
+					</div>
+					<div class="form-group" ng-class="{'has-error' : AddTaskForm.name.$dirty && AddTaskForm.name.$invalid}">
+						<label for="inputName" class="col-sm-2 control-label">نام لاتین<strong class="text-red">*</strong></label>
+						<div class="col-sm-10 col-lg-8">
+							<input type="text" name="address" ng-model="SelectedTask.name" id="inputName" class="form-control" required="required">
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label for="inputName" class="col-sm-2 control-label"> وظیفه پدر <strong class="text-red">*</strong></label>
+						<div class="col-sm-10 col-lg-8">
+							<select class="form-control text-center" ng-model="SelectedTask._parent" ng-options="task._id as task.title for task in TaskList">
+							</select>
+						</div>
+					</div>
+
+
+
+
+					<div class="form-group">
+						<label for="inputName" class="col-sm-2 control-label"> دست رسی ها<strong class="text-red">*</strong></label>
+						<div class="col-sm-10 col-lg-8">
+							<select class="form-control" name="permissions" ng-model="SelectedTask.permissions" ng-options="permission as permission for permission in permissionList" multiple>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="inine-checkbox col-lg-2 col-sm-2">
+						</label>
+						<label class="inine-checkbox col-lg-4 col-sm-5">
+							<input type="checkbox" name="_disable" ng-model="SelectedTask._disable"> غیر فعال
+						</label>
+					</div>
+
+				</div>
+				<div class="box-footer">
+					<button type="submit" class="btn btn-primary" ng-disabled="hasError()" ng-click="EditTask(SelectedTask)" ng-if="_type=='edit'">ویرایش <i class="fa fa-edit"></i></button>
+					<button type="submit" class="btn btn-primary" ng-disabled="hasError()" ng-click="AddTask(SelectedTask)" ng-if="_type=='add'">افزودن <i class="fa fa-plus-circle"></i></button>
+					<button type="button" class="btn btn-danger" ng-click="SelectedTask = null;AddTaskForm.$setPristine()">لغو <i class="fa fa-times"></i></button>
+				</div>
+			</form>
+			<div class="overlay" ng-show="isSending"><i class="fa fa-spinner fa-spin"></i></div>
+		</div>
+	</div>
+</div>

@@ -134,13 +134,13 @@ module.exports.post = function(req, res) {
             });
         }
 
-        if (_.includes(req.user._permissions, "root")) {
-            a.menus.push({
-                "title": "وظایف (مسئولیت ها)",
-                "icon": "fa-tasks",
-                "link": "#/task-assign"
-            });
-        }
+        // if (_.includes(req.user._permissions, "root")) {
+        //     a.menus.push({
+        //         "title": "وظایف (مسئولیت ها)",
+        //         "icon": "fa-tasks",
+        //         "link": "#/task-assign"
+        //     });
+        // }
 
         if (_.includes(req.user._permissions, "root") ||
             _.includes(req.user._permissions, "woman_mali") ||
@@ -159,6 +159,14 @@ module.exports.post = function(req, res) {
                 "title": "گزارش اعزام ها",
                 "icon": "fa-globe",
                 "link": "#/dispatch"
+            });
+        }
+
+        if (_.includes(req.user._permissions, "root")) {
+            a.menus.push({
+                "title": "تعریف مسئولیت ها",
+                "icon": "fa-tasks",
+                "link": "#/task"
             });
         }
 
