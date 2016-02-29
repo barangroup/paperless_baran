@@ -150,7 +150,7 @@ module.exports.post = function(req, res, next) {
 
                                             if (users[loop.iteration()]._site_log) {
                                                 Date.en_to_persion_date(users[loop.iteration()]._site_log, function(d2) {
-                                                    users[loop.iteration()]._site_log = d2.date + " " + d2.time ;
+                                                    users[loop.iteration()]._site_log = d2.date + " " + d2.time;
                                                 });
                                             }
 

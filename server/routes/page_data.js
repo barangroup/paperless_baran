@@ -170,6 +170,24 @@ module.exports.post = function(req, res) {
             });
         }
 
+        if (_.includes(req.user._permissions, "root") ||
+            _.includes(req.user._permissions, "vote")) {
+            a.menus.push({
+                "title": "رای گیری",
+                "icon": "fa-tasks",
+                "link": "#/vote"
+            });
+        }
+
+        if (_.includes(req.user._permissions, "root") ||
+            _.includes(req.user._permissions, "vote_counter")) {
+            a.menus.push({
+                "title": "شمارش آرا",
+                "icon": "fa-tasks",
+                "link": "#/vote_counter"
+            });
+        }
+
         if (req.user && req.user.task && req.user.task.length > 0) {
             a.menus.push({
                 "title": "انتقال تجربیات",

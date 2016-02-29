@@ -32,7 +32,9 @@ var permissions = [
     "mali_api",
     "mali_report",
     "mali_store",
-    "see_all_mali_notification"
+    "see_all_mali_notification",
+    "vote",
+    "vote_counter"
 ];
 
 

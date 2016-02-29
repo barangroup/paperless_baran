@@ -1,0 +1,146 @@
+<div class="row">
+    <div class="col-lg-12">
+        <!-- <div class="box box-solid" ng-cloak> -->
+            <form name="myForm" ng-submit="editUser(selectedUser)">
+                <!-- <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-edit"></i> نتیجه آرا </h3>
+                </div> -->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <!-- Content -->
+
+                    <div ng-repeat="nominate in nominated">
+                        <div class="col-lg-4 col-xs-6">
+                            <a href ng-click="add_vote(nominate)">
+                                <div class="small-box bg-light-blue">
+                                    <div class="inner">
+                                        <h1 align='center'>{{nominate.name}}</h1>
+                                        <h3 align='center'>{{nominate.votes}}</h3>
+                                        <h3 align='center'> % {{nominate.precent || 0}} </h3>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- <div> -->
+                    <!-- <h1><i class="fa-exclamation-circle"></i></h1> -->
+                    <!-- <h4></h4> -->
+                    <!-- </div> -->
+
+                </div>
+                <div class="box-footer" ng-if="canEdit && selectedUser">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-xs-6">
+                            <button type="submit" class="btn btn-success btn-block" ng-disabled="Deactive || hasError()">ویرایش</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="overlay" ng-show="isSending"><i class="fa fa-spinner fa-spin"></i></div>
+
+        <!-- </div> -->
+    </div>
+</div>
+
+<div class="modal fade" id="modal-search" data-backdrop="static">
+    <div class="modal-dialog">
+        <form name="AdvanceSearchForm" role="form">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-left" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                    </button>
+                    <h4 class="modal-title">جستجوی پیشرفته</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="help-block">تنها مواردی که مقدار دارند جستجو میشوند.</p>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <span>نام</span>
+                            <input type="text" class="form-control" name="first_name" ng-model="_query.first_name">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>نام خانوادگی</span>
+                            <input type="text" class="form-control" name="last_name" ng-model="_query.last_name">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>شماره همراه</span>
+                            <input type="text" class="form-control" name="mobile" ng-model="_query.mobile">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>ایمیل</span>
+                            <input type="text" class="form-control pr-en" name="email" ng-model="_query.email">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>دانشگاه</span>
+                            <input type="text" class="form-control" name="university" ng-model="_query.university">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>رشته</span>
+                            <select class="form-control text-right" ng-model="_query.major" ng-options="getMajorValue(major) as major.name group by major.group for major in majorsList"></select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>سال ورود به دانشگاه</span>
+                            <select class="form-control text-center" ng-model="_query.entering_uni_year" ng-options="year for year in entryYear"></select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>شهر</span>
+                            <input type="text" class="form-control" name="city" ng-model="_query.city">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>مهارت</span>
+                            <input type="text" class="form-control" name="skill" ng-model="_query.skill">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <span>توضیحات</span>
+                            <input type="text" class="form-control" name="comment" ng-model="_query.comment">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary pull-left" ng-click="search();" data-dismiss="modal">جستجو <i class="fa fa-search"></i></button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">لغو</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade modal-md" id="modal-password">
+    <div class="modal-dialog">
+        <form name="ChangePasswordForm" role="form" ng-submit="changePassword(selectedUser)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close pull-left" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-fw"></i></button>
+                    <h4 class="modal-title">تغییر کلمه عبور کاربر</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- <p class="help-block">تنها مواردی که مقدار دارند جستجو میشوند.</p> -->
+                    <div class="row">
+                        <div class="form-group col-lg-6" ng-class="{'has-error' : (ChangePasswordForm.password.$touched && ChangePasswordForm.password.$invalid)}">
+                            <span>کلمه عبور جدید</span>
+                            <input type="password" class="form-control" name="password" ng-model="selectedUser.password" required>
+                        </div>
+                        <div class="form-group col-lg-6" ng-class="{'has-error' : (ChangePasswordForm.password_repeat.$touched && selectedUser.password_repeat !=  selectedUser.password)}">
+                            <span>تکرار کلمه عبور جدید</span>
+                            <input type="password" class="form-control" name="password_repeat" ng-model="selectedUser.password_repeat">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>
+                                <input type="checkbox" name="send_sms" ng-model="selectedUser.send_sms"> ارسال با پیامک
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary pull-left" ng-disabled="ChangePasswordForm.$invalid || selectedUser.password_repeat !=  selectedUser.password">ذخیره</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بیخیال</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

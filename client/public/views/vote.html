@@ -1,0 +1,154 @@
+<div class="row">
+    <div class="col-lg-5">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-list"></i> لیست اعضا</h3>
+                <div class="pull-left">
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-sm text-muted" ng-init="_show_search_box = false;" data-toggle="collapse" data-target="#SearchBox">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <span ng-if="datatable.totalCount" class="label label-primary" ng-bind="datatable.totalCount"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding" ng-cloak>
+                <form name="searchBox" id="SearchBox" class="collapse" ng-submit="search()" style="background-color: #f9f9f9; padding: 5px;">
+                    <div class="input-group">
+                        <input class="form-control" name="quick_search" type="text" placeholder="جستجوی سریع ..." ng-model="_query.quick_search">
+                        <!-- <div class="input-group-btn" ng-show="query.quick_search">
+              <button type="button" class="btn btn-default btn-flat" ng-click="clearSearch();"><i class="fa fa-times"></i></button>
+            </div> -->
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="row margin pr-en">
+                        <a class="col-lg-3 label label-warning margin" ng-repeat="(key, value) in query" href ng-click="RemoveCriteria(key)">{{value}}</a>
+                    </div>
+                    <!-- <div class="clearfix">‍
+                        <a class="pull-left" href data-toggle="modal" data-target="#modal-search"><i class="fa fa-plus"></i>  جستجوی پیشرفته</a>
+                    </div> -->
+                </form>
+                <div class="text-gray margin text-center" ng-if="!users || users.length == 0">
+                    <h1><i class="fa fa-frown-o"></i></h1>
+                    <h4>هیچی برای نمایش نیست!!</h4>
+                </div>
+                <table class="table table-hover table-striped selectable-row" ng-if="users && users.length > 0">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">ردیف</th>
+                            <th style="width: 300px;">نام</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div class="input-group">
+                        </div>
+                        <tr ng-repeat="user in users" ng-model="user" ng-click="selectUser(user)" ng-class="{'bg-blue' : user._id == selectedUser._id}">
+                            <td>{{datatable.listSize * (datatable.currentPage - 1) + $index + 1}}</td>
+                            <td>{{user.first_name + ' ' + user.last_name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer clearfix">
+                <div class="row">
+                    <div class="col-lg-6 col-md-4 col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">تعداد لیست</span>
+                            <select class="form-control" ng-change="paging(1,true)" ng-model="datatable.listSize">
+                                <option ng-value="10">10</option>
+                                <option ng-value="25">25</option>
+                                <option ng-value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-4 col-xs-6 pull-left">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-class="{disabled : datatable.currentPage >= datatable.maxPage}" ng-click="paging(datatable.currentPage + 1)"><i class="fa fa-angle-right"></i></button>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon bg-gray" ng-bind="datatable.maxPage"></span>
+                                <input class="form-control text-center" ng-model-options="{ debounce: {default: 700, blur: 0} }" type="text" ng-model="_page" ng-change="paging(_page)">
+                            </div>
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-class="{disabled : datatable.currentPage == 1}" ng-click="paging(datatable.currentPage - 1)"><i class="fa fa-angle-left"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="overlay" ng-show="users == null || isLoading"><i class="fa fa-spinner fa-spin"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="box box-solid" ng-cloak>
+            <form name="myForm" ng-submit="add_vote(selectedUser._id)">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-edit"></i>  اطلاعات کاربر</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <!-- Content -->
+
+                    <div ng-hide="!selectedUser">
+                        <fieldset ng-disabled="true">
+
+                            <h2>اطلاعات فردی</h2>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="input-group" ng-class="{'has-error' : myForm.first_name.$touched && myForm.first_name.$invalid}">
+                                        <span class="input-group-addon text-blue">نام<small class="text-red"> *</small></span>
+                                        <input type="text" class="form-control" name="first_name" ng-model="selectedUser.first_name" required>
+                                    </div>
+                                </div>
+                                <br class="hidden-lg">
+
+                                <div class="col-lg-6">
+                                    <div class="input-group" ng-class="{'has-error' : myForm.last_name.$touched && myForm.last_name.$invalid}">
+                                        <span class="input-group-addon text-blue">نام خانوادگی<small class="text-red"> *</small></span>
+                                        <input type="text" class="form-control" name="last_name" ng-model="selectedUser.last_name" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="input-group">
+                                        <label>
+                                            <input type="radio" name="gender" ng-model="selectedUser.gender" ng-value="true"> مرد
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="input-group">
+                                        <label>
+                                            <input type="radio" name="gender" ng-model="selectedUser.gender" ng-value=""> زن
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div ng-show="!selectedUser" class="text-gray text-center">
+                        <h1><i class="fa fa-exclamation-circle text-blue"></i></h1>
+                        <h4>هیچ کاربری انتخاب نشده</h4>
+                    </div>
+                </div>
+                <div class="box-footer" ng-if="selectedUser">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-xs-6">
+                            <button ng-show="!selectedUser.vote" type="submit" class="btn btn-success btn-block" ng-disabled="Deactive || selectedUser.vote">تعرفه تحویل داده شد</button>
+                            <button type="button" class="btn btn-danger btn-block" ng-show="selectedUser.vote" ng-disabled="true">قبلا تعرفه تحویل داده شده!</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="overlay" ng-show="isSending"><i class="fa fa-spinner fa-spin"></i></div>
+        </div>
+    </div>
+</div>

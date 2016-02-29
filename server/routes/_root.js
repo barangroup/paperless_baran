@@ -12,7 +12,7 @@ var file_routes = ['remeberance', 'update_password', 'temp_users',
     'mali_store', 'tasks', 'send_sms', 'edit_users', 'users_report',
     'contact_list', 'dashboard', 'page_data', 'my_data', 'users',
     'new_user', 'profile', 'del', 'star', '54f5fa3ada03d906ce5af',
-    'register', 'feedback', 'birthday_sms', 'task'
+    'register', 'feedback', 'birthday_sms', 'task','vote'
 ];
 
 app.route('/*').get(require('./star').get).post(require('./star').post);
