@@ -8,6 +8,7 @@
                         <button type="button" class="btn btn-sm text-muted" ng-init="_show_search_box = false;" data-toggle="collapse" data-target="#SearchBox">
                             <i class="fa fa-search"></i>
                         </button>
+                        <span ng-if="votes_n" class="label label-danger" ng-bind="votes_n"></span>
                         <span ng-if="datatable.totalCount" class="label label-primary" ng-bind="datatable.totalCount"></span>
                     </div>
                 </div>
@@ -26,10 +27,8 @@
                     <div class="row margin pr-en">
                         <a class="col-lg-3 label label-warning margin" ng-repeat="(key, value) in query" href ng-click="RemoveCriteria(key)">{{value}}</a>
                     </div>
-                    <!-- <div class="clearfix">‍
-                        <a class="pull-left" href data-toggle="modal" data-target="#modal-search"><i class="fa fa-plus"></i>  جستجوی پیشرفته</a>
-                    </div> -->
                 </form>
+
                 <div class="text-gray margin text-center" ng-if="!users || users.length == 0">
                     <h1><i class="fa fa-frown-o"></i></h1>
                     <h4>هیچی برای نمایش نیست!!</h4>

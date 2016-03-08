@@ -105,6 +105,16 @@ module.exports.post = function(req, res, next) {
                 }
             });
 
+        } else if (req.body && req.body.type && req.body.type == "n") {
+            db.users.count({
+                vote: {
+                    $exists: true
+                }
+            }, function(err, n) {
+                res.json({
+                    n: n
+                });
+            });
         } else if (req.body.from && req.body.to) {
 
 
@@ -143,13 +153,13 @@ module.exports.post = function(req, res, next) {
                     .limit(to - from)
                     .lean()
                     .exec(function(err, users) {
-                        // console.log(users.length);
                         if (err) {
                             console.log(err);
                             res.json({});
                         } else if (users) {
                             String.sync_for(users.length, function(loop) {
-                                    if (global.init.real_mobile_numbers) users[loop.iteration()].mobile = String.dec_mobile(users[loop.iteration()].mobile);
+                                    if (global.init.real_mobile_numbers)
+                                        users[loop.iteration()].mobile = String.dec_mobile(users[loop.iteration()].mobile);
                                     loop.next();
                                 },
                                 function() {
@@ -157,7 +167,6 @@ module.exports.post = function(req, res, next) {
                                         count: c,
                                         data: users
                                     });
-                                    // console.open(users);
                                 });
                         } else res.json({
                             count: 0,

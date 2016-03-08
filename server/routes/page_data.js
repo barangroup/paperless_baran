@@ -188,6 +188,15 @@ module.exports.post = function(req, res) {
             });
         }
 
+        // if (_.includes(req.user._permissions, "root") ||
+        //     _.includes(req.user._permissions, "vote_counter")) {
+        //     a.menus.push({
+        //         "title": "ویدئو",
+        //         "icon": "fa-tasks",
+        //         "link": "#/vote_video"
+        //     });
+        // }
+
         if (req.user && req.user.task && req.user.task.length > 0) {
             a.menus.push({
                 "title": "انتقال تجربیات",

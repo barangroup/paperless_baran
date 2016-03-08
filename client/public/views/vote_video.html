@@ -21,25 +21,24 @@
 
 
                 <div ng-repeat="nominate in nominated">
-                    <div class="col-lg-4 col-xs-4">
-                        <a href ng-click="add_vote(nominate)">
+                    <div class="col-lg-5 col-xs-5" ng-if="nominate.url">
+                        <!-- <a href ng-click="add_vote(nominate)"> -->
                             <div class="small-box bg-light-blue">
                                 <div class="inner">
-                                    <h1 align='center'><b>{{nominate.name}} </h1>
-                                    <h2 align='center'><b>{{nominate.votes}}</b></h2>
-                                    <h3 align='center'> % {{nominate.precent || 0}} </h3>
+                                    <!-- <h1 align='center'><b>{{nominate.name}} - {{nominate.votes}}<b/></h1> -->
+                                    <img align='center' ng-if="nominate.url" src="{{nominate.url}}" alt="{{nominate.url}}">
                                 </div>
-                                <div class="icon">
+                                <!-- <div class="icon">
                                     <i class="ion ion-bag"></i>
-                                </div>
+                                </div> -->
                             </div>
-                        </a>
+                        <!-- </a> -->
                     </div>
                 </div>
 
-                <div class="col-lg-1 col-md-1 col-xs-1">
+                <!-- <div class="col-lg-1 col-md-1 col-xs-1">
                     <button ng-click="undo();" class="btn btn-block btn-info">undo</button>
-                </div>
+                </div> -->
             </div>
             <div class="box-footer" ng-if="canEdit && selectedUser">
                 <div class="row">
