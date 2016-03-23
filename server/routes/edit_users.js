@@ -61,8 +61,11 @@ module.exports.post = function(req, res, next) {
                     if (user.age_group_decide) u.age_group_decide = user.age_group_decide;
                     if (user.teaching_lessons) u.teaching_lessons = user.teaching_lessons;
 
-                    if (user.task && (_.includes(req.user._permissions, "root")))
+                    if (user.task && (_.includes(req.user._permissions, "root"))) {
                         u.task = user.task;
+                    } else if (_.includes(req.user._permissions, "root")) {
+                        u.task = undefined;
+                    }
 
                     u.skills = user.skills;
 

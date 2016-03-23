@@ -472,7 +472,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             if (!$scope.hasError()) {
                 trimArray(newUser.skills);
                 trimArray(newUser._comments, "comment");
-                // remove previous comment to protect duplicates on server 
+                // remove previous comment to protect duplicates on server
                 if (newUser && newUser._comments) {
                     for (var i = 0; i < newUser._comments.length; i++) {
                         if (newUser._comments[i]._writer) {
@@ -874,7 +874,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
                 return;
             };
             $scope.selected = row;
-            // fixme: @elyas get_data dosen't work in /dispatch 
+            // fixme: @elyas get_data dosen't work in /dispatch
             $http.get('/dispatch', {
                 params: {
                     type: 'get_data',
@@ -1003,7 +1003,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
     }
 
     $scope.init();
-    
+
 }]).controller('NewsController', ['$scope', '$http', 'toaster',
     function($scope, $http, toaster) {
         $scope.init = function() {
@@ -1073,7 +1073,7 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             controller: 'NewsController'
         }).when('/stations', {
             templateUrl: 'views/stations.html',
-            controller: 'StationController'  
+            controller: 'StationController'
         }).when('/experience', {
             templateUrl: 'views/experience.html',
             controller: 'ExperienceController'
