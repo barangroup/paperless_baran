@@ -1,9 +1,9 @@
 {
   "apps" : [{
-    "name"        : "baran_v0.0.20",
+    "name"        : "baran_v0.0.21",
     "script"      : "./bin/www",
-    "err_file"    : "baran_v0.0.20_err.log",
-    "out_file"    : "baran_v0.0.20_out.log",
+    "err_file"    : "baran_v0.0.21_err.log",
+    "out_file"    : "baran_v0.0.21_out.log",
     "args"        : "['-x']"
   }]
 }
