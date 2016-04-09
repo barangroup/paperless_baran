@@ -199,9 +199,15 @@ module.exports.post = function(req, res) {
 
         if (req.user && req.user.task && req.user.task.length > 0) {
             a.menus.push({
-                "title": "انتقال تجربیات",
+                "title": "افزودن تجربیات",
                 "icon": "fa-globe",
                 "link": "#/experience"
+            });
+
+            a.menus.push({
+                "title": "تجربیات",
+                "icon": "fa-wheelchair",
+                "link": "#/experience/show"
             });
         }
     }

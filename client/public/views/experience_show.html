@@ -1,0 +1,51 @@
+<div class="row">
+	<div class="col-md-4">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h2 class="box-title"><i class="fa fa-globe fa-fw"></i> تجربیات ثبت شده برای مسئولیت های شما </h2>
+			</div>
+			<div class="box-body no-padding" ng-cloak>
+				<table class="table table-hover table-striped selectable-row">
+					<thead>
+						<tr>
+							<th>نویسنده</th>
+							<th>عنوان</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-if="!experiences || !experiences.length">
+							<td colspan="2">
+								<h4><i class="fa fa-coffee fa-fw"></i> لیست خالیست</h4>
+							</td>
+						</tr>
+						<tr ng-if="experiences && experiences.length" ng-repeat="x in experiences" ng-click="selectRow(x)" ng-class="{'bg-blue' : x._id == selected._id}">
+							<td>{{getFullName(x._writer)}}</td>
+							<td>{{x.title}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- <div class="box-footer"></div> -->
+			<div class="overlay" ng-show="isLoading"><i class="fa fa-spinner fa-pulse"></i></div>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<div class="box box-solid" ng-if="selected">
+			<div class="box-header with-border">
+				<h2 class="box-title"><i class="fa fa-info-circle fa-fw"></i>جزئیات</h2>
+			</div>
+			<div class="box-body">
+				<dl class="dl-horizontal">
+					<dt>نویسنده:</dt>
+					<dd>{{getFullName(selected._writer)}}</dd>
+					<dt>مسئولیت :</dt>
+					<dd>{{selected._task.title}}</dd>
+					<dt>تاریخ:</dt>
+					<dd>{{selected.date}}</dd>
+					<dt>توضیحات</dt>
+					<dd>{{selected.text}}</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>

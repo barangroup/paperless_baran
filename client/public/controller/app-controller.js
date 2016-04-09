@@ -1036,6 +1036,38 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
             });
         }
     }
+]).controller('ExperienceShowController', ['$scope', '$http', 'toaster',
+    function($scope, $http, toaster) {
+        $scope.init = function() {
+            $scope.news = {};
+            $scope.newsForm.$setPristine();
+            $scope.isSending = false;
+        }
+        $scope.hasError = function() {
+            return $scope.newsForm.$invalid;
+        }
+        $scope.addNews = function(news) {
+            if ($scope.hasError()) {
+                return;
+            };
+            $scope.isSending = true;
+            $http.post('/news', {
+                type: 'add',
+                data: news
+            }).success(function(data) {
+                $scope.isSending = false;
+                if (data.err) {
+                    toaster.error("با خطا مواجه شد.");
+                    return;
+                };
+                $scope.init();
+                toaster.success("با موفقت ثبت شد.");
+            }).error(function(data, code) {
+                $scope.isSending = false;
+                toaster.error("با خطا مواجه شد.");
+            });
+        }
+    }
 ]).config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.when('/', {
@@ -1083,6 +1115,9 @@ app.controller('MainController', ['$scope', '$http', '$location', '$timeout', 't
         }).when('/dispatch', {
             templateUrl: 'views/dispatch-report.html',
             controller: 'DispatchReportController'
+        }).when('/experience/show', {
+            templateUrl: 'views/experience_show.html',
+            controller: 'ExperienceShowController'
         }).when('/bug-report', {
             templateUrl: 'views/bug-report.html',
             controller: 'BugReportController'
