@@ -1,27 +1,52 @@
-
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-5">
 		<div class="box box-solid">
 			<div class="box-header with-border">
 				<h2 class="box-title"><i class="fa fa-globe fa-fw"></i> گزارش اعزام به مراکز</h2>
+				<div class="pull-left">
+					<div class="box-tools">
+						<button type="button" class="btn btn-sm text-muted" ng-init="_show_search_box = false;" data-toggle="collapse" data-target="#SearchBox">
+							<i class="fa fa-search"></i>
+						</button>
+						<span ng-if="datatable.totalCount" class="label label-primary" ng-bind="datatable.totalCount"></span>
+					</div>
+				</div>
+
 			</div>
+
 			<div class="box-body no-padding" ng-cloak>
+				<form name="searchBox" id="SearchBox" class="collapse" ng-submit="search()" style="background-color: #f9f9f9; padding: 5px;">
+					<div class="input-group">
+						<input class="form-control" type="text" placeholder="جستجوی سریع در تمام فیلد ها..." ng-model="search">
+						<div class="input-group-btn" ng-show="query.quick_search">
+							<button type="button" class="btn btn-default btn-flat" ng-click="clearSearch();"><i class="fa fa-times"></i></button>
+						</div>
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+					<!-- <div class="row margin pr-en">
+						<a class="col-lg-3 label label-warning margin" ng-repeat="(key, value) in query" href ng-click="RemoveCriteria(key)">{{value}}</a>
+					</div> -->
+				</form>
 				<table class="table table-hover table-striped selectable-row">
 					<thead>
 						<tr>
 							<th>رابط</th>
 							<th>مرکز</th>
+							<th>تاریخ</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-if="!dispatches || !dispatches.length">
-							<td colspan="2">
+							<td colspan="3">
 								<h4><i class="fa fa-coffee fa-fw"></i> لیست خالیست</h4>
 							</td>
 						</tr>
-					<tr ng-if="dispatches && dispatches.length" ng-repeat="x in dispatches" ng-click="selectRow(x)" ng-class="{'bg-blue' : x._id == selected._id}">
+						<tr ng-if="dispatches && dispatches.length" ng-repeat="x in dispatches | filter : search" ng-click="selectRow(x)" ng-class="{'bg-blue' : x._id == selected._id}">
 							<td>{{getFullName(x._leader)}}</td>
 							<td>{{x._station.name}}</td>
+							<td>{{x.date}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -30,11 +55,12 @@
 			<div class="overlay" ng-show="isLoading"><i class="fa fa-spinner fa-pulse"></i></div>
 		</div>
 	</div>
-	<div class="col-md-8">
+	<div class="col-md-7">
 		<div class="box box-solid" ng-if="selected">
 			<div class="box-header with-border">
 				<h2 class="box-title"><i class="fa fa-info-circle fa-fw"></i>جزئیات</h2>
 			</div>
+
 			<div class="box-body">
 				<dl class="dl-horizontal">
 					<dt>رابط:</dt>

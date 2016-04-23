@@ -47,6 +47,9 @@ module.exports.post = function(req, res, next) {
                     else if (u.gender) u.gender = undefined;
 
                     u.email = user.email;
+
+                    u.stations = user.stations;
+
                     // todo : free_times ?
                     u.major = user.major;
                     u.university = user.university;
