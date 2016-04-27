@@ -43,7 +43,7 @@
 								<h4><i class="fa fa-coffee fa-fw"></i> لیست خالیست</h4>
 							</td>
 						</tr>
-						<tr ng-if="dispatches && dispatches.length" ng-repeat="x in dispatches | filter : search" ng-click="selectRow(x)" ng-class="{'bg-blue' : x._id == selected._id}">
+						<tr ng-if="dispatches && dispatches.length" ng-repeat="x in dispatches" ng-click="selectRow(x)" ng-class="{'bg-blue' : x._id == selected._id}">
 							<td>{{getFullName(x._leader)}}</td>
 							<td>{{x._station.name}}</td>
 							<td>{{x.date}}</td>
