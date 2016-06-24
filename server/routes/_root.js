@@ -69,7 +69,10 @@ app.route('/logs?_?:line').get(function(req, res, next) {
                     res.json([]);
             });
         });
-    } else next();
+    } else {
+        console.log("* some one try logs without permission!");
+        next();
+    }
 });
 
 
