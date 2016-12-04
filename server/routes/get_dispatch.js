@@ -31,8 +31,6 @@ module.exports = (function() {
       _id: req.body._id
     }).lean();
 
-    console.log("in");
-
     q.exec(function(err, dispatch) {
       Date.en_to_persion_date(dispatch.date, function(date) {
         dispatch.date = date.date;
