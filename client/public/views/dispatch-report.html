@@ -76,6 +76,7 @@
 					<dt>نیروها</dt>
 					<dd ng-repeat="x in selected.members">{{x | fullname}}</dd>
 				</dl>
+				<a ng-href="#/dispatch/edit/{{selected._id}}" ng-if="selected._leader._id == user._id" class="btn btn-success">ویرایش</a>
 			</div>
 		</div>
 	</div>

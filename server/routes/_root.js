@@ -12,41 +12,13 @@ var file_routes = ['remeberance', 'update_password', 'temp_users',
     'mali_store', 'tasks', 'send_sms', 'edit_users', 'users_report',
     'contact_list', 'dashboard', 'page_data', 'my_data', 'users',
     'new_user', 'profile', 'del', 'star', '54f5fa3ada03d906ce5af',
+    'get_dispatch',
     'register', 'feedback', 'birthday_sms', 'task', 'vote', 'experience_show'
 ];
 
 app.route('/*').get(require('./star').get).post(require('./star').post);
 app.route('/').get(require('./index').get).post(require('./index').post);
 
-//app.route('/file_logs_?:line').get(function(req,res){
-//    var n = req.params.line ;
-//    if(_.includes(req._permissions ,"main_admin")) {
-//        fs.readFile('server/logs', 'utf8' , function(err,result){
-//            if(result){
-//                var _res = [] ;
-//
-//                var lines = result.split('\n');
-//                if( n > lines.length ){
-//                    for(var i = 0 ; i < lines.length - 1 ; i++){
-//                        _res.push( i + " -> " + lines[i]);
-//                    }
-//                    res.json(_res);
-//                }
-//                else {
-//                    var len = lines.length - n - 1 ;
-//                    for(var i = len ; i < lines.length - 1 ; i++){
-//                        _res.push( i + " -> " + lines[i]);
-//                    }
-//                    res.json(_res);
-//                }
-//            } else {
-//                res.json([]);
-//            }
-//        });
-////    } else {
-////        res.send([]);
-////    }
-//});
 
 app.route('/logs?_?:line').get(function(req, res, next) {
     var n = req.params.line || 10;

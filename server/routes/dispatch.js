@@ -84,7 +84,7 @@
                          select: 'first_name last_name -_id'
                      }).populate({
                          path: '_leader',
-                         select: 'first_name last_name -_id'
+                         select: 'first_name last_name'
                      }).populate({
                          path: 'costs',
                          select: 'cost comment -_id'
@@ -106,7 +106,7 @@
                                  });
 
                                  dispatch.costs = c;
-                                 
+
                                  if (dispatch.date) {
                                      Date.en_to_persion_date(dispatch.date, function(date) {
                                          dispatch.date = date.date;
