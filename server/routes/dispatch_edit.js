@@ -34,9 +34,12 @@ module.exports = (function() {
             edit: edit
           });
 
+          console.log(req.user.first_name + " " + req.user.last_name + " edit a dispatch -> " + dispatch_id);
+
         });
       } else {
 
+        console.log(req.user.first_name + " " + req.user.last_name + " edit a dispatch without permission!");
         res.status(403).json({});
       }
     })
