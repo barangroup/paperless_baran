@@ -23,8 +23,8 @@ require('./server/utils/requires');
 app = express();
 
 // view engine setup
-if(global.init.print_routes){
-    app.use(logger('dev'));
+if (global.init.print_routes) {
+  app.use(logger('dev'));
 }
 //app.use(favicon(__dirname + '/client/public/favicon.ico'));
 //app.disable("x-powered-by");
@@ -35,14 +35,14 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'client/public')));
 
 app.use(session({
-    name: 'shroom',
-    secret: 'kytddkhovoqyfjgfhch'
+  name: 'shroom',
+  secret: 'kytddkhovoqyfjgfhch'
 }));
 //------------------------------------------------------------------
 // app.use needs for posting data from forms to node
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: true
 }));
 //------------------------------------------------------------------
 // add routes

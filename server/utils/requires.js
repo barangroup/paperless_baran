@@ -16,14 +16,14 @@ var path = require('path');
 
 fs.exists(path.join(__dirname + './../node_modules/encrypt_module.js'), function(exists) {
 
-	if (exists) require('encrypt_module');
-	else {
-		String.enc_mobile = function(mobile) {
-			return mobile;
-		}
+  if (exists) require('encrypt_module');
+  else {
+    String.enc_mobile = function(mobile) {
+      return mobile;
+    }
 
-		String.dec_mobile = function(mobile) {
-			return mobile;
-		}
-	}
+    String.dec_mobile = function(mobile) {
+      return mobile;
+    }
+  }
 });

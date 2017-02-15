@@ -1,118 +1,118 @@
 var db = require('mongo_schemas'),
-    enc = require('encrypt');
+  enc = require('encrypt');
 
 //var valid = require('validator');
 
 module.exports = (function() {
-    var _return = {};
+  var _return = {};
 
-    _return.get = function(req, res, next) {
-        next();
-    };
+  _return.get = function(req, res, next) {
+    next();
+  };
 
-    _return.post = function(req, res) {
-            var data = req.body;
-            //        console.log(data);
-            //-----------------------------------------------------------------------
-            /*if(data["task"] == "login"){
-                if(data.username && data.password){
-                    db.mali_api.findOne(
-                        { username : data.username },
-                        { password : true ,_id : false }).lean().exec(function(err,user){
-                            if(err) {
-                                res.send("error");
-                                console.log(err);
-                            } else if (user) {
-                                enc.compare(data.password ,user.password ,function(result){
-                                    if(result) res.send("ok");
-                                    else res.send("wrong password");
-                                });
-                            } else {
-                                res.send("no user");
-                            }
-                        })
-                } else res.json({ error : "low args" });
-            }
-            //-----------------------------------------------------------------------
-            else*/
-            if ( /*data["task"] == "register" && */ data.mobile) {
+  _return.post = function(req, res) {
+    var data = req.body;
+    //        console.log(data);
+    //-----------------------------------------------------------------------
+    /*if(data["task"] == "login"){
+        if(data.username && data.password){
+            db.mali_api.findOne(
+                { username : data.username },
+                { password : true ,_id : false }).lean().exec(function(err,user){
+                    if(err) {
+                        res.send("error");
+                        console.log(err);
+                    } else if (user) {
+                        enc.compare(data.password ,user.password ,function(result){
+                            if(result) res.send("ok");
+                            else res.send("wrong password");
+                        });
+                    } else {
+                        res.send("no user");
+                    }
+                })
+        } else res.json({ error : "low args" });
+    }
+    //-----------------------------------------------------------------------
+    else*/
+    if ( /*data["task"] == "register" && */ data.mobile) {
 
-                // todo : validate
-                // console.log("mali_api -> try to register");
-                // if(data.username && data.password){
-                db.mali_api.findOne({
-                        mobile: data.mobile
-                    }, {
-                        _id: true
-                    })
-                    .lean().exec(function(err, user) {
-                        if (err) {
+      // todo : validate
+      // console.log("mali_api -> try to register");
+      // if(data.username && data.password){
+      db.mali_api.findOne({
+          mobile: data.mobile
+        }, {
+          _id: true
+        })
+        .lean().exec(function(err, user) {
+          if (err) {
+            res.send("error");
+            console.log(err);
+          } else if (user) {
+            console.log("mali_api -> user exists");
+            res.send("exists");
+          } else {
+            db.mali_api.count(function(err, c) {
+              if (err) {
+                res.send("error");
+                console.log(err);
+              } else if (c < 500) { // limit size of registration on 500 !
+                /*enc.hash(data.password,function(hash){
+                    data.password = hash ;
+                    new db.mali_api(data).save(function(err){
+                        if(err) {
                             res.send("error");
-                            console.log(err);
-                        } else if (user) {
-                            console.log("mali_api -> user exists");
-                            res.send("exists");
-                        } else {
-                            db.mali_api.count(function(err, c) {
-                                if (err) {
-                                    res.send("error");
-                                    console.log(err);
-                                } else if (c < 500) { // limit size of registration on 500 !
-                                    /*enc.hash(data.password,function(hash){
-                                        data.password = hash ;
-                                        new db.mali_api(data).save(function(err){
-                                            if(err) {
-                                                res.send("error");
-                                                console.log('mali_api -> error in saving');
-                                            }
-                                            else res.send("ok");
-                                            console.log('mali_api -> new user registered');
-                                        });
-                                    });*/
-                                    new db.mali_api(data).save(function(err) {
-                                        if (err) {
-                                            res.send("error");
-                                            console.log('mali_api -> error in saving');
-                                        } else {
-                                            res.send("ok");
-                                            console.log('mali_api -> new mali user registered');
-                                        }
-                                    });
-                                } else {
-                                    res.send("error");
-                                    console.log('mali_api -> custom db limit exceeded');
-                                }
-                            });
+                            console.log('mali_api -> error in saving');
                         }
+                        else res.send("ok");
+                        console.log('mali_api -> new user registered');
                     });
-            } else res.json({
-                error: 'low args'
+                });*/
+                new db.mali_api(data).save(function(err) {
+                  if (err) {
+                    res.send("error");
+                    console.log('mali_api -> error in saving');
+                  } else {
+                    res.send("ok");
+                    console.log('mali_api -> new mali user registered');
+                  }
+                });
+              } else {
+                res.send("error");
+                console.log('mali_api -> custom db limit exceeded');
+              }
             });
-        }
-        //-----------------------------------------------------------------------
-        /*else if (data["task"] == "get_data") {
-            if (data.username) {
-                db.mali_api.findOne({
-                        username: data.username
-                    }, {
-                        _id: false,
-                        password: false,
-                        __v: false`
-                    })
-                    .lean().exec(function(err, user) {
-                        if (err) {
-                            res.send("error");
-                            console.log(err);
-                        } else {
-                            res.send(user.name + "|" + user.mobile);
-                        }
-                    });
-            } else res.json({
-                error: "low args"
-            });
-        }*/
-        //-----------------------------------------------------------------------
-        /*else if (data["task"] == "update") {
+          }
+        });
+    } else res.json({
+      error: 'low args'
+    });
+  }
+  //-----------------------------------------------------------------------
+  /*else if (data["task"] == "get_data") {
+      if (data.username) {
+          db.mali_api.findOne({
+                  username: data.username
+              }, {
+                  _id: false,
+                  password: false,
+                  __v: false`
+              })
+              .lean().exec(function(err, user) {
+                  if (err) {
+                      res.send("error");
+                      console.log(err);
+                  } else {
+                      res.send(user.name + "|" + user.mobile);
+                  }
+              });
+      } else res.json({
+          error: "low args"
+      });
+  }*/
+  //-----------------------------------------------------------------------
+  /*else if (data["task"] == "update") {
         if (data.username) {
             db.mali_api.findOne({
                 username: data.username
@@ -156,5 +156,5 @@ module.exports = (function() {
         error: "low args"
     });
 };*/
-    return _return;
+  return _return;
 })();
