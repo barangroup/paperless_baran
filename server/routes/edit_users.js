@@ -54,6 +54,8 @@ module.exports.post = function(req, res, next) {
           u.major = user.major;
           u.university = user.university;
 
+          u.meta_data = user.meta_data;
+
           u.address = user.address;
 
           if (user.native) u.native = user.native;
