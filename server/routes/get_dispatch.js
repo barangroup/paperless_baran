@@ -15,7 +15,7 @@ module.exports = (function() {
       _see_all_women = _.includes(req.user._permissions, "see_all_woman_dispatch"),
       _see_all_man = _.includes(req.user._permissions, "see_all_man_dispatch");
 
-    if (!root || !_see_all_man || !_see_all_women) {
+    if (!root && !_see_all_man && !_see_all_women) {
       return res.status(403).json({
         error: true
       });
