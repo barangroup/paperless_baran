@@ -23,15 +23,16 @@
                 <div ng-repeat="nominate in nominated">
                     <div class="col-lg-5 col-xs-5" ng-if="nominate.url">
                         <!-- <a href ng-click="add_vote(nominate)"> -->
-                            <div class="small-box bg-light-blue">
+                            <!-- <div class="small-box bg-light-blue"> -->
                                 <div class="inner">
                                     <!-- <h1 align='center'><b>{{nominate.name}} - {{nominate.votes}}<b/></h1> -->
                                     <img align='center' ng-if="nominate.url" src="{{nominate.url}}" alt="{{nominate.url}}">
+                                    <br />
                                 </div>
                                 <!-- <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div> -->
-                            </div>
+                            <!-- </div> -->
                         <!-- </a> -->
                     </div>
                 </div>

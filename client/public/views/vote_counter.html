@@ -1,27 +1,9 @@
 <div class="row">
     <div class="col-lg-12">
-        <!-- <div class="box box-solid" ng-cloak> -->
         <form name="myForm" ng-submit="editUser(selectedUser)">
-            <!-- <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-edit"></i> نتیجه آرا </h3>
-                </div> -->
-            <!-- /.box-header -->
             <div class="box-body">
-                <!-- Content -->
-
-                <!-- <div class="row"> -->
-                <!-- </div> -->
-
-                <!-- <h3 align='center'> تعداد کل آرا : {{all_votes}} </h3> -->
-
-
-
-                <!-- <img src="http://192.168.43.33:8080/videofeed" alt="http://192.168.43.33:8080/videofeed"> -->
-
-
-
                 <div ng-repeat="nominate in nominated">
-                    <div class="col-lg-4 col-xs-4">
+                    <div class="col-lg-3 col-xs-3">
                         <a href ng-click="add_vote(nominate)">
                             <div class="small-box bg-light-blue">
                                 <div class="inner">
@@ -50,7 +32,5 @@
             </div>
         </form>
         <div class="overlay" ng-show="isSending"><i class="fa fa-spinner fa-spin"></i></div>
-
-        <!-- </div> -->
     </div>
 </div>

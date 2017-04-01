@@ -74,6 +74,9 @@ module.exports.post = function(req, res, next) {
       u.email = user.data.email;
       u.city = user.data.city;
       u.address = user.data.address;
+
+      u.skills = user.data.skills;
+
       if (user.data.student_number) u.student_number = user.data.student_number;
       if (user.data.major) u.major = user.data.major;
       if (user.data._free_of_edu) u._free_of_edu = true;
