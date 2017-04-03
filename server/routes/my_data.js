@@ -76,6 +76,7 @@ module.exports.post = function(req, res, next) {
       u.address = user.data.address;
 
       u.skills = user.data.skills;
+      u.meta_data = user.data.meta_data;
 
       if (user.data.student_number) u.student_number = user.data.student_number;
       if (user.data.major) u.major = user.data.major;
