@@ -60,23 +60,6 @@ module.exports = function(app) {
       .post(require('./' + file_name).post);
   });
 
-  //    fs.readdir( __dirname , function(err, files) { // todo : :(
-  //        if (err) console.log(err);
-  //        else {
-  //            files.forEach(function(file) {
-  //                if(file.substring(0,1) != "_" &&
-  //                    file.substring(file.length-2 ,file.length-1) != "~" &&
-  //                    file != "index.js"){
-  //                    var file_name = file.substring(0,file.length-3) ;
-  //                    console.log(file_name);
-  //                    app.route('/' + file_name)
-  //                        .get(require('./' + file_name).get)
-  //                        .post(require('./' + file_name).post);
-  //                }
-  //            });
-  //        }
-  //    });
-
   //------------------------------------------------------------------
 
   if (global.init.developer) {

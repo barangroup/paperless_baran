@@ -11,7 +11,6 @@ module.exports = (function() {
   };
 
   _return.post = function(req, res) {
-    console.open(req.body);
 
     for (var i in req.body) {
       if (req.body[i] == null || req.body[i] == false || req.body[i] == "" || _.isArray(req.body[i]) && req.body[i].length < 1) {
