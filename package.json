@@ -24,7 +24,7 @@
     "jalaali-js": "^1.0.0",
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
-    "mongoose": "^4.8.2",
+    "mongoose": "^5.7.7",
     "morgan": "~1.9.1",
     "request": "^2.53.0",
     "serve-favicon": "~2.3.2",
